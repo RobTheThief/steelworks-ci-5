@@ -10,14 +10,15 @@ Fullstack eCommerce Gym website. React frontend and Django restframework backend
 
   - #### First Time Visitor Goals
 
-    1. As a First Time Visitor, I want to easily ....
-    2. As a First Time Visitor, I want to be able to easily ...
-    3. As a First Time Visitor, I want to be able to easily ....
+    1. As a First Time Visitor, I want to easily understand the purpose of the site.
+    2. As a First Time Visitor, I want to be able to easily see the different gym plans and the differences between them.
+    3. As a First Time Visitor, I want to be able to easily register as a new user and log in.
+    4. As a First Time Visitor, I want to be able to easily see what classes are available.
 
   - #### Returning Visitor Goals
 
-    1. As a Returning Visitor, I want to be able to ...
-    2. As a Returning Visitor, I want to be able to ...
+    1. As a Returning Visitor, I want to be able to log in and see my account details and subscription.
+    2. As a Returning Visitor, I want to be able to upgrade my subscription.
     3. As a Returning Visitor, I want to find contact information.
 
 - ### Design
@@ -28,8 +29,11 @@ Fullstack eCommerce Gym website. React frontend and Django restframework backend
   - #### Imagery
     - Imagery used to make up ...
   - #### Wireframe
-    - This wireframe was used initially to get an idea of the style and layout of the page would be:
-      [Wireframe Screenshot](./assets/media/ci-5-steelworks.png)
+    - This wireframe was used initially to get an idea of the style and layout of the site would be:
+      ![Wireframe Screenshot](./assets/media/ci-5-steelworks.png)
+  - #### Relational model diagram
+    - This diagram was used to plan how the database tables would relate to each other and what data they should contain:
+      ![Wireframe Screenshot](./assets/media/steelworks-relational-model.png)
 
 ## FEATURES
 
