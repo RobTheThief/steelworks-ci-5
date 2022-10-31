@@ -30,7 +30,7 @@ if os.path.isfile(dotenv_file):
 SECRET_KEY = str(os.getenv('DJANGO_SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = str(os.getenv('DJANGO_ENV')) == 'development'
 
 ALLOWED_HOSTS = ['*']
 
