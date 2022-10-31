@@ -3,7 +3,7 @@ from .views import SteelworksUserCreate, SteelworksUserList, SteelworksUserDetai
 
 
 urlpatterns = [
-    path('create/', UserCreate.as_view(), name='create-User'),
+    path('create/', SteelworksUserCreate.as_view(), name='create-User'),
     path('', SteelworksUserList.as_view()),
     path('<int:pk>/', SteelworksUserDetail.as_view(), name='retrieve-User'),
     path('update/<int:pk>/', SteelworksUserUpdate.as_view(), name='update-User'),

@@ -16,7 +16,7 @@ from rest_framework import views
 from rest_framework import status
 from rest_framework.response import Response
 from django.http import HttpResponse
-from .serializers import UserSerializer
+from .serializers import SteelworksUserSerializer, CreateUserSerializer
 from . import serializers
 from django.contrib.auth import login, logout
 
@@ -47,27 +47,27 @@ catchall = catchall_dev if settings.DEBUG else catchall_prod
 
 class SteelworksUserCreate(generics.CreateAPIView):
     queryset = SteelworksUser.objects.all(),
-    serializer_class = UserSerializer
+    serializer_class = SteelworksUserSerializer
 
 
 class SteelworksUserList(generics.ListAPIView):
     queryset = SteelworksUser.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = SteelworksUserSerializer
 
 
 class SteelworksUserDetail(generics.RetrieveAPIView):
     queryset = SteelworksUser.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = SteelworksUserSerializer
 
 
 class SteelworksUserUpdate(generics.RetrieveUpdateAPIView):
     queryset = SteelworksUser.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = SteelworksUserSerializer
 
 
 class SteelworksUserDelete(generics.RetrieveDestroyAPIView):
     queryset = SteelworksUser.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = SteelworksUserSerializer
 
 
 class LoginView(views.APIView):
