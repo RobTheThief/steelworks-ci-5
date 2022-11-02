@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from .models import SteelworksUser
+from .models import SteelworksUser, Product
 from django.contrib.auth.models import User
 from django.views.generic import TemplateView
 
@@ -16,7 +16,7 @@ from rest_framework import views
 from rest_framework import status
 from rest_framework.response import Response
 from django.http import HttpResponse
-from .serializers import SteelworksUserSerializer, CreateUserSerializer
+from .serializers import SteelworksUserSerializer, CreateUserSerializer, ProductSerializer
 from . import serializers
 from django.contrib.auth import login, logout
 
@@ -45,6 +45,7 @@ catchall_prod = TemplateView.as_view(template_name='index.html')
 catchall = catchall_dev if settings.DEBUG else catchall_prod
 
 
+############# """ USER VIEWS """#####################
 class SteelworksUserCreate(generics.CreateAPIView):
     queryset = SteelworksUser.objects.all(),
     serializer_class = SteelworksUserSerializer
@@ -70,6 +71,33 @@ class SteelworksUserDelete(generics.RetrieveDestroyAPIView):
     serializer_class = SteelworksUserSerializer
 
 
+############# """ PRODUCT VIEWS """#####################
+class ProductCreate(generics.CreateAPIView):
+    queryset = Product.objects.all(),
+    serializer_class = ProductSerializer
+
+
+class ProductList(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+
+class ProductDetail(generics.RetrieveAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+
+class ProductUpdate(generics.RetrieveUpdateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+
+class ProductDelete(generics.RetrieveDestroyAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+
+############# """ AUTH VIEWS """#####################
 class LoginView(views.APIView):
     """ Endpoint that logs in a regestered user """
     permission_classes = [permissions.AllowAny]
