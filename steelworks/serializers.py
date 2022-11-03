@@ -52,6 +52,22 @@ class ClassesSerializer(serializers.ModelSerializer):
                   'instructor', 'enrolled_students', 'created']
 
 
+class InstructorSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Instructor
+        fields = ['pk', 'first_name', 'last_name',
+                  'email', 'address_line_1', 'address_line_2',
+                  'address_line_3', 'postcode', 'phone', 'created']
+
+
+class InstructorUserPairSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.InstructorUserPair
+        fields = ['pk', 'instructor', 'students', 'created']
+
+
 class LoginSerializer(serializers.Serializer):
     """ This serializer defines two fields for authentication:
     username and password. It will try to authenticate the

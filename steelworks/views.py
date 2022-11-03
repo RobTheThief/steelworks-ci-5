@@ -138,6 +138,48 @@ class ClassesCreate(generics.CreateAPIView):
     serializer_class = serializers.ClassesSerializer
 
 
+############# """ INSTRUCTOR VIEWS """#####################
+class ClassesList(generics.ListAPIView):
+    queryset = models.Instructor.objects.all()
+    serializer_class = serializers.InstructorSerializer
+
+
+class ClassesDetail(generics.RetrieveAPIView):
+    queryset = models.Instructor.objects.all()
+    serializer_class = serializers.InstructorSerializer
+
+
+class ClassesUpdate(generics.RetrieveUpdateAPIView):
+    queryset = models.Instructor.objects.all()
+    serializer_class = serializers.InstructorSerializer
+
+
+class ClassesCreate(generics.CreateAPIView):
+    queryset = models.Instructor.objects.all()
+    serializer_class = serializers.InstructorSerializer
+
+
+############# """ INSTRUCTOR USER PAIR VIEWS """#####################
+class InstructorUserPairList(generics.ListAPIView):
+    queryset = models.InstructorUserPair.objects.all()
+    serializer_class = serializers.InstructorUserPairSerializer
+
+
+class InstructorUserPairDetail(generics.RetrieveAPIView):
+    queryset = models.InstructorUserPair.objects.all()
+    serializer_class = serializers.InstructorUserPairSerializer
+
+
+class InstructorUserPairUpdate(generics.RetrieveUpdateAPIView):
+    queryset = models.InstructorUserPair.objects.all()
+    serializer_class = serializers.InstructorUserPairSerializer
+
+
+class InstructorUserPairCreate(generics.CreateAPIView):
+    queryset = models.InstructorUserPair.objects.all()
+    serializer_class = serializers.InstructorUserPairSerializer
+
+
 ############# """ AUTH VIEWS """#####################
 class LoginView(views.APIView):
     """ Endpoint that logs in a regestered user """
