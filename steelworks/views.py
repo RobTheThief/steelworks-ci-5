@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from .models import SteelworksUser, Product, ProductUserPair
+from .models import SteelworksUser, Product, ProductUserPair, Classes
 from django.contrib.auth.models import User
 from django.views.generic import TemplateView
 
@@ -17,7 +17,7 @@ from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.response import Response
 from django.http import HttpResponse
-from .serializers import SteelworksUserSerializer, CreateUserSerializer, ProductSerializer, ProductUserPairSerializer
+from .serializers import SteelworksUserSerializer, CreateUserSerializer, ProductSerializer, ProductUserPairSerializer, ClassesSerializer
 from . import serializers
 from django.contrib.auth import login, logout
 
@@ -117,6 +117,27 @@ class ProductUserPairUpdate(generics.RetrieveUpdateAPIView):
 class ProductUserPairCreate(generics.CreateAPIView):
     queryset = ProductUserPair.objects.all()
     serializer_class = ProductUserPairSerializer
+
+
+############# """ GYM CLASSES VIEWS """#####################
+class ClassesList(generics.ListAPIView):
+    queryset = Classes.objects.all()
+    serializer_class = ClassesSerializer
+
+
+class ClassesDetail(generics.RetrieveAPIView):
+    queryset = Classes.objects.all()
+    serializer_class = ClassesSerializer
+
+
+class ClassesUpdate(generics.RetrieveUpdateAPIView):
+    queryset = Classes.objects.all()
+    serializer_class = ClassesSerializer
+
+
+class ClassesCreate(generics.CreateAPIView):
+    queryset = Classes.objects.all()
+    serializer_class = ClassesSerializer
 
 
 ############# """ AUTH VIEWS """#####################

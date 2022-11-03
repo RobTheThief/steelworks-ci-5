@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import SteelworksUser, Product, ProductUserPair
+from .models import SteelworksUser, Product, ProductUserPair, Classes
 from django.contrib.auth import authenticate
 
 from django.contrib.auth.models import User
@@ -42,6 +42,14 @@ class ProductUserPairSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductUserPair
         fields = ['pk', 'product', 'subscribed_users', 'created']
+
+
+class ClassesSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Classes
+        fields = ['pk', 'class_name', 'class_details',
+                  'instructor', 'enrolled_students', 'created']
 
 
 class LoginSerializer(serializers.Serializer):
