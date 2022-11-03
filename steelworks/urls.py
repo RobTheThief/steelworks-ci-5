@@ -1,6 +1,7 @@
 from django.urls import include, path
 from steelworks import views
 
+
 urlpatterns = [
     path('user/create/', views.SteelworksUserCreate.as_view(), name='create-User'),
     path('user/', views.SteelworksUserList.as_view()),
@@ -17,5 +18,13 @@ urlpatterns = [
     path('product/update/<int:pk>/',
          views.ProductUpdate.as_view(), name='update-Product'),
     path('product/delete/<int:pk>/',
-         views.ProductDelete.as_view(), name='delete-Product')
+         views.ProductDelete.as_view(), name='delete-Product'),
+    path('product/user-pair/',
+         views.ProductUserPairList.as_view()),
+    path('product/user-pair/detail/<int:pk>/',
+         views.ProductUserPairDetail.as_view()),
+    path('product/user-pair/update/<int:pk>/',
+         views.ProductUserPairUpdate.as_view()),
+    path('product/user-pair/create/',
+         views.ProductUserPairCreate.as_view())
 ]

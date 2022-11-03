@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from .models import SteelworksUser, Product
+from .models import SteelworksUser, Product, ProductUserPair
 from django.contrib.auth.models import User
 from django.views.generic import TemplateView
 
@@ -14,9 +14,10 @@ from rest_framework import permissions
 from rest_framework import authentication
 from rest_framework import views
 from rest_framework import status
+from rest_framework import viewsets
 from rest_framework.response import Response
 from django.http import HttpResponse
-from .serializers import SteelworksUserSerializer, CreateUserSerializer, ProductSerializer
+from .serializers import SteelworksUserSerializer, CreateUserSerializer, ProductSerializer, ProductUserPairSerializer
 from . import serializers
 from django.contrib.auth import login, logout
 
@@ -95,6 +96,27 @@ class ProductUpdate(generics.RetrieveUpdateAPIView):
 class ProductDelete(generics.RetrieveDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+
+############# """ PRODUCT/USER PAIR VIEWS """#####################
+class ProductUserPairList(generics.ListAPIView):
+    queryset = ProductUserPair.objects.all()
+    serializer_class = ProductUserPairSerializer
+
+
+class ProductUserPairDetail(generics.RetrieveAPIView):
+    queryset = ProductUserPair.objects.all()
+    serializer_class = ProductUserPairSerializer
+
+
+class ProductUserPairUpdate(generics.RetrieveUpdateAPIView):
+    queryset = ProductUserPair.objects.all()
+    serializer_class = ProductUserPairSerializer
+
+
+class ProductUserPairCreate(generics.CreateAPIView):
+    queryset = ProductUserPair.objects.all()
+    serializer_class = ProductUserPairSerializer
 
 
 ############# """ AUTH VIEWS """#####################

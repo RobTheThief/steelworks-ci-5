@@ -13,7 +13,7 @@ class SteelworksUser(models.Model):
     created = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return self.email
 
 
 class Product(models.Model):
@@ -23,4 +23,13 @@ class Product(models.Model):
     created = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return self.product_name
+
+
+class ProductUserPair(models.Model):
+    product = models.ManyToManyField(Product)
+    subscribed_users = models.ManyToManyField(SteelworksUser)
+    created = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.product
