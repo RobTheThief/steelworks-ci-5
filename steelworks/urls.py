@@ -19,6 +19,7 @@ urlpatterns = [
          views.ProductUpdate.as_view(), name='update-Product'),
     path('product/delete/<int:pk>/',
          views.ProductDelete.as_view(), name='delete-Product'),
+
     path('product/user-pair/',
          views.ProductUserPairList.as_view()),
     path('product/user-pair/detail/<int:pk>/',
@@ -26,5 +27,32 @@ urlpatterns = [
     path('product/user-pair/update/<int:pk>/',
          views.ProductUserPairUpdate.as_view()),
     path('product/user-pair/create/',
-         views.ProductUserPairCreate.as_view())
+         views.ProductUserPairCreate.as_view()),
+
+    path('instructor/',
+         views.InstructorUserPairList.as_view()),
+    path('instructor/detail/<int:pk>/',
+         views.InstructorUserPairDetail.as_view()),
+    path('instructor/update/<int:pk>/',
+         views.InstructorUserPairUpdate.as_view()),
+    path('instructor/create/',
+         views.InstructorUserPairCreate.as_view()),
+
+    path('classes/',
+         views.ClassesList.as_view()),
+    path('classes/detail/<int:pk>/',
+         views.ClassesDetail.as_view()),
+    path('classes/update/<int:pk>/',
+         views.ClassesUpdate.as_view()),
+    path('classes/create/',
+         views.ClassesCreate.as_view()),
+
+    path('instructor/user-pair/',
+         views.InstructorUserPairList.as_view()),
+    path('instructor/user-pair/detail/<int:pk>/',
+         views.InstructorUserPairDetail.as_view()),
+    path('instructor/user-pair/update/<int:pk>/',
+         views.InstructorUserPairUpdate.as_view()),
+    path('instructor/user-pair/create/',
+         views.InstructorUserPairCreate.as_view())
 ]
