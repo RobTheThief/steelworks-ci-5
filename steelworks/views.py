@@ -1,5 +1,3 @@
-from django.shortcuts import render
-
 from steelworks import models
 from django.contrib.auth.models import User
 from django.views.generic import TemplateView
@@ -11,7 +9,6 @@ from django.conf import settings
 
 from rest_framework import generics
 from rest_framework import permissions
-from rest_framework import authentication
 from rest_framework import views
 from rest_framework import status
 from rest_framework.response import Response
@@ -107,14 +104,18 @@ class ProductUserPairDetail(generics.RetrieveAPIView):
     serializer_class = serializers.ProductUserPairSerializer
 
 
-class ProductUserPairUpdate(generics.RetrieveUpdateAPIView):
-    queryset = models.ProductUserPair.objects.all()
-    serializer_class = serializers.ProductUserPairSerializer
+def ProductUserPairCreateFunction(prod, users):
+
+    p = models.InstructorUserPair(product=prod,
+                                  subscribed_users=users)
+    p.save()
 
 
-class ProductUserPairCreate(generics.CreateAPIView):
-    queryset = models.ProductUserPair.objects.all()
-    serializer_class = serializers.ProductUserPairSerializer
+def ProductUserPairUpdateFunction(pk, prod, users):
+    obj = models.Product.objects.get(pk=pk)
+    obj.product = prod
+    obj.subscribed_users = users
+    obj.save()
 
 
 ############# """ GYM CLASSES VIEWS """#####################
@@ -128,54 +129,66 @@ class ClassesDetail(generics.RetrieveAPIView):
     serializer_class = serializers.ClassesSerializer
 
 
-class ClassesUpdate(generics.RetrieveUpdateAPIView):
-    queryset = models.Classes.objects.all()
-    serializer_class = serializers.ClassesSerializer
+def ClassesCreateFunction(name, details, instr, students):
+
+    p = models.InstructorUserPair(class_name=name,
+                                  class_details=details,
+                                  instructor=instr,
+                                  enrolled_students=students)
+    p.save()
 
 
-class ClassesCreate(generics.CreateAPIView):
-    queryset = models.Classes.objects.all()
-    serializer_class = serializers.ClassesSerializer
+def ClassesUpdateFunction(pk, name, details, instr, students):
+    obj = models.Product.objects.get(pk=pk)
+    obj.class_name = name
+    obj.class_details = details
+    obj.instructor = instr
+    obj.enrolled_students = students
+    obj.save()
 
 
 ############# """ INSTRUCTOR VIEWS """#####################
-class ClassesList(generics.ListAPIView):
+class InstructorList(generics.ListAPIView):
     queryset = models.Instructor.objects.all()
     serializer_class = serializers.InstructorSerializer
 
 
-class ClassesDetail(generics.RetrieveAPIView):
+class InstructorDetail(generics.RetrieveAPIView):
     queryset = models.Instructor.objects.all()
     serializer_class = serializers.InstructorSerializer
 
 
-class ClassesUpdate(generics.RetrieveUpdateAPIView):
+class InstructorUpdate(generics.RetrieveUpdateAPIView):
     queryset = models.Instructor.objects.all()
     serializer_class = serializers.InstructorSerializer
 
 
-class ClassesCreate(generics.CreateAPIView):
+class InstructorCreate(generics.CreateAPIView):
     queryset = models.Instructor.objects.all()
     serializer_class = serializers.InstructorSerializer
 
 
 ############# """ INSTRUCTOR USER PAIR VIEWS """#####################
+def InstructorUserPairCreateFunction(instr, stdns):
+
+    p = models.InstructorUserPair(instructor=instr,
+                                  students=stdns)
+    p.save()
+
+
+def InstructorUserPairUpdateFunction(pk, inst, stdns):
+    obj = models.Product.objects.get(pk=pk)
+    obj.instructor = inst
+    obj.students = stdns
+    obj.save()
+
+
 class InstructorUserPairList(generics.ListAPIView):
     queryset = models.InstructorUserPair.objects.all()
     serializer_class = serializers.InstructorUserPairSerializer
 
 
 class InstructorUserPairDetail(generics.RetrieveAPIView):
-    queryset = models.InstructorUserPair.objects.all()
-    serializer_class = serializers.InstructorUserPairSerializer
-
-
-class InstructorUserPairUpdate(generics.RetrieveUpdateAPIView):
-    queryset = models.InstructorUserPair.objects.all()
-    serializer_class = serializers.InstructorUserPairSerializer
-
-
-class InstructorUserPairCreate(generics.CreateAPIView):
     queryset = models.InstructorUserPair.objects.all()
     serializer_class = serializers.InstructorUserPairSerializer
 
@@ -213,13 +226,15 @@ class LogoutView(views.APIView):
 class ProfileView(generics.RetrieveAPIView):
     """ Endpoint that gets profile information on a logged in user
     if a user is logged in"""
-    authentication_classes = [authentication.SessionAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    #authentication_classes = [authentication.SessionAuthentication]
+    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
     serializer_class = serializers.UserSerializer
 
     def get_object(self):
         """ Makes a GET request to the backend and
         returns the reponse object """
+        print('Hello')
         return self.request.user
 
 
