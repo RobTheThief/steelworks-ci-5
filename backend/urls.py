@@ -13,8 +13,6 @@ urlpatterns = [
     path('logout/', views.LogoutView.as_view()),
     path('profile/', views.ProfileView.as_view()),
     path('register/', views.CreateUserView.as_view(), name='auth_register'),
-    #re_path('.*', TemplateView.as_view(template_name='index.html')),
-    #re_path(r'', views.catchall),
     path("__reload__/", include("django_browser_reload.urls")),
     re_path('.*', views.ReactView.as_view(), name='react'),
 ]
