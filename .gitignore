@@ -131,6 +131,7 @@ dmypy.json
 
 # dependencies
 /node_modules
+/steelworks/node_modules
 /.pnp
 .pnp.js
 
@@ -140,6 +141,8 @@ dmypy.json
 # production
 
 /build
+
+/steelworks/static/
 
 # misc
 .DS_Store

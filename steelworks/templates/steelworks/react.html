@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+    {% load static %}
+
+<body>
+    {% block content %}
+    <div id='root'></div>
+    <script src={% static 'main.js' %} ></script>
+    {% endblock content %}
+</body>

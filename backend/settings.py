@@ -17,6 +17,7 @@ import dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+print(BASE_DIR)
 
 dotenv_file = os.path.join(BASE_DIR, ".env")
 if os.path.isfile(dotenv_file):
@@ -47,7 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'steelworks'
+    'steelworks',
+    "django_browser_reload",
 ]
 
 MIDDLEWARE = [
@@ -60,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -68,7 +71,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # 'DIRS': [os.path.join(BASE_DIR, 'build')],
-        'DIRS': [BASE_DIR / 'build'],
+        'DIRS': [BASE_DIR / 'backend' / 'templates'],
+        # 'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -140,11 +144,11 @@ STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'build' / 'static'
+    BASE_DIR / 'steelworks' / 'static' / 'ui'
 ]
-#os.path.join(BASE_DIR, 'build/static')
 
-STATIC_ROOT = BASE_DIR / 'static'  # os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = '/static/'
+# os.path.join(BASE_DIR, 'staticfiles')
 
 
 # Default primary key field type

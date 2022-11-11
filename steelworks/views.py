@@ -41,7 +41,12 @@ catchall_prod = TemplateView.as_view(template_name='index.html')
 catchall = catchall_dev if settings.DEBUG else catchall_prod
 
 
+class ReactView(TemplateView):
+    template_name = 'steelworks/react.html'
+
 ############# """ USER VIEWS """#####################
+
+
 class SteelworksUserCreate(generics.CreateAPIView):
     queryset = models.SteelworksUser.objects.all(),
     serializer_class = serializers.SteelworksUserSerializer
