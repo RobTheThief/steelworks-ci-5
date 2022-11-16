@@ -141,7 +141,7 @@ STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'steelworks' / 'static' / 'ui'
+    BASE_DIR / 'static' / 'ui'
 ]
 
 STATIC_ROOT = '/static/'
