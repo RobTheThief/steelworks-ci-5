@@ -9,9 +9,10 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { css } from "@emotion/css";
+import { Link } from "react-router-dom";
 
 function Sidebar() {
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(true);
 
   const toggleDrawer = (event) => {
     setToggle(!toggle);
@@ -22,9 +23,10 @@ function Sidebar() {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar
           className={css`
-            background: rgba(0, 0, 0, 0.432) !important;
+            background: black !important;
+            z-index: 12010 !important;
           `}
-          position="static"
+          position="fixed"
         >
           <Toolbar>
             <IconButton
@@ -34,14 +36,14 @@ function Sidebar() {
               aria-label="menu"
               sx={{ mr: 2 }}
               className={css`
-                color: blue !important;
+                color: rgb(0, 89, 255) !important;
               `}
             >
               <MenuIcon />
             </IconButton>
             <Typography
               className={css`
-                color: blue !important;
+                color: rgb(0, 89, 255) !important;
                 font-size: 24px !important;
                 padding-bottom: 0.25rem;
               `}
@@ -52,7 +54,7 @@ function Sidebar() {
             </Typography>
             <Button
               className={css`
-                color: blue !important;
+                color: rgb(0, 89, 255) !important;
               `}
             >
               Login / Register
@@ -60,11 +62,56 @@ function Sidebar() {
           </Toolbar>
         </AppBar>
       </Box>
-      <Drawer open={toggle} onClose={toggleDrawer}>
-        <div>Hello</div>
+      <Drawer
+        open={toggle}
+        onClose={toggleDrawer}
+        className={css`
+          & > .MuiPaper-root {
+            width: 20rem;
+            border: 2px solid rgb(0, 89, 255) !important;
+            border-width: 0 2px 0 0 !important;
+            padding-top: 5rem;
+          }
+        `}
+      >
+        <Button
+          component={Link}
+          className={css`
+            justify-content: start !important;
+          `}
+        >
+          <Link to="/">Home</Link>
+        </Button>
+
+        <Button
+          component={Link}
+          className={css`
+            justify-content: start !important;
+          `}
+        >
+          <Link to="/about">About</Link>
+        </Button>
+
+        <Button
+          className={css`
+            justify-content: start !important;
+          `}
+        >
+          Price Plans
+        </Button>
+
+        <Button
+          className={css`
+            justify-content: start !important;
+          `}
+        >
+          Contact
+        </Button>
       </Drawer>
     </>
   );
 }
 
 export default Sidebar;
+
+/* MuiButtonBase-root-MuiButton-root */

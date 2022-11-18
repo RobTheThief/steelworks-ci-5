@@ -8,8 +8,8 @@ import Sidebar from './components/Sidebar';
 function App(props) {
   return (
     <React.StrictMode>
-      <Sidebar />
       <BrowserRouter>
+        <Sidebar />
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/about" element={<About />} />
