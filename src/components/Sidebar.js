@@ -12,7 +12,7 @@ import { css } from "@emotion/css";
 import { Link } from "react-router-dom";
 
 function Sidebar() {
-  const [toggle, setToggle] = useState(true);
+  const [toggle, setToggle] = useState(false);
 
   const toggleDrawer = (event) => {
     setToggle(!toggle);
