@@ -1,44 +1,11 @@
-import { Button } from "@mui/material";
 import React from "react";
 import pullups from "../img/pullups1024.jpg";
+import PricePlan from "../components/PricePlan";
 import { css } from "@emotion/css";
-
-function PricePlan({
-  type,
-  headingClasses,
-  sect1,
-  sect2,
-  sect3,
-  sect4,
-  sect5,
-}) {
-  const sectStyle = "text-white text-center my-4";
-  return (
-    <div className="w-1/3 border-slate-500 border-2 rounded-lg p-4 flex flex-col items-center">
-      <h3 className={`${headingClasses} text-center`}>
-        <b>{type}</b>
-      </h3>
-      <p className={sectStyle}>{sect1 && sect1}</p>
-      <p className={sectStyle}>{sect2 && sect2}</p>
-      <p className={sectStyle}>{sect3 && sect3}</p>
-      <p className={sectStyle}>{sect4 && sect4}</p>
-      <p className={sectStyle}>{sect5 && sect5}</p>
-      <Button
-        className={css`
-          width: 35%;
-          background-color: rgb(0, 89, 255) !important;
-          color: white !important;
-          font-weight: 900 !important;
-          border-radius: 2rem !important;
-        `}
-      >
-        Sign up
-      </Button>
-    </div>
-  );
-}
+import { Button } from "@mui/material";
 
 function Home(props) {
+  const classes = "hidden";
   return (
     <>
       <section className="hero-container">
@@ -103,6 +70,69 @@ function Home(props) {
             />
           </div>
         </div>
+      </section>
+      <section
+        id="contact_section"
+        className="contact-section"
+        aria-labelledby="contact_section_heading"
+      >
+        <h2 id="contact_section_heading" className="hidden">
+          CONTACT
+        </h2>
+        <fieldset
+          className={css`
+            position: relative;
+            top: 30%;
+            left: 35%;
+            width: 490px;
+            height: 310px;
+            border-radius: 5px;
+            border: #64748b solid 2px;
+            background-color: rgba(0, 0, 0, 0.473);
+            display:flex;
+            justify-content: center;
+            align-items: center;
+          `}
+        >
+          <form
+            action="https://formspree.io/f/xqkjjegb"
+            className=" w-2/3 h-2/3 flex flex-col"
+            method="POST"
+          >
+            <label htmlFor="email_field" className='text-white' >Email </label>
+            <input
+              id="email_field"
+              name="email_field"
+              type="email"
+              className="w-full mb-4"
+              placeholder="example@yourmail.com"
+              required
+            />
+
+            <label htmlFor="message_field" className='text-white'>Message </label>
+            <textarea
+              id="message_field"
+              name="message_field"
+              className="mb-4"
+              placeholder="Please type your message here"
+              required
+            ></textarea>
+            <Button
+              type="submit"
+              variant="outlined"
+              className={css`
+                width: 40%;
+                background-color: rgb(0, 89, 255) !important;
+                color: white !important;
+                font-weight: 900 !important;
+                border-radius: 2rem !important;
+                padding: 0.35rem 1.5rem !important;
+              `}
+            >
+              Submit
+            </Button>
+          </form>
+        </fieldset>
       </section>
     </>
   );

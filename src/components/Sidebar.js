@@ -83,7 +83,9 @@ function Sidebar() {
             justify-content: start !important;
           `}
         >
-          <Link to="/" className="w-full">Home</Link>
+          <Link to="/" className="w-full">
+            Home
+          </Link>
         </Button>
 
         <Button
@@ -92,7 +94,9 @@ function Sidebar() {
             justify-content: start !important;
           `}
         >
-          <Link to="/about" className="w-full">About</Link>
+          <Link to="/about" className="w-full">
+            About
+          </Link>
         </Button>
 
         <Button
@@ -116,5 +120,3 @@ function Sidebar() {
 }
 
 export default Sidebar;
-
-/* MuiButtonBase-root-MuiButton-root */
