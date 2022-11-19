@@ -115,6 +115,9 @@ function Sidebar() {
           Contact
         </Button>
       </Drawer>
+      <footer className='h-24 w-full bg-black flex flex-col justify-center items-center'>
+        <p className="text-white">Copyright &#169; Steelworks 2022</p>
+      </footer>
     </>
   );
 }

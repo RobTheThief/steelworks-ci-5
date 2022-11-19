@@ -8,6 +8,21 @@
   font-family: "Open Sans", sans-serif !important;
 }
 
+body {
+  position: relative;
+}
+
+body::after {
+  content: '';
+  display: block;
+  height: 96px;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+}
+
 .hero-container {
   background: #000000;
   background: linear-gradient(rgb(0, 0, 0, 0.753), rgb(0, 0, 0, 0.753)), url('./img/hero1024.jpg');

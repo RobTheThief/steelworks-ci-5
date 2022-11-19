@@ -82,8 +82,8 @@ function Home(props) {
         <fieldset
           className={css`
             position: relative;
-            top: 30%;
-            left: 35%;
+            top: 40%;
+            left: 37%;
             width: 490px;
             height: 310px;
             border-radius: 5px;
