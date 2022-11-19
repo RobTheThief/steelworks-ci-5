@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Drawer from "@mui/material/Drawer";
-import { Button, Chip } from "@mui/material";
+import { Button } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 
 import Box from "@mui/material/Box";
@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { css } from "@emotion/css";
-import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 
 function Sidebar() {
   const [toggle, setToggle] = useState(false);
@@ -56,12 +56,14 @@ function Sidebar() {
               Steelworks Fitness
             </Typography>
             <Button
-            component={Link}
+              component={HashLink}
+              smooth
+              to="/login-register"
               className={css`
                 color: rgb(0, 89, 255) !important;
               `}
             >
-              <Link to='/login-register'>Login / Register</Link>
+              Login / Register
             </Button>
           </Toolbar>
         </AppBar>
@@ -79,47 +81,47 @@ function Sidebar() {
         `}
       >
         <Button
-          component={Link}
+          component={HashLink}
+          smooth
+          to="/#hero"
           className={css`
             justify-content: start !important;
           `}
         >
-          <Link to="/" className="w-full">
-            Home
-          </Link>
+          Home
         </Button>
 
         <Button
-          component="a"
+          component={HashLink}
+          smooth
+          to="/#about"
           className={css`
             justify-content: start !important;
           `}
         >
-          <a href="#about" className="w-full">
-            About
-          </a>
+          About
         </Button>
 
         <Button
-          component="a"
+          component={HashLink}
+          smooth
+          to="/#price-plans"
           className={css`
             justify-content: start !important;
           `}
         >
-          <a href="#price-plans" className="w-full">
-            Price Plans
-          </a>
+          Price Plans
         </Button>
 
         <Button
-          component="a"
+          component={HashLink}
+          smooth
+          to="#contact_section"
           className={css`
             justify-content: start !important;
           `}
         >
-          <a href="#contact_section" className="w-full">
-            Contact
-          </a>
+          Contact
         </Button>
       </Drawer>
       <footer className="h-24 w-full bg-black flex flex-col justify-center items-center">
