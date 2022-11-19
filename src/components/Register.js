@@ -1,10 +1,14 @@
-import React from 'react'
+import React from "react";
 import { Button } from "@mui/material";
 import { css } from "@emotion/css";
 
-export default function Register() {
+export default function Register({ setIsRegister }) {
+  const handleClick = () => {
+    setIsRegister(false);
+  };
   return (
-    <fieldset
+    <div className="register-form">
+      <fieldset
         className={css`
           width: 490px;
           margin-top: 4rem;
@@ -18,6 +22,7 @@ export default function Register() {
         `}
       >
         <div className=" w-2/3 h-2/3 flex flex-col">
+          <h2 className="text-white mb-8 font-extrabold">Register</h2>
           <label htmlFor="first_name_field" className="text-white">
             First name
           </label>
@@ -132,21 +137,30 @@ export default function Register() {
             className="w-full mb-4 rounded"
             required
           />
-          <Button
-            type="submit"
-            variant="outlined"
-            className={css`
-              width: 40%;
-              background-color: rgb(0, 89, 255) !important;
-              color: white !important;
-              font-weight: 900 !important;
-              border-radius: 2rem !important;
-              padding: 0.35rem 1.5rem !important;
-            `}
-          >
-            Submit
-          </Button>
+          <div>
+            <Button
+              type="submit"
+              variant="outlined"
+              className={css`
+                width: 40%;
+                background-color: rgb(0, 89, 255) !important;
+                color: white !important;
+                font-weight: 900 !important;
+                border-radius: 2rem !important;
+                padding: 0.35rem 1.5rem !important;
+              `}
+            >
+              Submit
+            </Button>
+            <a
+              className="text-blue-300 ml-4 cursor-pointer"
+              onClick={handleClick}
+            >
+              Login
+            </a>
+          </div>
         </div>
       </fieldset>
-  )
+    </div>
+  );
 }

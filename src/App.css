@@ -56,3 +56,17 @@ footer {
   background-size: cover;
   height: 75rem;
 }
+
+.register-form, .login-form {
+  animation-name: fade-in;
+  animation-duration: 0.3s;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
