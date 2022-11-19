@@ -56,11 +56,12 @@ function Sidebar() {
               Steelworks Fitness
             </Typography>
             <Button
+            component={Link}
               className={css`
                 color: rgb(0, 89, 255) !important;
               `}
             >
-              Login / Register
+              <Link to='/login-register'>Login / Register</Link>
             </Button>
           </Toolbar>
         </AppBar>

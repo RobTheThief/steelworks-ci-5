@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import './App.css';
 import Sidebar from './components/Sidebar';
+import LoginRegister from './pages/LoginRegister';
 
 function App(props) {
   return (
@@ -12,7 +13,7 @@ function App(props) {
         <Sidebar />
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route exact path="/about" element={<About />} />
+          <Route exact path="/login-register" element={<LoginRegister />} />
         </Routes>
       </BrowserRouter>
     </React.StrictMode>
