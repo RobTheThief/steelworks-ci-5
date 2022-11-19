@@ -89,33 +89,39 @@ function Sidebar() {
         </Button>
 
         <Button
-          component={Link}
+          component="a"
           className={css`
             justify-content: start !important;
           `}
         >
-          <Link to="/about" className="w-full">
+          <a href="#about" className="w-full">
             About
-          </Link>
+          </a>
         </Button>
 
         <Button
+          component="a"
           className={css`
             justify-content: start !important;
           `}
         >
-          Price Plans
+          <a href="#price-plans" className="w-full">
+            Price Plans
+          </a>
         </Button>
 
         <Button
+          component="a"
           className={css`
             justify-content: start !important;
           `}
         >
-          Contact
+          <a href="#contact_section" className="w-full">
+            Contact
+          </a>
         </Button>
       </Drawer>
-      <footer className='h-24 w-full bg-black flex flex-col justify-center items-center'>
+      <footer className="h-24 w-full bg-black flex flex-col justify-center items-center">
         <p className="text-white">Copyright &#169; Steelworks 2022</p>
       </footer>
     </>

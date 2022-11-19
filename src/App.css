@@ -6,6 +6,7 @@
 
 * {
   font-family: "Open Sans", sans-serif !important;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -13,7 +14,7 @@ body {
 }
 
 body::after {
-  content: '';
+  content: "";
   display: block;
   height: 96px;
 }
@@ -25,7 +26,8 @@ footer {
 
 .hero-container {
   background: #000000;
-  background: linear-gradient(rgb(0, 0, 0, 0.753), rgb(0, 0, 0, 0.753)), url('./img/hero1024.jpg');
+  background: linear-gradient(rgb(0, 0, 0, 0.753), rgb(0, 0, 0, 0.753)),
+    url("./img/hero1024.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   width: 100%;
@@ -33,8 +35,14 @@ footer {
   overflow: hidden;
 }
 
+.about-section,
+.price-plan-section {
+  padding-top: 4rem;
+  margin-top: 4rem;
+}
+
 .contact-section {
-  background: url('./img/exerciseBike1024.jpg');
+  background: url("./img/exerciseBike1024.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
