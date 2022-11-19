@@ -37,6 +37,9 @@ function Sidebar() {
               sx={{ mr: 2 }}
               className={css`
                 color: rgb(0, 89, 255) !important;
+                &:hover {
+                  background: rgb(41, 40, 40) !important;
+                }
               `}
             >
               <MenuIcon />
@@ -80,7 +83,7 @@ function Sidebar() {
             justify-content: start !important;
           `}
         >
-          <Link to="/">Home</Link>
+          <Link to="/" className="w-full">Home</Link>
         </Button>
 
         <Button
@@ -89,7 +92,7 @@ function Sidebar() {
             justify-content: start !important;
           `}
         >
-          <Link to="/about">About</Link>
+          <Link to="/about" className="w-full">About</Link>
         </Button>
 
         <Button
