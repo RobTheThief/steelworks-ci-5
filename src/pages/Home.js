@@ -17,7 +17,7 @@ function Home(props) {
         </div>
       </section>
       <section className="m-52 about-section" id="about">
-        <h2 className="lg:text-6xl md:text-4xl sm:text-2xl w-1/2 m-auto mb-12">
+        <h2 className="lg:text-6xl md:text-4xl sm:text-2xl w-1/2 m-auto mb-12 mt-64">
           <b>About</b>
           <br />
           Steelworks Fitness
