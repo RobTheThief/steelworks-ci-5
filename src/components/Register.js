@@ -137,7 +137,7 @@ export default function Register({ setIsRegister }) {
             className="w-full mb-8 rounded"
             required
           />
-          <div className="pb-4">
+          <div className="pb-4 flex">
             <Button
               type="submit"
               variant="outlined"
@@ -153,10 +153,10 @@ export default function Register({ setIsRegister }) {
               Submit
             </Button>
             <a
-              className="text-blue-300 ml-4 cursor-pointer"
+              className="text-blue-300 ml-4  block cursor-pointer"
               onClick={handleClick}
             >
-              Login
+              Have an account already? Go to login
             </a>
           </div>
         </div>

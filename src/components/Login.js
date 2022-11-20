@@ -9,9 +9,8 @@ export default function Login({ setIsRegister }) {
   return (
     <div className={`login-form w-1/3 ${css`min-width: 295px;`}`}>
       <fieldset
-        className={css`
+        className={`my-24 ${css`
           min-width: 295px;
-          margin-top: 4rem;
           padding: 2rem;
           border-radius: 5px;
           border: #64748b solid 2px;
@@ -20,7 +19,7 @@ export default function Login({ setIsRegister }) {
           flex-direction: column;
           justify-content: center;
           align-items: flex-start;
-        `}
+        `}`}
       >
         <h2 className='text-white mb-8 font-extrabold'>Login</h2>
         <label htmlFor="username_field" className="text-white">

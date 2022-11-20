@@ -16,13 +16,24 @@ function Home(props) {
           </h2>
         </div>
       </section>
-      <section className="about-section mb-52 flex flex-col items-center justify-center" id="about">
-        <h2 className={`lg:text-6xl md:text-4xl sm:text-3xl text-3xl w-1/2 mb-12 mt-64 ${css`min-width: 260px`}`}>
+      <section
+        className="about-section mb-52 flex flex-col items-center justify-center"
+        id="about"
+      >
+        <h2
+          className={`lg:text-6xl md:text-4xl sm:text-3xl text-3xl w-1/2 mb-12 mt-64 ${css`
+            min-width: 260px;
+          `}`}
+        >
           <b>About</b>
           <br />
           Steelworks Fitness
         </h2>
-        <p className={`w-1/2 m-2 text-lg sm:text-xl ${css`min-width: 260px`}`}>
+        <p
+          className={`w-1/2 m-2 text-lg sm:text-xl ${css`
+            min-width: 260px;
+          `}`}
+        >
           "There is no limit to what you are capable of, physically and
           mentally. All trainers certified through nationally accredited
           organizations. Years of pushing our limits in performance have given
@@ -77,9 +88,9 @@ function Home(props) {
         aria-labelledby="contact_section_heading"
       >
         <h2 id="contact_section_heading" className="hidden">
-          CONTACT
+          Contact
         </h2>
-        <div className="w-full h-full flex justify-center items-center">
+        <div className="w-full h-full flex justify-center items-start mt-32 ">
           <fieldset
             className={css`
               width: 30%;
@@ -89,15 +100,21 @@ function Home(props) {
               border: #64748b solid 2px;
               background-color: rgba(0, 0, 0, 0.473);
               display: flex;
+              flex-direction: column;
               justify-content: center;
               align-items: center;
             `}
           >
             <form
               action="https://formspree.io/f/xqkjjegb"
-              className=" w-2/3 h-2/3 flex flex-col z-50"
+              className=" w-2/3 h-2/3 flex flex-col z-50 mb-4"
               method="POST"
             >
+              <span
+                className="text-white w-full mb-4"
+              >
+                Contact
+              </span>
               <label htmlFor="email_field" className="text-white">
                 Email
               </label>
