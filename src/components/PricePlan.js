@@ -13,7 +13,9 @@ export default function PricePlan({
 }) {
   const sectStyle = "text-white text-center my-4";
   return (
-    <div className="w-1/3 border-slate-500 border-2 rounded-lg p-4 flex flex-col items-center">
+    <div className={`w-1/3 border-slate-500 border-2 rounded-lg p-4 flex flex-col items-center ${css`min-width: 182px;  @media (max-width: 639px) {
+      min-width: 295px;
+    } `}`}>
       <h3 className={`${headingClasses} text-center`}>
         <b>{type}</b>
       </h3>

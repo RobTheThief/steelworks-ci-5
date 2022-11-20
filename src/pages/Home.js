@@ -37,10 +37,10 @@ function Home(props) {
       />
       <section id="price-plans" className="price-plan-section">
         <div className="border-slate-500 border-y-2 flex flex-col justify-center items-center bg-black p-8 py-32 w-full">
-          <h2 className="lg:text-6xl md:text-4xl sm:text-2xl text-blue-500">
+          <h2 className="lg:text-6xl md:text-4xl sm:text-3xl text-3xl text-blue-500">
             Price Plans
           </h2>
-          <div className="w-1/2 flex flex-row gap-2 mt-8">
+          <div className="max-w-2xl flex flex-col items-center sm:flex-row gap-2 mt-8">
             <PricePlan
               type="Unlimited"
               headingClasses="text-blue-500"
@@ -82,7 +82,8 @@ function Home(props) {
         <div className="w-full h-full flex justify-center items-center">
           <fieldset
             className={css`
-              width: 490px;
+              width: 30%;
+              min-width: 295px;
               height: 310px;
               border-radius: 5px;
               border: #64748b solid 2px;

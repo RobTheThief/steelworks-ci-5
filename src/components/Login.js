@@ -7,11 +7,12 @@ export default function Login({ setIsRegister }) {
     setIsRegister(true);
   };
   return (
-    <div className={`login-form ${css`min-width: 320px;`}`}>
+    <div className={`login-form w-1/3 ${css`min-width: 295px;`}`}>
       <fieldset
         className={css`
+          min-width: 295px;
           margin-top: 4rem;
-          padding: 4rem 5rem;
+          padding: 2rem;
           border-radius: 5px;
           border: #64748b solid 2px;
           background-color: rgba(0, 0, 0, 0.473);

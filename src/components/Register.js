@@ -7,10 +7,11 @@ export default function Register({ setIsRegister }) {
     setIsRegister(false);
   };
   return (
-    <div className={`register-form w-1/3 h-4/5 flex flex-col ${css`min-width: 320px;`}`}>
+    <div className={`register-form w-full h-full flex flex-col justify-end items-center`}>
       <fieldset
-        className={`${css`
-          margin-top: 8rem;
+        className={`my-24 ${css`
+          width: 30%;
+          min-width: 295px;
           padding: 2rem 0;
           border-radius: 5px;
           border: #64748b solid 2px;
@@ -18,7 +19,6 @@ export default function Register({ setIsRegister }) {
           display: flex;
           justify-content: center;
           align-items: flex-start;
-          overflow-y: scroll;
         `}`}
       >
         <div className=" w-2/3 h-2/3 flex flex-col">
