@@ -29,45 +29,67 @@ function Sidebar() {
           `}
           position="fixed"
         >
-          <Toolbar>
-            <IconButton
-              onClick={toggleDrawer(!toggle)}
-              size="large"
-              edge="start"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-              className={css`
-                color: rgb(0, 89, 255) !important;
-                &:hover {
-                  background: rgb(41, 40, 40) !important;
-                }
-                @media (max-width: 470px) {
-                  margin-right: 10px !important;
-                }
-                @media (max-width: 410px) {
-                  margin-right: 3px !important;
-                }
-              `}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              className={css`
-                color: rgb(0, 89, 255) !important;
-                font-size: 24px !important;
-                padding-bottom: 0.25rem;
-                @media (max-width: 470px) {
-                  font-size: 20px !important;
-                }
-                @media (max-width: 410px) {
-                  font-size: 16px !important;
-                }
-              `}
-              variant="h1"
-              sx={{ flexGrow: 1 }}
-            >
-              Steelworks Fitness
-            </Typography>
+          <Toolbar
+            className={`${css`
+              display: flex !important;
+              flex-direction: row !important;
+              justify-content: space-between !important;
+            `}`}
+          >
+            <div className="flex items-center">
+              <IconButton
+                onClick={toggleDrawer(!toggle)}
+                size="large"
+                edge="start"
+                aria-label="menu"
+                sx={{ mr: 2 }}
+                className={css`
+                  color: rgb(0, 89, 255) !important;
+                  height: 48px;
+                  width: 48px;
+                  &:hover {
+                    background: rgb(41, 40, 40) !important;
+                  }
+                  @media (max-width: 470px) {
+                    margin-right: 10px !important;
+                  }
+                  @media (max-width: 410px) {
+                    margin-right: 3px !important;
+                  }
+                `}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography
+                className={css`
+                  padding-bottom: 0.25rem;
+                `}
+                variant="h1"
+                /* sx={{ flexGrow: 1 }} */
+              >
+                <Button
+                  onClick={toggleDrawer(false)}
+                  component={HashLink}
+                  smooth
+                  to="/#hero"
+                  className={css`
+                    color: rgb(0, 89, 255) !important;
+                    font-size: 24px !important;
+                    justify-content: start !important;
+                    display: flex !important;
+                    text-transform: capitalize !important;
+                    @media (max-width: 470px) {
+                      font-size: 20px !important;
+                    }
+                    @media (max-width: 410px) {
+                      font-size: 16px !important;
+                    }
+                  `}
+                >
+                  Steelworks Fitness
+                </Button>
+              </Typography>
+            </div>
             <Button
               onClick={toggleDrawer(false)}
               component={HashLink}
