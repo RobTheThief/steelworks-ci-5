@@ -10,6 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { css } from "@emotion/css";
 import { HashLink } from "react-router-hash-link";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 function Sidebar() {
   const [toggle, setToggle] = useState(false);
@@ -83,6 +84,11 @@ function Sidebar() {
               `}
             >
               Login / Register
+              <AccountCircleIcon
+                className={`ml-2 ${css`
+                  color: rgb(0, 89, 255);
+                `}`}
+              />
             </Button>
           </Toolbar>
         </AppBar>
