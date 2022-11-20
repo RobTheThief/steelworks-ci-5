@@ -7,7 +7,9 @@ export default function Register({ setIsRegister }) {
     setIsRegister(false);
   };
   return (
-    <div className={`register-form w-full h-full flex flex-col justify-end items-center`}>
+    <div
+      className={`register-form w-full h-full flex flex-col justify-end items-center`}
+    >
       <fieldset
         className={`my-24 ${css`
           width: 30%;
@@ -137,12 +139,19 @@ export default function Register({ setIsRegister }) {
             className="w-full mb-8 rounded"
             required
           />
-          <div className="pb-4 flex">
+          <div
+            className={`pb-4 flex ${css`
+              @media (max-width: 1226px) {
+                flex-direction: column;
+              }
+            `}`}
+          >
             <Button
               type="submit"
               variant="outlined"
               className={css`
                 width: 40%;
+                min-width: 80px !important;
                 background-color: rgb(0, 89, 255) !important;
                 color: white !important;
                 font-weight: 900 !important;
@@ -153,7 +162,12 @@ export default function Register({ setIsRegister }) {
               Submit
             </Button>
             <a
-              className="text-blue-300 ml-4  block cursor-pointer"
+              className={`text-blue-300 ml-4 block cursor-pointer min-w-32 ${css`
+                min-width: 154px;
+                @media (max-width: 1226px) {
+                  margin-left: 0.125rem;
+                }
+              `}`}
               onClick={handleClick}
             >
               Have an account already? Go to login
