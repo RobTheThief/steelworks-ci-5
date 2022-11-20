@@ -61,6 +61,13 @@ footer {
   animation-duration: 0.3s;
 }
 
+@media (max-width: 505px) {
+  .contact-section,
+  .hero-container {
+    background-position: 25%;
+  }
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;
