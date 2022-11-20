@@ -7,12 +7,11 @@ export default function Login({ setIsRegister }) {
     setIsRegister(true);
   };
   return (
-    <div className="login-form">
+    <div className={`login-form ${css`min-width: 320px;`}`}>
       <fieldset
         className={css`
-          width: 490px;
           margin-top: 4rem;
-          padding: 4rem;
+          padding: 4rem 5rem;
           border-radius: 5px;
           border: #64748b solid 2px;
           background-color: rgba(0, 0, 0, 0.473);
@@ -30,7 +29,7 @@ export default function Login({ setIsRegister }) {
           id="username_field"
           name="username_field"
           type="text"
-          className="w-full mb-4 rounded"
+          className="w-full mb-8 rounded"
           placeholder=" Username"
           required
         />
@@ -41,7 +40,7 @@ export default function Login({ setIsRegister }) {
           id="password_field"
           name="password_field"
           type="password"
-          className="w-full mb-4 rounded"
+          className="w-full mb-8 rounded"
           required
         />
         <div>

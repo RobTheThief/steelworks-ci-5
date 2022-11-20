@@ -36,7 +36,7 @@ function Home(props) {
         alt="Man hanging from a bar, doing pullups"
       />
       <section id="price-plans" className="price-plan-section">
-        <div className="border-slate-500 border-y-2 flex flex-col justify-center items-center bg-black p-8 w-full">
+        <div className="border-slate-500 border-y-2 flex flex-col justify-center items-center bg-black p-8 py-32 w-full">
           <h2 className="lg:text-6xl md:text-4xl sm:text-2xl text-blue-500">
             Price Plans
           </h2>
@@ -94,7 +94,7 @@ function Home(props) {
           >
             <form
               action="https://formspree.io/f/xqkjjegb"
-              className=" w-2/3 h-2/3 flex flex-col"
+              className=" w-2/3 h-2/3 flex flex-col z-50"
               method="POST"
             >
               <label htmlFor="email_field" className="text-white">
@@ -104,8 +104,8 @@ function Home(props) {
                 id="email_field"
                 name="email_field"
                 type="email"
-                className="w-full mb-4"
-                placeholder="example@yourmail.com"
+                className="w-full mb-4 rounded"
+                placeholder=" example@yourmail.com"
                 required
               />
 
@@ -115,8 +115,8 @@ function Home(props) {
               <textarea
                 id="message_field"
                 name="message_field"
-                className="mb-4"
-                placeholder="Please type your message here"
+                className="mb-4 rounded"
+                placeholder=" Please type your message here"
                 required
               ></textarea>
               <Button

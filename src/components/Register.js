@@ -7,11 +7,10 @@ export default function Register({ setIsRegister }) {
     setIsRegister(false);
   };
   return (
-    <div className="register-form">
+    <div className={`register-form w-1/3 h-4/5 flex flex-col ${css`min-width: 320px;`}`}>
       <fieldset
-        className={css`
-          width: 490px;
-          margin-top: 4rem;
+        className={`${css`
+          margin-top: 8rem;
           padding: 2rem 0;
           border-radius: 5px;
           border: #64748b solid 2px;
@@ -19,7 +18,8 @@ export default function Register({ setIsRegister }) {
           display: flex;
           justify-content: center;
           align-items: flex-start;
-        `}
+          overflow-y: scroll;
+        `}`}
       >
         <div className=" w-2/3 h-2/3 flex flex-col">
           <h2 className="text-white mb-8 font-extrabold">Register</h2>
@@ -30,8 +30,8 @@ export default function Register({ setIsRegister }) {
             id="first_name_field"
             name="first_name_field"
             type="text"
-            className="w-full mb-4 rounded"
-            placeholder="First name"
+            className="w-full mb-8 rounded"
+            placeholder=" First name"
             required
           />
           <label htmlFor="last_name_field" className="text-white">
@@ -41,8 +41,8 @@ export default function Register({ setIsRegister }) {
             id="last_name_field"
             name="last_name_field"
             type="text"
-            className="w-full mb-4 rounded"
-            placeholder="Last name"
+            className="w-full mb-8 rounded"
+            placeholder=" Last name"
             required
           />
           <label htmlFor="email_field" className="text-white">
@@ -52,8 +52,8 @@ export default function Register({ setIsRegister }) {
             id="email_field"
             name="email_field"
             type="email"
-            className="w-full mb-4 rounded"
-            placeholder="example@yourmail.com"
+            className="w-full mb-8 rounded"
+            placeholder=" example@yourmail.com"
             required
           />
           <label htmlFor="username_field" className="text-white">
@@ -63,8 +63,8 @@ export default function Register({ setIsRegister }) {
             id="username_field"
             name="username_field"
             type="text"
-            className="w-full mb-4 rounded"
-            placeholder="Username"
+            className="w-full mb-8 rounded"
+            placeholder=" Username"
             required
           />
           <label htmlFor="password_field" className="text-white">
@@ -74,7 +74,7 @@ export default function Register({ setIsRegister }) {
             id="password_field"
             name="password_field"
             type="password"
-            className="w-full mb-4 rounded"
+            className="w-full mb-8 rounded"
             required
           />
           <label htmlFor="password_again_field" className="text-white">
@@ -84,7 +84,7 @@ export default function Register({ setIsRegister }) {
             id="password_again_field"
             name="password_again_field"
             type="password"
-            className="w-full mb-4 rounded"
+            className="w-full mb-8 rounded"
             required
           />
           <label htmlFor="address_1_field" className="text-white">
@@ -94,7 +94,7 @@ export default function Register({ setIsRegister }) {
             id="address_1_field"
             name="address_1_field"
             type="text"
-            className="w-full mb-4 rounded"
+            className="w-full mb-8 rounded"
             required
           />
           <label htmlFor="address_2_field" className="text-white">
@@ -104,7 +104,7 @@ export default function Register({ setIsRegister }) {
             id="address_2_field"
             name="address_2_field"
             type="text"
-            className="w-full mb-4 rounded"
+            className="w-full mb-8 rounded"
             required
           />
           <label htmlFor="address_3_field" className="text-white">
@@ -114,7 +114,7 @@ export default function Register({ setIsRegister }) {
             id="address_3_field"
             name="address_3_field"
             type="text"
-            className="w-full mb-4 rounded"
+            className="w-full mb-8 rounded"
             required
           />
           <label htmlFor="postcode_field" className="text-white">
@@ -124,7 +124,7 @@ export default function Register({ setIsRegister }) {
             id="postcode_field"
             name="postcode_field"
             type="text"
-            className="w-full mb-4 rounded"
+            className="w-full mb-8 rounded"
             required
           />
           <label htmlFor="phone_field" className="text-white">
@@ -134,7 +134,7 @@ export default function Register({ setIsRegister }) {
             id="phone_field"
             name="phone_field"
             type="tel"
-            className="w-full mb-4 rounded"
+            className="w-full mb-8 rounded"
             required
           />
           <div>

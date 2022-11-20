@@ -14,8 +14,8 @@ import { HashLink } from "react-router-hash-link";
 function Sidebar() {
   const [toggle, setToggle] = useState(false);
 
-  const toggleDrawer = (event) => {
-    setToggle(!toggle);
+  const toggleDrawer = (option) => (event) => {
+    setToggle(option);
   };
 
   return (
@@ -30,7 +30,7 @@ function Sidebar() {
         >
           <Toolbar>
             <IconButton
-              onClick={toggleDrawer}
+              onClick={toggleDrawer(!toggle)}
               size="large"
               edge="start"
               aria-label="menu"
@@ -39,6 +39,12 @@ function Sidebar() {
                 color: rgb(0, 89, 255) !important;
                 &:hover {
                   background: rgb(41, 40, 40) !important;
+                }
+                @media (max-width: 470px) {
+                  margin-right: 10px !important;
+                }
+                @media (max-width: 410px) {
+                  margin-right: 3px !important;
                 }
               `}
             >
@@ -49,6 +55,12 @@ function Sidebar() {
                 color: rgb(0, 89, 255) !important;
                 font-size: 24px !important;
                 padding-bottom: 0.25rem;
+                @media (max-width: 470px) {
+                  font-size: 20px !important;
+                }
+                @media (max-width: 410px) {
+                  font-size: 16px !important;
+                }
               `}
               variant="h1"
               sx={{ flexGrow: 1 }}
@@ -56,11 +68,18 @@ function Sidebar() {
               Steelworks Fitness
             </Typography>
             <Button
+              onClick={toggleDrawer(false)}
               component={HashLink}
               smooth
               to="/login-register"
               className={css`
                 color: rgb(0, 89, 255) !important;
+                @media (max-width: 470px) {
+                  font-size: 0.8rem !important;
+                }
+                @media (max-width: 410px) {
+                  font-size: 0.65rem !important;
+                }
               `}
             >
               Login / Register
@@ -70,7 +89,7 @@ function Sidebar() {
       </Box>
       <Drawer
         open={toggle}
-        onClose={toggleDrawer}
+        onClose={toggleDrawer(false)}
         className={css`
           & > .MuiPaper-root {
             width: 20rem;
@@ -81,6 +100,7 @@ function Sidebar() {
         `}
       >
         <Button
+          onClick={toggleDrawer(false)}
           component={HashLink}
           smooth
           to="/#hero"
@@ -92,6 +112,7 @@ function Sidebar() {
         </Button>
 
         <Button
+          onClick={toggleDrawer(false)}
           component={HashLink}
           smooth
           to="/#about"
@@ -103,6 +124,7 @@ function Sidebar() {
         </Button>
 
         <Button
+          onClick={toggleDrawer(false)}
           component={HashLink}
           smooth
           to="/#price-plans"
@@ -114,9 +136,10 @@ function Sidebar() {
         </Button>
 
         <Button
+          onClick={toggleDrawer(false)}
           component={HashLink}
           smooth
-          to="#contact_section"
+          to="/#contact_section"
           className={css`
             justify-content: start !important;
           `}

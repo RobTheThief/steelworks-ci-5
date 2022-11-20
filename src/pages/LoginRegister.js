@@ -5,7 +5,7 @@ import Register from "../components/Register";
 export default function LoginRegister() {
   const [isRegister, setIsRegister] = useState(false);
   return (
-    <div className="w-full h-full flex justify-center items-center login-register-page">
+    <div className="w-full h-screen flex justify-center items-center login-register-page overflow-y-scroll">
       {isRegister ? (
         <Register setIsRegister={setIsRegister} />
       ) : (
