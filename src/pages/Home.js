@@ -10,7 +10,7 @@ function Home(props) {
     <>
       <section className="hero-container" id="hero">
         <div className="mt-16">
-          <h2 className="absolute w-full h-full top-0 left-0 text-center m-auto pb-64 lg:text-6xl md:text-4xl sm:text-2xl pt-32 md:pt-64 sm:pt-32 text-blue-500">
+          <h2 className="absolute w-full h-full top-0 left-0 text-center px-4 py-64 text-2xl lg:text-6xl md:text-4xl sm:text-3xl text-blue-500">
             Forge your dream body
             <br /> at <b>Steelworks</b>
           </h2>
