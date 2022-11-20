@@ -51,10 +51,9 @@ function Sidebar() {
                     background: rgb(41, 40, 40) !important;
                   }
                   @media (max-width: 470px) {
-                    margin-right: 10px !important;
-                  }
-                  @media (max-width: 410px) {
-                    margin-right: 3px !important;
+                    margin-right: 0 !important;
+                    height: 32px;
+                  width: 32px;
                   }
                 `}
               >
@@ -63,6 +62,9 @@ function Sidebar() {
               <Typography
                 className={css`
                   padding-bottom: 0.25rem;
+                  @media (max-width: 444px) {
+                    padding-bottom: 0;
+                  }
                 `}
                 variant="h1"
                 /* sx={{ flexGrow: 1 }} */
@@ -78,11 +80,14 @@ function Sidebar() {
                     justify-content: start !important;
                     display: flex !important;
                     text-transform: capitalize !important;
-                    @media (max-width: 470px) {
+                    @media (max-width: 491px) {
                       font-size: 20px !important;
                     }
-                    @media (max-width: 410px) {
+                    @media (max-width: 444px) {
                       font-size: 16px !important;
+                    }
+                    @media (max-width: 358px) {
+                      font-size: 12px !important;
                     }
                   `}
                 >
@@ -97,11 +102,12 @@ function Sidebar() {
               to="/login-register"
               className={css`
                 color: rgb(0, 89, 255) !important;
-                @media (max-width: 470px) {
+                @media (max-width: 491px) {
                   font-size: 0.8rem !important;
                 }
-                @media (max-width: 410px) {
+                @media (max-width: 444px) {
                   font-size: 0.65rem !important;
+                  margin-top: 0.25rem !important;
                 }
               `}
             >
