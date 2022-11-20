@@ -16,13 +16,13 @@ function Home(props) {
           </h2>
         </div>
       </section>
-      <section className="m-52 about-section" id="about">
-        <h2 className="lg:text-6xl md:text-4xl sm:text-2xl w-1/2 m-auto mb-12 mt-64">
+      <section className="about-section mb-52 flex flex-col items-center justify-center" id="about">
+        <h2 className="lg:text-6xl md:text-4xl sm:text-3xl text-3xl w-1/2 mb-12 mt-64">
           <b>About</b>
           <br />
           Steelworks Fitness
         </h2>
-        <p className="w-1/2 m-auto text-xl">
+        <p className="w-1/2 m-2 text-xl">
           "There is no limit to what you are capable of, physically and
           mentally. All trainers certified through nationally accredited
           organizations. Years of pushing our limits in performance have given

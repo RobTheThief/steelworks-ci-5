@@ -37,7 +37,7 @@ footer {
 .about-section,
 .price-plan-section {
   padding-top: 4rem;
-  margin-top: -4rem;
+  margin-top: -4rem !important;
 }
 
 .contact-section {

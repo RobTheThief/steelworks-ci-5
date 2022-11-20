@@ -137,7 +137,7 @@ export default function Register({ setIsRegister }) {
             className="w-full mb-8 rounded"
             required
           />
-          <div>
+          <div className="pb-4">
             <Button
               type="submit"
               variant="outlined"
