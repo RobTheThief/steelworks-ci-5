@@ -18,6 +18,25 @@ function Sidebar() {
   const toggleDrawer = (option) => (event) => {
     setToggle(option);
   };
+ 
+  const steelworksBlue = "rgb(0, 89, 255) !important";
+
+  function DrawerButton({ label, link }) {
+    return (
+      <Button
+        onClick={toggleDrawer(false)}
+        component={HashLink}
+        smooth
+        to={link}
+        className={css`
+        justify-content: start !important;
+        font-size: 20px !important;
+      `}
+      >
+        {label}
+      </Button>
+    );
+  }
 
   return (
     <>
@@ -44,7 +63,7 @@ function Sidebar() {
                 aria-label="menu"
                 sx={{ mr: 2 }}
                 className={css`
-                  color: rgb(0, 89, 255) !important;
+                  color: ${steelworksBlue};
                   height: 48px;
                   width: 48px;
                   &:hover {
@@ -53,7 +72,7 @@ function Sidebar() {
                   @media (max-width: 470px) {
                     margin-right: 0 !important;
                     height: 32px;
-                  width: 32px;
+                    width: 32px;
                   }
                 `}
               >
@@ -67,7 +86,6 @@ function Sidebar() {
                   }
                 `}
                 variant="h1"
-                /* sx={{ flexGrow: 1 }} */
               >
                 <Button
                   onClick={toggleDrawer(false)}
@@ -75,7 +93,7 @@ function Sidebar() {
                   smooth
                   to="/#hero"
                   className={css`
-                    color: rgb(0, 89, 255) !important;
+                    color: ${steelworksBlue};
                     font-size: 24px !important;
                     justify-content: start !important;
                     display: flex !important;
@@ -101,7 +119,7 @@ function Sidebar() {
               smooth
               to="/login-register"
               className={css`
-                color: rgb(0, 89, 255) !important;
+                color: ${steelworksBlue};
                 @media (max-width: 491px) {
                   font-size: 0.8rem !important;
                 }
@@ -127,59 +145,16 @@ function Sidebar() {
         className={css`
           & > .MuiPaper-root {
             width: 20rem;
-            border: 2px solid rgb(0, 89, 255) !important;
+            border: 2px solid ${steelworksBlue};
             border-width: 0 2px 0 0 !important;
             padding-top: 5rem;
           }
         `}
       >
-        <Button
-          onClick={toggleDrawer(false)}
-          component={HashLink}
-          smooth
-          to="/#hero"
-          className={css`
-            justify-content: start !important;
-          `}
-        >
-          Home
-        </Button>
-
-        <Button
-          onClick={toggleDrawer(false)}
-          component={HashLink}
-          smooth
-          to="/#about"
-          className={css`
-            justify-content: start !important;
-          `}
-        >
-          About
-        </Button>
-
-        <Button
-          onClick={toggleDrawer(false)}
-          component={HashLink}
-          smooth
-          to="/#price-plans"
-          className={css`
-            justify-content: start !important;
-          `}
-        >
-          Price Plans
-        </Button>
-
-        <Button
-          onClick={toggleDrawer(false)}
-          component={HashLink}
-          smooth
-          to="/#contact_section"
-          className={css`
-            justify-content: start !important;
-          `}
-        >
-          Contact
-        </Button>
+        <DrawerButton label="Home" link="/#hero" />
+        <DrawerButton label="About" link="/#about" />
+        <DrawerButton label="Price Plans" link="/#price-plans" />
+        <DrawerButton label="Contact" link="/#contact_section" />
       </Drawer>
       <footer className="h-24 w-full bg-black flex flex-col justify-center items-center">
         <p className="text-white">Copyright &#169; Steelworks 2022</p>
