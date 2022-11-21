@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { css } from "@emotion/css";
 
 export default function Login({ setIsRegister }) {
-  const inputClasses = "w-full mb-8 rounded";
+  const inputClasses = "w-full mb-8 rounded p-1";
   const handleClick = () => {
     setIsRegister(true);
   };
@@ -31,7 +31,7 @@ export default function Login({ setIsRegister }) {
           name="username_field"
           type="text"
           className={inputClasses}
-          placeholder=" Username"
+          placeholder="Username"
           required
         />
         <label htmlFor="password_field" className="text-white">

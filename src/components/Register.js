@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { css } from "@emotion/css";
 
 export default function Register({ setIsRegister }) {
-  const inputClasses = "w-full mb-8 rounded";
+  const inputClasses = "w-full mb-8 rounded p-1";
   const handleClick = () => {
     setIsRegister(false);
   };
@@ -34,7 +34,7 @@ export default function Register({ setIsRegister }) {
             name="first_name_field"
             type="text"
             className={inputClasses}
-            placeholder=" First name"
+            placeholder="First name"
             required
           />
           <label htmlFor="last_name_field" className="text-white">
@@ -45,7 +45,7 @@ export default function Register({ setIsRegister }) {
             name="last_name_field"
             type="text"
             className={inputClasses}
-            placeholder=" Last name"
+            placeholder="Last name"
             required
           />
           <label htmlFor="email_field" className="text-white">
@@ -67,7 +67,7 @@ export default function Register({ setIsRegister }) {
             name="username_field"
             type="text"
             className={inputClasses}
-            placeholder=" Username"
+            placeholder="Username"
             required
           />
           <label htmlFor="password_field" className="text-white">
@@ -166,7 +166,7 @@ export default function Register({ setIsRegister }) {
               className={`text-blue-300 ml-4 block cursor-pointer min-w-32 ${css`
                 min-width: 154px;
                 @media (max-width: 1226px) {
-                  margin-left: 0.125rem;
+                  margin: 0.5rem 0 0 0.125rem;
                 }
               `}`}
               onClick={handleClick}

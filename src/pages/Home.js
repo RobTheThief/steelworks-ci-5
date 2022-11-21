@@ -95,7 +95,6 @@ function Home(props) {
             className={css`
               width: 30%;
               min-width: 295px;
-              height: 310px;
               border-radius: 5px;
               border: #64748b solid 2px;
               background-color: rgba(0, 0, 0, 0.473);
@@ -107,7 +106,7 @@ function Home(props) {
           >
             <form
               action="https://formspree.io/f/xqkjjegb"
-              className=" w-2/3 h-2/3 flex flex-col z-50 mb-4"
+              className="w-2/3 h-2/3 flex flex-col z-50 mb-4"
               method="POST"
             >
               <span className="text-white w-full mb-4">Contact</span>
@@ -118,8 +117,8 @@ function Home(props) {
                 id="email_field"
                 name="email_field"
                 type="email"
-                className="w-full mb-4 rounded"
-                placeholder=" example@yourmail.com"
+                className="w-full mb-4 rounded p-1"
+                placeholder="example@yourmail.com"
                 required
               />
 
@@ -129,8 +128,8 @@ function Home(props) {
               <textarea
                 id="message_field"
                 name="message_field"
-                className="mb-4 rounded"
-                placeholder=" Please type your message here"
+                className={`mb-4 rounded p-1 ${css`height: 200px;`}`}
+                placeholder="Please type your message here"
                 required
               ></textarea>
               <Button
