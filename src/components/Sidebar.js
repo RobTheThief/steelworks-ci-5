@@ -18,7 +18,7 @@ function Sidebar() {
   const toggleDrawer = (option) => (event) => {
     setToggle(option);
   };
- 
+
   const steelworksBlue = "rgb(0, 89, 255) !important";
 
   function DrawerButton({ label, link }) {
@@ -29,9 +29,9 @@ function Sidebar() {
         smooth
         to={link}
         className={css`
-        justify-content: start !important;
-        font-size: 20px !important;
-      `}
+          justify-content: start !important;
+          font-size: 20px !important;
+        `}
       >
         {label}
       </Button>

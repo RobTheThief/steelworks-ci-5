@@ -110,11 +110,7 @@ function Home(props) {
               className=" w-2/3 h-2/3 flex flex-col z-50 mb-4"
               method="POST"
             >
-              <span
-                className="text-white w-full mb-4"
-              >
-                Contact
-              </span>
+              <span className="text-white w-full mb-4">Contact</span>
               <label htmlFor="email_field" className="text-white">
                 Email
               </label>

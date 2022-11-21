@@ -3,6 +3,7 @@ import { Button } from "@mui/material";
 import { css } from "@emotion/css";
 
 export default function Register({ setIsRegister }) {
+  const inputClasses = "w-full mb-8 rounded";
   const handleClick = () => {
     setIsRegister(false);
   };
@@ -32,7 +33,7 @@ export default function Register({ setIsRegister }) {
             id="first_name_field"
             name="first_name_field"
             type="text"
-            className="w-full mb-8 rounded"
+            className={inputClasses}
             placeholder=" First name"
             required
           />
@@ -43,7 +44,7 @@ export default function Register({ setIsRegister }) {
             id="last_name_field"
             name="last_name_field"
             type="text"
-            className="w-full mb-8 rounded"
+            className={inputClasses}
             placeholder=" Last name"
             required
           />
@@ -54,7 +55,7 @@ export default function Register({ setIsRegister }) {
             id="email_field"
             name="email_field"
             type="email"
-            className="w-full mb-8 rounded"
+            className={inputClasses}
             placeholder=" example@yourmail.com"
             required
           />
@@ -65,7 +66,7 @@ export default function Register({ setIsRegister }) {
             id="username_field"
             name="username_field"
             type="text"
-            className="w-full mb-8 rounded"
+            className={inputClasses}
             placeholder=" Username"
             required
           />
@@ -76,7 +77,7 @@ export default function Register({ setIsRegister }) {
             id="password_field"
             name="password_field"
             type="password"
-            className="w-full mb-8 rounded"
+            className={inputClasses}
             required
           />
           <label htmlFor="password_again_field" className="text-white">
@@ -86,7 +87,7 @@ export default function Register({ setIsRegister }) {
             id="password_again_field"
             name="password_again_field"
             type="password"
-            className="w-full mb-8 rounded"
+            className={inputClasses}
             required
           />
           <label htmlFor="address_1_field" className="text-white">
@@ -96,7 +97,7 @@ export default function Register({ setIsRegister }) {
             id="address_1_field"
             name="address_1_field"
             type="text"
-            className="w-full mb-8 rounded"
+            className={inputClasses}
             required
           />
           <label htmlFor="address_2_field" className="text-white">
@@ -106,7 +107,7 @@ export default function Register({ setIsRegister }) {
             id="address_2_field"
             name="address_2_field"
             type="text"
-            className="w-full mb-8 rounded"
+            className={inputClasses}
             required
           />
           <label htmlFor="address_3_field" className="text-white">
@@ -116,7 +117,7 @@ export default function Register({ setIsRegister }) {
             id="address_3_field"
             name="address_3_field"
             type="text"
-            className="w-full mb-8 rounded"
+            className={inputClasses}
             required
           />
           <label htmlFor="postcode_field" className="text-white">
@@ -126,7 +127,7 @@ export default function Register({ setIsRegister }) {
             id="postcode_field"
             name="postcode_field"
             type="text"
-            className="w-full mb-8 rounded"
+            className={inputClasses}
             required
           />
           <label htmlFor="phone_field" className="text-white">
@@ -136,7 +137,7 @@ export default function Register({ setIsRegister }) {
             id="phone_field"
             name="phone_field"
             type="tel"
-            className="w-full mb-8 rounded"
+            className={inputClasses}
             required
           />
           <div
