@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Button } from "@mui/material";
 import { css } from "@emotion/css";
-import { getProducts, register } from "../apirequests/authRequests";
+import { register } from "../apirequests/authRequests";
+import { createUser } from "../apirequests/apiBackEndRequests";
 
 export default function Register({ setIsRegister }) {
   const [user, setUser] = useState();
@@ -19,7 +20,6 @@ export default function Register({ setIsRegister }) {
   const inputClasses = "w-full mb-8 rounded p-1";
 
   const handleGoToLogin = () => {
-    getProducts();
     setIsRegister(false);
   };
 
@@ -27,7 +27,16 @@ export default function Register({ setIsRegister }) {
     let result = await register(user, pass, pass2, email, firstName, lastName);
 
     if (result.email && result.email[0] !== "This field must be unique.") {
-      console.log("Email Ok");
+      createUser(
+        email,
+        firstName,
+        lastName,
+        address1,
+        address2,
+        address3,
+        postCode,
+        phone
+      );
     } else if (result.email) {
       console.log(result.email[0]);
     } else {
