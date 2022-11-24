@@ -1,15 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@mui/material";
 import { css } from "@emotion/css";
+import { getProducts, register } from "../apirequests/authRequests";
 
 export default function Register({ setIsRegister }) {
+  const [user, setUser] = useState();
+  const [pass, setPass] = useState();
+  const [pass2, setPass2] = useState();
+  const [email, setEmail] = useState();
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [address1, setAddress1] = useState();
+  const [address2, setAddress2] = useState();
+  const [address3, setAddress3] = useState();
+  const [postCode, setPostCode] = useState();
+  const [phone, setPhone] = useState();
+
   const inputClasses = "w-full mb-8 rounded p-1";
-  const handleClick = () => {
+
+  const handleGoToLogin = () => {
+    getProducts();
     setIsRegister(false);
   };
+
+  const handleRegister = async () => {
+    let result = await register(user, pass, pass2, email, firstName, lastName);
+
+    if (result.email && result.email[0] !== "This field must be unique.") {
+      console.log("Email Ok");
+    } else if (result.email) {
+      console.log(result.email[0]);
+    } else {
+      console.log(result.username ? result.username[0] : result.password[0]);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleRegister();
+  };
+
   return (
-    <div
+    <form
       className={`register-form w-full h-full flex flex-col justify-end items-center`}
+      onSubmit={(e) => handleSubmit(e)}
     >
       <fieldset
         className={`my-24 ${css`
@@ -36,6 +70,7 @@ export default function Register({ setIsRegister }) {
             className={inputClasses}
             placeholder="First name"
             required
+            onChange={(e) => setFirstName(e.target.value)}
           />
           <label htmlFor="last_name_field" className="text-white">
             Last name
@@ -47,6 +82,7 @@ export default function Register({ setIsRegister }) {
             className={inputClasses}
             placeholder="Last name"
             required
+            onChange={(e) => setLastName(e.target.value)}
           />
           <label htmlFor="email_field" className="text-white">
             Email
@@ -57,6 +93,7 @@ export default function Register({ setIsRegister }) {
             type="email"
             className={inputClasses}
             placeholder=" example@yourmail.com"
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
           <label htmlFor="username_field" className="text-white">
@@ -69,6 +106,7 @@ export default function Register({ setIsRegister }) {
             className={inputClasses}
             placeholder="Username"
             required
+            onChange={(e) => setUser(e.target.value)}
           />
           <label htmlFor="password_field" className="text-white">
             Password
@@ -79,6 +117,7 @@ export default function Register({ setIsRegister }) {
             type="password"
             className={inputClasses}
             required
+            onChange={(e) => setPass(e.target.value)}
           />
           <label htmlFor="password_again_field" className="text-white">
             Type password again
@@ -89,6 +128,7 @@ export default function Register({ setIsRegister }) {
             type="password"
             className={inputClasses}
             required
+            onChange={(e) => setPass2(e.target.value)}
           />
           <label htmlFor="address_1_field" className="text-white">
             Address line 1
@@ -99,6 +139,7 @@ export default function Register({ setIsRegister }) {
             type="text"
             className={inputClasses}
             required
+            onChange={(e) => setAddress1(e.target.value)}
           />
           <label htmlFor="address_2_field" className="text-white">
             Address line 2
@@ -109,6 +150,7 @@ export default function Register({ setIsRegister }) {
             type="text"
             className={inputClasses}
             required
+            onChange={(e) => setAddress2(e.target.value)}
           />
           <label htmlFor="address_3_field" className="text-white">
             Address line 3
@@ -119,6 +161,7 @@ export default function Register({ setIsRegister }) {
             type="text"
             className={inputClasses}
             required
+            onChange={(e) => setAddress3(e.target.value)}
           />
           <label htmlFor="postcode_field" className="text-white">
             Postcode
@@ -129,6 +172,7 @@ export default function Register({ setIsRegister }) {
             type="text"
             className={inputClasses}
             required
+            onChange={(e) => setPostCode(e.target.value)}
           />
           <label htmlFor="phone_field" className="text-white">
             Phone
@@ -139,6 +183,7 @@ export default function Register({ setIsRegister }) {
             type="tel"
             className={inputClasses}
             required
+            onChange={(e) => setPhone(e.target.value)}
           />
           <div
             className={`pb-4 flex ${css`
@@ -169,13 +214,13 @@ export default function Register({ setIsRegister }) {
                   margin: 0.5rem 0 0 0.125rem;
                 }
               `}`}
-              onClick={handleClick}
+              onClick={handleGoToLogin}
             >
               Have an account already? Go to login
             </a>
           </div>
         </div>
       </fieldset>
-    </div>
+    </form>
   );
 }

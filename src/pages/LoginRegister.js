@@ -4,7 +4,7 @@ import Login from "../components/Login";
 import Register from "../components/Register";
 
 export default function LoginRegister() {
-  const [isRegister, setIsRegister] = useState(true);
+  const [isRegister, setIsRegister] = useState(false);
   return (
     <>
       <Head
