@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Button } from "@mui/material";
 import { css } from "@emotion/css";
-import { login } from "../apirequests/authRequests";
+import { getProfile, login } from "../apirequests/authRequests";
 
 export default function Login({
   setIsRegister,
   setShowModal,
   setModalHeading,
   setModalMessage,
+  setProfile
 }) {
   const [user, setUser] = useState();
   const [pass, setPass] = useState();
@@ -30,8 +31,10 @@ export default function Login({
         result = await result.json();
         if (result.non_field_errors)
           createModal("Error", result.non_field_errors[0]);
+      } else {
+        const profile = await getProfile();
+        setProfile(profile);
       }
-      console.log(result);
     } catch (error) {
       console.log(error);
     }

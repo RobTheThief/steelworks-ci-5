@@ -4,7 +4,7 @@ import Register from "../components/Register";
 import { Helmet } from "react-helmet-async";
 import Modal from '../components/Modal';
 
-export default function LoginRegister() {
+export default function LoginRegister({profile, setProfile}) {
   const [isRegister, setIsRegister] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalHeading, setModalHeading] = useState("");
@@ -33,6 +33,7 @@ export default function LoginRegister() {
             setShowModal={setShowModal}
             setModalHeading={setModalHeading}
             setModalMessage={setModalMessage}
+            setProfile={setProfile}
           />
         ) : (
           <Login
@@ -40,6 +41,7 @@ export default function LoginRegister() {
             setShowModal={setShowModal}
             setModalHeading={setModalHeading}
             setModalMessage={setModalMessage}
+            setProfile={setProfile}
           />
         )}
       </div>

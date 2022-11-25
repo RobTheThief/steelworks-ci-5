@@ -12,7 +12,7 @@ import { css } from "@emotion/css";
 import { HashLink } from "react-router-hash-link";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
-function Sidebar() {
+function Sidebar({profile}) {
   const [toggle, setToggle] = useState(false);
 
   const toggleDrawer = (option) => (event) => {
@@ -117,7 +117,8 @@ function Sidebar() {
               onClick={toggleDrawer(false)}
               component={HashLink}
               smooth
-              to="/login-register"
+              title={profile?.username ? `${profile.username}'s Account` : 'Login or register'}
+              to={profile?.username ? '/user-account' : "/login-register"}
               className={css`
                 color: ${steelworksBlue};
                 @media (max-width: 491px) {
@@ -129,7 +130,7 @@ function Sidebar() {
                 }
               `}
             >
-              Login / Register
+              {profile?.username ? profile.username : 'Login / Register'}
               <AccountCircleIcon
                 className={`ml-2 ${css`
                   color: rgb(0, 89, 255);

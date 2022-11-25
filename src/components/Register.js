@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "@mui/material";
 import { css } from "@emotion/css";
-import { login, register } from "../apirequests/authRequests";
+import { getProfile, login, register } from "../apirequests/authRequests";
 import { createUser } from "../apirequests/apiBackEndRequests";
 
 export default function Register({
@@ -9,6 +9,7 @@ export default function Register({
   setShowModal,
   setModalHeading,
   setModalMessage,
+  setProfile
 }) {
   const [user, setUser] = useState();
   const [pass, setPass] = useState();
@@ -55,6 +56,8 @@ export default function Register({
         phone
       );
       await login(user, pass);
+      const profile = await getProfile();
+      setProfile(profile);
     } else if (result.email) {
       createModal("Input error!", "Email already used. " + result.email[0]);
     } else {

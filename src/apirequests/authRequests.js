@@ -1,3 +1,5 @@
+import { getCookie } from "../helpers";
+
 /**
  * Sends a POST request to the backend to registers a new user.
  * @param {String} user
@@ -63,4 +65,31 @@ const login = (user, pass) => {
   });
 };
 
-export { register, login };
+/**
+ * Sends a GET request to the backend to get profile
+ * information about the user.
+ * @returns object, promise
+ */
+ const getProfile = () => {
+    return new Promise(async (resolve) => {
+      try {
+        const response = await fetch(`/profile/`, {
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie(),
+          },
+          credentials: "include",
+          method: "GET",
+        });
+  
+        const responseJson = await response.json(); //extract JSON from the http response
+  
+        resolve(responseJson);
+      } catch (error) {
+        console.log(error);
+        resolve(error);
+      }
+    });
+  };
+
+export { register, login, getProfile };
