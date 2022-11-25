@@ -2,13 +2,30 @@ import React from "react";
 import { Button } from "@mui/material";
 import { css } from "@emotion/css";
 
-export default function Login({ setIsRegister }) {
+export default function Login({
+  setIsRegister,
+  setShowModal,
+  setModalHeading,
+  setModalMessage,
+}) {
   const inputClasses = "w-full mb-8 rounded p-1";
+
+  function createModal(heading, message) {
+    setShowModal(true);
+    setModalHeading(heading);
+    setModalMessage(message);
+  }
+
   const handleClick = () => {
     setIsRegister(true);
   };
+  
   return (
-    <div className={`login-form w-1/3 ${css`min-width: 295px;`}`}>
+    <div
+      className={`login-form w-1/3 ${css`
+        min-width: 295px;
+      `}`}
+    >
       <fieldset
         className={`my-24 ${css`
           min-width: 295px;
@@ -22,7 +39,7 @@ export default function Login({ setIsRegister }) {
           align-items: flex-start;
         `}`}
       >
-        <h2 className='text-white mb-8 font-extrabold'>Login</h2>
+        <h2 className="text-white mb-8 font-extrabold">Login</h2>
         <label htmlFor="username_field" className="text-white">
           Username
         </label>

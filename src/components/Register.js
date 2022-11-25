@@ -4,7 +4,12 @@ import { css } from "@emotion/css";
 import { register } from "../apirequests/authRequests";
 import { createUser } from "../apirequests/apiBackEndRequests";
 
-export default function Register({ setIsRegister }) {
+export default function Register({
+  setIsRegister,
+  setShowModal,
+  setModalHeading,
+  setModalMessage,
+}) {
   const [user, setUser] = useState();
   const [pass, setPass] = useState();
   const [pass2, setPass2] = useState();
@@ -23,6 +28,12 @@ export default function Register({ setIsRegister }) {
     setIsRegister(false);
   };
 
+  function createModal(heading, message) {
+    setShowModal(true);
+    setModalHeading(heading);
+    setModalMessage(message);
+  }
+
   const handleRegister = async () => {
     let result = await register(user, pass, pass2, email, firstName, lastName);
 
@@ -38,9 +49,9 @@ export default function Register({ setIsRegister }) {
         phone
       );
     } else if (result.email) {
-      console.log(result.email[0]);
+      createModal("Input error!", 'Email already used. ' + result.email[0]);
     } else {
-      console.log(result.username ? result.username[0] : result.password[0]);
+      createModal("Input error!", result.username ? result.username[0] : result.password[0]);
     }
   };
 
@@ -189,7 +200,7 @@ export default function Register({ setIsRegister }) {
           <input
             id="phone_field"
             name="phone_field"
-            type="tel"
+            type="number"
             className={inputClasses}
             required
             onChange={(e) => setPhone(e.target.value)}
