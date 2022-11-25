@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "@mui/material";
 import { css } from "@emotion/css";
-import { register } from "../apirequests/authRequests";
+import { login, register } from "../apirequests/authRequests";
 import { createUser } from "../apirequests/apiBackEndRequests";
 
 export default function Register({
@@ -35,8 +35,14 @@ export default function Register({
   }
 
   const handleRegister = async () => {
-    let result = await register(user, pass, pass2, email, firstName, lastName);
-
+    const result = await register(
+      user,
+      pass,
+      pass2,
+      email,
+      firstName,
+      lastName
+    );
     if (result.email && result.email[0] !== "This field must be unique.") {
       createUser(
         email,
@@ -48,10 +54,14 @@ export default function Register({
         postCode,
         phone
       );
+      await login(user, pass);
     } else if (result.email) {
-      createModal("Input error!", 'Email already used. ' + result.email[0]);
+      createModal("Input error!", "Email already used. " + result.email[0]);
     } else {
-      createModal("Input error!", result.username ? result.username[0] : result.password[0]);
+      createModal(
+        "Input error!",
+        result.username ? result.username[0] : result.password[0]
+      );
     }
   };
 

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@mui/material";
 import { css } from "@emotion/css";
+import { login } from "../apirequests/authRequests";
 
 export default function Login({
   setIsRegister,
@@ -8,6 +9,8 @@ export default function Login({
   setModalHeading,
   setModalMessage,
 }) {
+  const [user, setUser] = useState();
+  const [pass, setPass] = useState();
   const inputClasses = "w-full mb-8 rounded p-1";
 
   function createModal(heading, message) {
@@ -16,15 +19,35 @@ export default function Login({
     setModalMessage(message);
   }
 
-  const handleClick = () => {
+  const handleGoToRegister = () => {
     setIsRegister(true);
   };
-  
+
+  const handleLogin = async () => {
+    try {
+      let result = await login(user, pass);
+      if (!result.ok) {
+        result = await result.json();
+        if (result.non_field_errors)
+          createModal("Error", result.non_field_errors[0]);
+      }
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleLogin();
+  };
+
   return (
-    <div
+    <form
       className={`login-form w-1/3 ${css`
         min-width: 295px;
       `}`}
+      onSubmit={handleSubmit}
     >
       <fieldset
         className={`my-24 ${css`
@@ -50,6 +73,7 @@ export default function Login({
           className={inputClasses}
           placeholder="Username"
           required
+          onChange={(e) => setUser(e.target.value)}
         />
         <label htmlFor="password_field" className="text-white">
           Password
@@ -60,6 +84,7 @@ export default function Login({
           type="password"
           className={inputClasses}
           required
+          onChange={(e) => setPass(e.target.value)}
         />
         <div>
           <Button
@@ -78,12 +103,12 @@ export default function Login({
           </Button>
           <a
             className="text-blue-300 ml-4 cursor-pointer"
-            onClick={handleClick}
+            onClick={handleGoToRegister}
           >
             Create account
           </a>
         </div>
       </fieldset>
-    </div>
+    </form>
   );
 }

@@ -36,4 +36,31 @@ const register = (user, pass, pass2, email, firstName, lastName) => {
   });
 };
 
-export { register };
+/**
+ * Sends a post request to the backend to log in user.
+ * @param {string} user
+ * @param {string} pass
+ * @returns object, promise
+ */
+const login = (user, pass) => {
+  return new Promise(async (resolve) => {
+    var formdata = new FormData();
+    formdata.append("username", user);
+    formdata.append("password", pass);
+
+    var requestOptions = {
+      method: "POST",
+      body: formdata,
+    };
+    try {
+      const response = await fetch(`/login/`, requestOptions);
+
+      resolve(response);
+    } catch (error) {
+      console.log(error);
+      resolve(error);
+    }
+  });
+};
+
+export { register, login };
