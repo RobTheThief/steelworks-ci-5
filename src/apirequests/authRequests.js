@@ -66,6 +66,28 @@ const login = (user, pass) => {
 };
 
 /**
+ * Sends a POST request to the backend to logout user
+ * @returns promise
+ */
+ const logout = () => {
+    return new Promise(async (resolve) => {
+      try {
+        var requestOptions = {
+          credentials: "include",
+          method: "POST",
+        };
+  
+        let response = await fetch(`/logout/`, requestOptions);
+  
+        resolve(response);
+      } catch (error) {
+        console.log(error);
+        resolve(error);
+      }
+    });
+  };
+
+/**
  * Sends a GET request to the backend to get profile
  * information about the user.
  * @returns object, promise
@@ -82,7 +104,7 @@ const login = (user, pass) => {
           method: "GET",
         });
   
-        const responseJson = await response.json(); //extract JSON from the http response
+        const responseJson = await response.json();
   
         resolve(responseJson);
       } catch (error) {
@@ -92,4 +114,4 @@ const login = (user, pass) => {
     });
   };
 
-export { register, login, getProfile };
+export { register, login, getProfile, logout };

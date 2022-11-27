@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import Drawer from "@mui/material/Drawer";
-import { Button } from "@mui/material";
+import { Button, Input } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 
 import Box from "@mui/material/Box";
@@ -12,14 +12,46 @@ import { css } from "@emotion/css";
 import { HashLink } from "react-router-hash-link";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
-function Sidebar({profile}) {
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { useNavigate } from "react-router-dom";
+import { getProfile, logout } from "../apirequests/authRequests";
+
+const MenuProps = {
+  PaperProps: {
+    style: {
+      width: 150,
+    },
+  },
+};
+
+const options = ["Account", "Log out"];
+
+function Sidebar({ profile, setProfile }) {
   const [toggle, setToggle] = useState(false);
+  const steelworksBlue = "rgb(0, 89, 255) !important";
+  const navigate = useNavigate();
 
   const toggleDrawer = (option) => (event) => {
     setToggle(option);
   };
 
-  const steelworksBlue = "rgb(0, 89, 255) !important";
+  const handleNavigateAccount = useCallback(
+    () => navigate("/user-account", { replace: true }),
+    [navigate]
+  );
+
+  const handleNavigateLogin = useCallback(
+    () => navigate("/login-register", { replace: true }),
+    [navigate]
+  );
+
+  async function handleLogout() {
+    await logout()
+      .then(() => getProfile())
+      .then((res) => setProfile(res));
+  }
 
   function DrawerButton({ label, link }) {
     return (
@@ -113,30 +145,86 @@ function Sidebar({profile}) {
                 </Button>
               </Typography>
             </div>
-            <Button
-              onClick={toggleDrawer(false)}
-              component={HashLink}
-              smooth
-              title={profile?.username ? `${profile.username}'s Account` : 'Login or register'}
-              to={profile?.username ? '/user-account' : "/login-register"}
-              className={css`
-                color: ${steelworksBlue};
-                @media (max-width: 491px) {
-                  font-size: 0.8rem !important;
+            <div className="flex">
+              <Button
+                onClick={toggleDrawer(false)}
+                component={HashLink}
+                smooth
+                title={
+                  profile?.username
+                    ? `${profile.username}'s Account`
+                    : "Login or register"
                 }
-                @media (max-width: 444px) {
-                  font-size: 0.65rem !important;
-                  margin-top: 0.25rem !important;
-                }
-              `}
-            >
-              {profile?.username ? profile.username : 'Login / Register'}
-              <AccountCircleIcon
-                className={`ml-2 ${css`
-                  color: rgb(0, 89, 255);
-                `}`}
-              />
-            </Button>
+                to={profile?.username ? "/user-account" : "/login-register"}
+                className={css`
+                  color: ${steelworksBlue};
+                  @media (max-width: 491px) {
+                    font-size: 0.8rem !important;
+                  }
+                  @media (max-width: 444px) {
+                    font-size: 0.65rem !important;
+                    margin-top: 0.25rem !important;
+                  }
+                `}
+              >
+                {profile?.username ? profile.username : "Login / Register"}
+              </Button>
+
+              <FormControl sx={{ m: 1, width: 40, mt: 3, pb: 2 }}>
+                <Select
+                  displayEmpty
+                  value={""}
+                  onClick={() => {
+                    if (profile?.username === "") {
+                      handleNavigateLogin();
+                    }
+                  }}
+                  input={
+                    <Input
+                      disabled={profile?.username === ""}
+                      disableUnderline={true}
+                    />
+                  }
+                  renderValue={() => {
+                    return (
+                      <AccountCircleIcon
+                        className={`ml-2 ${css`
+                          color: rgb(0, 89, 255);
+                        `}`}
+                      />
+                    );
+                  }}
+                  MenuProps={MenuProps}
+                  inputProps={{ "aria-label": "Without label" }}
+                  className={` ${css`
+                    height: 30px;
+                    font-size: 13px !important;
+                    font-weight: 600 !important;
+                    padding: 0 !important;
+                  `}`}
+                >
+                  <MenuItem disabled value="">
+                    <em className="text-blue-500 p-2"></em>
+                  </MenuItem>
+                  {options.map((option) => (
+                    <MenuItem
+                      key={option}
+                      value={option}
+                      className={` ${css`
+                        color: ${steelworksBlue};
+                      `}`}
+                      onClick={
+                        option === "Account"
+                          ? handleNavigateAccount
+                          : handleLogout
+                      }
+                    >
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
           </Toolbar>
         </AppBar>
       </Box>
