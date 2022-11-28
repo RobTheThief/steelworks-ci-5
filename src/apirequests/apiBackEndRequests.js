@@ -51,4 +51,79 @@ function createUser(
   });
 }
 
-export { createUser };
+/**
+ * Takes in a string for email and returns the steelworks user object.
+ * @param {string} email
+ * @returns promise, object
+ */
+const getSWUser = (email) => {
+  return new Promise(async (resolve) => {
+    try {
+      const response = await fetch(`/api/user/${email}/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCookie(),
+        },
+        redirect: "follow",
+      });
+
+      //const responseJson = await response.json();
+
+      resolve(response);
+    } catch (error) {
+      console.log(error);
+      resolve();
+    }
+  });
+};
+
+/**
+ * Takes strings and ints for for user details and updates
+ * the steelworks user object address,postcode and phone number
+ * and returns a status in string with a promise.
+ * @param {int} pk
+ * @param {string} user_email
+ * @param {string} password,
+ * @param {string} address_line_1
+ * @param {string} address_line_2
+ * @param {string} address_line_3
+ * @param {string} postcode
+ * @param {int} phone
+ * @returns promise, object
+ */
+const updateUserAddressPhone = (
+  pk,
+  user_email,
+  password,
+  address_line_1,
+  address_line_2,
+  address_line_3,
+  postcode,
+  phone
+) => {
+  return new Promise(async (resolve) => {
+    try {
+      const response = await fetch(
+        `/api/user/update/${pk}/${user_email}/${password}/${address_line_1}/${address_line_2}/${address_line_3}/${postcode}/${phone}/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie(),
+          },
+          redirect: "follow",
+        }
+      );
+
+      //const responseJson = await response.json();
+
+      resolve(response);
+    } catch (error) {
+      console.log(error);
+      resolve();
+    }
+  });
+};
+
+export { createUser, getSWUser, updateUserAddressPhone };

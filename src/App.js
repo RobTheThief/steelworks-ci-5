@@ -39,7 +39,7 @@ function App(props) {
               exact
               path="/user-account"
               element={
-                <UserAccount />
+                <UserAccount profile={profile} />
               }
             />
           </Routes>

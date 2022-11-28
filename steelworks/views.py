@@ -1,3 +1,4 @@
+import json
 from steelworks import models
 from django.contrib.auth.models import User
 from django.views.generic import TemplateView
@@ -12,7 +13,6 @@ from rest_framework import permissions
 from rest_framework import views
 from rest_framework import status
 from rest_framework.response import Response
-from django.http import HttpResponse
 from steelworks import serializers
 from django.contrib.auth import login, logout
 
@@ -52,9 +52,27 @@ class SteelworksUserCreate(generics.CreateAPIView):
     serializer_class = serializers.SteelworksUserSerializer
 
 
-class SteelworksUserList(generics.ListAPIView):
-    queryset = models.SteelworksUser.objects.all()
-    serializer_class = serializers.SteelworksUserSerializer
+def SteelworksUserGetFunction(self, user_email):
+    if user_email.__contains__('@'):
+        user_array = models.SteelworksUser.objects.all()
+
+        for user in user_array:
+            if user.email == user_email:
+                return HttpResponse(json.dumps({
+                    'first_name': user.first_name,
+                    'last_name': user.last_name,
+                    'email': user.email,
+                    'address_line_1': user.address_line_1,
+                    'address_line_2': user.address_line_2,
+                    'address_line_3': user.address_line_3,
+                    'postcode': user.postcode,
+                    'phone': user.phone,
+                    'id': user.id,
+                }), content_type="application/json")
+
+        return HttpResponse(json.dumps({'response':'no user found'}))
+    else:
+        return HttpResponse(json.dumps({'response':'You must enter an email address'}))
 
 
 class SteelworksUserDetail(generics.RetrieveAPIView):
@@ -62,9 +80,26 @@ class SteelworksUserDetail(generics.RetrieveAPIView):
     serializer_class = serializers.SteelworksUserSerializer
 
 
-class SteelworksUserUpdate(generics.RetrieveUpdateAPIView):
-    queryset = models.SteelworksUser.objects.all()
-    serializer_class = serializers.SteelworksUserSerializer
+def SteelworksUserUpdateFunction(self, pk, user_email, password,
+                                 address_line_1, address_line_2,
+                                 address_line_3, postcode, phone
+                                 ):
+    auth_user_array = User.objects.all()
+
+    for user in auth_user_array:
+        if user.email == user_email:
+            if user.check_password(password):
+                obj = models.SteelworksUser.objects.get(pk=pk)
+                obj.address_line_1 = address_line_1
+                obj.address_line_2 = address_line_2
+                obj.address_line_3 = address_line_3
+                obj.postcode = postcode
+                obj.phone = phone
+                obj.save()
+                return HttpResponse(json.dumps({'response':'updated'}))
+            else:
+                return HttpResponse(json.dumps({'response':'password incorrect'}))
+    return HttpResponse(json.dumps({'response':'user not found'}))
 
 
 class SteelworksUserDelete(generics.RetrieveDestroyAPIView):
@@ -239,7 +274,6 @@ class ProfileView(generics.RetrieveAPIView):
     def get_object(self):
         """ Makes a GET request to the backend and
         returns the reponse object """
-        print('Hello')
         return self.request.user
 
 

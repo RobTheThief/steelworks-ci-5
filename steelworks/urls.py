@@ -4,10 +4,10 @@ from steelworks import views
 
 urlpatterns = [
     path('user/create/', views.SteelworksUserCreate.as_view(), name='create-User'),
-    path('user/', views.SteelworksUserList.as_view()),
+    path('user/<str:user_email>/', views.SteelworksUserGetFunction),
     path('user/<int:pk>/', views.SteelworksUserDetail.as_view(), name='retrieve-User'),
-    path('user/update/<int:pk>/',
-         views.SteelworksUserUpdate.as_view(), name='update-User'),
+    path('user/update/<int:pk>/<str:user_email>/<str:password>/<str:address_line_1>/<str:address_line_2>/<str:address_line_3>/<str:postcode>/<int:phone>/',
+         views.SteelworksUserUpdateFunction, name='update-User'),
     path('user/delete/<int:pk>/',
          views.SteelworksUserDelete.as_view(), name='delete-User'),
 

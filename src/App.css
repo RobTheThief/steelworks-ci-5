@@ -35,14 +35,13 @@ footer {
 }
 
 .about-section,
-.price-plan-section
- {
+.price-plan-section {
   padding-top: 4rem;
   margin-top: -4rem !important;
 }
 
 .contact-section {
-  background: url("./img/exerciseBike1024.jpg");
+  background: url("./img/exercise-bike1024.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
@@ -56,7 +55,15 @@ footer {
   background-size: cover;
 }
 
-.register-form, .login-form {
+.user-account-page {
+  background: url("./img/gym-with-view1024.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.register-form,
+.login-form,
+.account-details {
   animation-name: fade-in;
   animation-duration: 0.3s;
 }
