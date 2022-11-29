@@ -8,7 +8,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { getProfile } from "./apirequests/authRequests";
 import UserAccount from "./pages/UserAccount";
 
-function App(props) {
+function App() {
   const [profile, setProfile] = useState();
 
   async function checkForProfile() {

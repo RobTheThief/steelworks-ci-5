@@ -2,12 +2,22 @@ import React from "react";
 import { Button } from "@mui/material";
 import { css } from "@emotion/css";
 
-export default function SWButton({type, margin, width, children, handleOnClick}) {
+export default function SWButton({
+  type,
+  margin,
+  width,
+  children,
+  handleOnClick,
+  component,
+  link,
+}) {
   return (
     <Button
       type={type ? type : "button"}
       onClick={handleOnClick && handleOnClick}
       variant="outlined"
+      component={component && component}
+      to={link && link}
       className={`${css`
         width: ${width};
         min-width: 80px !important;
@@ -19,7 +29,7 @@ export default function SWButton({type, margin, width, children, handleOnClick})
         margin: ${margin} !important;
       `}`}
     >
-     {children}
+      {children}
     </Button>
   );
 }

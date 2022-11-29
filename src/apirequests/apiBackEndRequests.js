@@ -129,20 +129,17 @@ const updateUserAddressPhone = (
  * and returns an array with a promise.
  * @returns promise, array
  */
- const getProductUserPairs = () => {
+const getProductUserPairs = () => {
   return new Promise(async (resolve) => {
     try {
-      const response = await fetch(
-        `/api/product/user-pair/`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": getCookie(),
-          },
-          redirect: "follow",
-        }
-      );
+      const response = await fetch(`/api/product/user-pair/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCookie(),
+        },
+        redirect: "follow",
+      });
 
       let jsonResponse = await response.json();
 

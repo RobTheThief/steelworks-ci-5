@@ -7,9 +7,10 @@ import {
 } from "../apirequests/apiBackEndRequests";
 import SWButton from "../components/SWButton";
 import Modal from "../components/Modal";
+import { HashLink } from "react-router-hash-link";
 
 const CONTAINER_CSS =
-  "border-radius: 5px;border: #64748b solid 2px;background-color: rgba(0, 0, 0, 0.473);display: flex;align-items: center;";
+  "border-radius: 5px;border: #64748b solid 2px;background-color: rgba(0, 0, 0, 0.473);display: flex;";
 
 export default function UserAccount({ profile }) {
   const [swUser, setSWUser] = useState();
@@ -129,7 +130,7 @@ export default function UserAccount({ profile }) {
       />
       <div className="w-full min-h-screen flex justify-center items-center user-account-page overflow-y-scroll">
         <form
-          className={`my-24 py-8 flex-col account-details ${css`
+          className={`my-24 py-8 flex-col items-center account-details ${css`
             width: 30%;
             min-width: 295px;
             ${CONTAINER_CSS}
@@ -196,11 +197,19 @@ export default function UserAccount({ profile }) {
             </ul>
           </div>
           <div
-            className={`w-4/5 p-4 text-white ${css`
+            className={`w-4/5 p-4 text-white flex-col items- ${css`
               ${CONTAINER_CSS}
             `}`}
           >
             <p>Active Subscription: {sub}</p>
+            <SWButton
+              margin="1rem 0 0 0"
+              width="25%"
+              component={HashLink}
+              link='/#price-plans'
+            >
+              Upgrade
+            </SWButton>
           </div>
         </form>
       </div>
