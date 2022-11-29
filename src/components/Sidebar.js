@@ -57,7 +57,7 @@ function Sidebar({ profile, setProfile }) {
   async function handleLogout() {
     await logout()
       .then(() => getProfile())
-      .then((res) => setProfile(res));
+      .then((res) => setProfile(res)).then(handleNavigateLogin());
   }
 
   return (

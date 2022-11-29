@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Button } from "@mui/material";
 import { css } from "@emotion/css";
 import { getProfile, login, register } from "../apirequests/authRequests";
 import { createUser } from "../apirequests/apiBackEndRequests";
+import { useNavigate } from "react-router-dom";
 
 export default function Register({
   setIsRegister,
@@ -23,7 +24,14 @@ export default function Register({
   const [postCode, setPostCode] = useState();
   const [phone, setPhone] = useState();
 
+  const navigate = useNavigate();
+
   const inputClasses = "w-full mb-8 rounded p-1";
+
+  const handleNavigateAccount = useCallback(
+    () => navigate("/user-account", { replace: true }),
+    [navigate]
+  );
 
   const handleGoToLogin = () => {
     setIsRegister(false);
@@ -58,6 +66,7 @@ export default function Register({
       await login(user, pass);
       const profile = await getProfile();
       setProfile(profile);
+      handleNavigateAccount();
     } else if (result.email) {
       createModal("Input error!", "Email already used. " + result.email[0]);
     } else {

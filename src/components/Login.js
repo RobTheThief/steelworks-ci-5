@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Button } from "@mui/material";
 import { css } from "@emotion/css";
+import { useNavigate } from "react-router-dom";
 import { getProfile, login } from "../apirequests/authRequests";
 
 export default function Login({
@@ -12,7 +13,15 @@ export default function Login({
 }) {
   const [user, setUser] = useState();
   const [pass, setPass] = useState();
+
+  const navigate = useNavigate();
+
   const inputClasses = "w-full mb-8 rounded p-1";
+
+  const handleNavigateAccount = useCallback(
+    () => navigate("/user-account", { replace: true }),
+    [navigate]
+  );
 
   function createModal(heading, message) {
     setShowModal(true);
@@ -34,6 +43,7 @@ export default function Login({
       } else {
         const profile = await getProfile();
         setProfile(profile);
+        handleNavigateAccount();
       }
     } catch (error) {
       console.log(error);
