@@ -146,18 +146,21 @@ class ProductUserPairDetail(generics.RetrieveAPIView):
 
 def ProductUserPairCreateFunction(prod, users):
 
-    p = models.InstructorUserPair(product=prod,
+    p = models.ProductUserPair(product=prod,
                                   subscribed_users=users)
     p.save()
 
 
-def ProductUserPairUpdateFunction(pk, prod, users):
-    obj = models.Product.objects.get(pk=pk)
-    obj.product = prod
-    obj.subscribed_users = users
+def ProductUserPairUpdateFunction(pk, user_id, add_remove):
+    obj = models.ProductUserPair.objects.get(pk=pk)
+    user = models.SteelworksUser.objects.get(pk=user_id)
+    if add_remove:
+        obj.subscribed_users.add(user)
+    else:
+        obj.subscribed_users.remove(user)
     obj.save()
 
-
+ProductUserPairUpdateFunction(1, 5, True)
 ############# """ GYM CLASSES VIEWS """#####################
 class ClassesList(generics.ListAPIView):
     queryset = models.Classes.objects.all()

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { css } from "@emotion/css";
 import {
+  getProductUserPairs,
   getSWUser,
   updateUserAddressPhone,
 } from "../apirequests/apiBackEndRequests";
-import { Button } from "@mui/material";
+import SWButton from "../components/SWButton";
 import Modal from "../components/Modal";
 
 const CONTAINER_CSS =
@@ -22,8 +23,10 @@ export default function UserAccount({ profile }) {
   const [modalHeading, setModalHeading] = useState("");
   const [modalMessage, setModalMessage] = useState("");
   const [isModalInput, setIsModalInput] = useState(false);
+  const [productUserPairs, setProductUserPairs] = useState();
+  const [sub, setSub] = useState();
+  const [subID, setSubID] = useState();
 
-  isModalInput;
   async function getUserAsync() {
     try {
       if (profile && profile.email) {
@@ -36,6 +39,10 @@ export default function UserAccount({ profile }) {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async function getProductUserPairsAsync() {
+    setProductUserPairs(await getProductUserPairs());
   }
 
   function handleUpdadeInfo(e) {
@@ -73,12 +80,40 @@ export default function UserAccount({ profile }) {
   }, [profile]);
 
   useEffect(() => {
-    console.log(swUser);
+    productUserPairs &&
+      productUserPairs.forEach((item) => {
+        item.subscribed_users.forEach((userID) => {
+          if (userID == swUser?.id) {
+            setSubID(item.product[0]);
+          }
+        });
+      });
+  }, [productUserPairs]);
+
+  useEffect(() => {
+    switch (subID) {
+      case 1:
+        setSub("Unlimited");
+        break;
+      case 2:
+        setSub("Gold");
+        break;
+      case 3:
+        setSub("Silver");
+        break;
+      default:
+        setSub("None");
+        break;
+    }
+  }, [subID]);
+
+  useEffect(() => {
     setAddress1(swUser?.address_line_1);
     setAddress2(swUser?.address_line_2);
     setAddress3(swUser?.address_line_3);
     setPostcode(swUser?.postcode);
     setPhone(swUser?.phone);
+    getProductUserPairsAsync();
   }, [swUser]);
 
   return (
@@ -155,22 +190,9 @@ export default function UserAccount({ profile }) {
                 <br />
               </li>
               <li>ID: {swUser?.id}</li>
-              <Button
-                type="submit"
-                variant="outlined"
-                className={`${css`
-                  width: 40%;
-                  min-width: 80px !important;
-                  background-color: rgb(0, 89, 255) !important;
-                  color: white !important;
-                  font-weight: 900 !important;
-                  border-radius: 2rem !important;
-                  padding: 0.35rem 1.5rem !important;
-                  margin-top: 1rem !important;
-                `}`}
-              >
+              <SWButton type="submit" margin={"1rem 0 0 0"}>
                 Update
-              </Button>
+              </SWButton>
             </ul>
           </div>
           <div
@@ -178,7 +200,7 @@ export default function UserAccount({ profile }) {
               ${CONTAINER_CSS}
             `}`}
           >
-            <p>Active Subscription: </p>
+            <p>Active Subscription: {sub}</p>
           </div>
         </form>
       </div>

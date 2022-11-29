@@ -79,9 +79,9 @@ const getSWUser = (email) => {
 };
 
 /**
- * Takes strings and ints for for user details and updates
+ * Takes in strings and ints for user details and updates
  * the steelworks user object address,postcode and phone number
- * and returns a status in string with a promise.
+ * and returns a status as a string with a promise.
  * @param {int} pk
  * @param {string} user_email
  * @param {string} password,
@@ -116,8 +116,6 @@ const updateUserAddressPhone = (
         }
       );
 
-      //const responseJson = await response.json();
-
       resolve(response);
     } catch (error) {
       console.log(error);
@@ -126,4 +124,34 @@ const updateUserAddressPhone = (
   });
 };
 
-export { createUser, getSWUser, updateUserAddressPhone };
+/**
+ * Gets a list of product/user pairs as objects
+ * and returns an array with a promise.
+ * @returns promise, array
+ */
+ const getProductUserPairs = () => {
+  return new Promise(async (resolve) => {
+    try {
+      const response = await fetch(
+        `/api/product/user-pair/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie(),
+          },
+          redirect: "follow",
+        }
+      );
+
+      let jsonResponse = await response.json();
+
+      resolve(jsonResponse);
+    } catch (error) {
+      console.log(error);
+      resolve();
+    }
+  });
+};
+
+export { createUser, getSWUser, updateUserAddressPhone, getProductUserPairs };

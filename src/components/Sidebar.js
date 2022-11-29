@@ -2,7 +2,6 @@ import React, { useCallback, useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import { Button, Input } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
-
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -11,12 +10,13 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { css } from "@emotion/css";
 import { HashLink } from "react-router-hash-link";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useNavigate } from "react-router-dom";
+
 import { getProfile, logout } from "../apirequests/authRequests";
+import DrawerButton from "./DrawerButton";
 
 const MenuProps = {
   PaperProps: {
@@ -25,6 +25,13 @@ const MenuProps = {
     },
   },
 };
+
+const drawerButtons = [
+  { label: "Home", link: "/#hero" },
+  { label: "About", link: "/#about" },
+  { label: "Price Plans", link: "/#price-plans" },
+  { label: "Contact", link: "/#contact_section" },
+];
 
 const options = ["Account", "Log out"];
 
@@ -51,23 +58,6 @@ function Sidebar({ profile, setProfile }) {
     await logout()
       .then(() => getProfile())
       .then((res) => setProfile(res));
-  }
-
-  function DrawerButton({ label, link }) {
-    return (
-      <Button
-        onClick={toggleDrawer(false)}
-        component={HashLink}
-        smooth
-        to={link}
-        className={css`
-          justify-content: start !important;
-          font-size: 20px !important;
-        `}
-      >
-        {label}
-      </Button>
-    );
   }
 
   return (
@@ -240,10 +230,15 @@ function Sidebar({ profile, setProfile }) {
           }
         `}
       >
-        <DrawerButton label="Home" link="/#hero" />
-        <DrawerButton label="About" link="/#about" />
-        <DrawerButton label="Price Plans" link="/#price-plans" />
-        <DrawerButton label="Contact" link="/#contact_section" />
+        {drawerButtons.map((drawer, idx) => (
+          <DrawerButton
+            key={`drawer-button-${idx}`}
+            label={drawer.label}
+            link={drawer.link}
+            toggleDrawer={toggleDrawer}
+            HashLink={HashLink}
+          />
+        ))}
       </Drawer>
       <footer className="h-24 w-full bg-black flex flex-col justify-center items-center">
         <p className="text-white">Copyright &#169; Steelworks 2022</p>

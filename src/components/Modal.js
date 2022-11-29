@@ -1,7 +1,7 @@
 import React from "react";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import { css } from "@emotion/css";
-import { Button } from "@mui/material";
+import SWButton from "./SWButton";
 
 export default function Modal({
   showModal,
@@ -43,25 +43,16 @@ export default function Modal({
                 className="text-black mt-2 rounded"
                 onChange={(e) => setter(e.target.value)}
               ></input>{" "}
-              <Button
-                onClick={() => {
+              <SWButton
+                handleOnClick={() => {
                   setShowModal(false);
                   func();
                 }}
                 variant="outlined"
-                className={`${css`
-                  width: 20%;
-                  min-width: 80px !important;
-                  background-color: rgb(0, 89, 255) !important;
-                  color: white !important;
-                  font-weight: 900 !important;
-                  border-radius: 2rem !important;
-                  padding: 0.35rem 1.5rem !important;
-                  margin: 0.5rem 0 0 1rem !important;
-                `}`}
+                margin="0.5rem 0 0 1rem"
               >
                 Ok
-              </Button>
+              </SWButton>
             </div>
           ) : (
             <div className="flex items-center">

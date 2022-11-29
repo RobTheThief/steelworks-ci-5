@@ -1,6 +1,6 @@
 import React from "react";
 import { css } from "@emotion/css";
-import { Button } from "@mui/material";
+import SWButton from "./SWButton";
 
 export default function PricePlan({
   type,
@@ -29,18 +29,7 @@ export default function PricePlan({
       <p className={sectStyle}>{sect3 && sect3}</p>
       <p className={sectStyle}>{sect4 && sect4}</p>
       <p className={sectStyle}>{sect5 && sect5}</p>
-      <Button
-        className={css`
-          width: 35%;
-          min-width: 150px !important;
-          background-color: rgb(0, 89, 255) !important;
-          color: white !important;
-          font-weight: 900 !important;
-          border-radius: 2rem !important;
-        `}
-      >
-        Sign up
-      </Button>
+      <SWButton>Sign up</SWButton>
     </div>
   );
 }
