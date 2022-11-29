@@ -213,7 +213,8 @@ export default function Register({
           <input
             id="phone_field"
             name="phone_field"
-            type="number"
+            type="tel"
+            pattern="(^\d{1,10}$)"
             className={inputClasses}
             required
             onChange={(e) => setPhone(e.target.value)}
