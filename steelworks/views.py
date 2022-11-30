@@ -160,7 +160,6 @@ def ProductUserPairUpdateFunction(pk, user_id, add_remove):
         obj.subscribed_users.remove(user)
     obj.save()
 
-ProductUserPairUpdateFunction(1, 5, True)
 ############# """ GYM CLASSES VIEWS """#####################
 class ClassesList(generics.ListAPIView):
     queryset = models.Classes.objects.all()
