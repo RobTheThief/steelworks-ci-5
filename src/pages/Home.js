@@ -7,7 +7,10 @@ import Modal from "../components/Modal";
 
 function Home() {
   const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalHeading, setModalHeading] = useState('');
   const [paymentPlanType, setPaymentPlanType] = useState("");
+  const [isCheckout, setIsCheckOut] = useState(true);
 
   const classes = "hidden";
   return (
@@ -59,8 +62,10 @@ function Home() {
             <Modal
               showModal={showModal}
               setShowModal={setShowModal}
-              isCheckout
+              isCheckout={isCheckout}
               paymentPlanType={paymentPlanType}
+              message={modalMessage}
+              heading={modalHeading}
             />
             <PricePlan
               type="Unlimited"
@@ -72,6 +77,9 @@ function Home() {
               sect5="Cancel or change plan w/ email or text 48hr notice"
               setShowModal={setShowModal}
               setPaymentPlanType={setPaymentPlanType}
+              setIsCheckOut={setIsCheckOut}
+              setModalMessage={setModalMessage}
+              setModalHeading={setModalHeading}
             />
             <PricePlan
               type="Gold"
@@ -83,6 +91,9 @@ function Home() {
               sect5="Cancel or change plan w/ email or text 48hr notice"
               setShowModal={setShowModal}
               setPaymentPlanType={setPaymentPlanType}
+              setIsCheckOut={setIsCheckOut}
+              setModalMessage={setModalMessage}
+              setModalHeading={setModalHeading}
             />
             <PricePlan
               type="Silver"
@@ -94,6 +105,9 @@ function Home() {
               sect5="Cancel or change plan w/ email or text 48hr notice"
               setShowModal={setShowModal}
               setPaymentPlanType={setPaymentPlanType}
+              setIsCheckOut={setIsCheckOut}
+              setModalMessage={setModalMessage}
+              setModalHeading={setModalHeading}
             />
           </div>
         </div>

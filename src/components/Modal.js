@@ -45,7 +45,7 @@ export default function Modal({
       onClick={() => !isInput && !isCheckout && setShowModal(false)}
     >
       <div
-        className={`w-1/3 ${
+        className={`${isCheckout ? "w-2/3" : "w-1/3"} ${
           isCheckout ? "bg-white text-black" : "bg-black text-white"
         } rounded border-blue-500 border-2`}
       >
@@ -54,7 +54,7 @@ export default function Modal({
             <h3 className="w-full text-lg text-blue-500">{heading}</h3>
             <span
               onClick={() => (isInput || isCheckout) && setShowModal(false)}
-              className="realtive top-0 left-0 cursor-pointer"
+              className="realtive top-0 left-0 cursor-pointer text-3xl"
             >
               &times;
             </span>

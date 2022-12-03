@@ -1,6 +1,7 @@
 import React from "react";
 import { css } from "@emotion/css";
 import SWButton from "./SWButton";
+import { getProfile } from "../apirequests/authRequests";
 
 export default function PricePlan({
   type,
@@ -12,12 +13,25 @@ export default function PricePlan({
   sect5,
   setShowModal,
   setPaymentPlanType,
+  setIsCheckOut,
+  setModalMessage,
+  setModalHeading
 }) {
   const sectStyle = "text-white text-center my-4";
 
-  const handleClick = () => {
-    setPaymentPlanType(type);
-    setShowModal(true);
+  const handleClick = async () => {
+    await getProfile().then(res => {
+      if (res.email) {
+        console.log(res.email)
+        setPaymentPlanType(type);
+        setShowModal(true);
+      } else {
+        setShowModal(true);
+        setIsCheckOut(false)
+        setModalHeading('Please login or register')
+        setModalMessage('You must be logged in to sign up for a subscription.')
+      }
+    })
   };
 
   return (
