@@ -151,4 +151,44 @@ const getProductUserPairs = () => {
   });
 };
 
-export { createUser, getSWUser, updateUserAddressPhone, getProductUserPairs };
+/**
+ *Sends a POST request to the backend to make a stripe payment. Takes the user
+ * email, paymentMenthodID and subscription type as parameters and returns
+ * a response object.
+ * @param {string} email
+ * @param {string} paymentMethodID
+ * @param {string} subscription_type
+ * @returns promise, object
+ */
+const saveStripeInfo = (email, paymentMethodID, subscription_type) => {
+  return new Promise(async (resolve) => {
+    try {
+      const response = await fetch(
+        `/api/save-stripe-info/${email}/${paymentMethodID}/${subscription_type}/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie(),
+          },
+          redirect: "follow",
+        }
+      );
+
+      const jsonResponse = await response.json();
+
+      resolve(jsonResponse);
+    } catch (error) {
+      console.log(error);
+      resolve();
+    }
+  });
+};
+
+export {
+  createUser,
+  getSWUser,
+  updateUserAddressPhone,
+  getProductUserPairs,
+  saveStripeInfo,
+};

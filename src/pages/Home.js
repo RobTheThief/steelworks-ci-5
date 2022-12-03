@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import pullups from "../img/pullups1024.jpg";
 import PricePlan from "../components/PricePlan";
 import { css } from "@emotion/css";
 import { Button } from "@mui/material";
+import Modal from "../components/Modal";
 
-function Home(props) {
+function Home() {
+  const [showModal, setShowModal] = useState(false);
+  const [paymentPlanType, setPaymentPlanType] = useState("");
+
   const classes = "hidden";
   return (
     <>
@@ -52,6 +56,12 @@ function Home(props) {
             Price Plans
           </h2>
           <div className="max-w-2xl flex flex-col items-center sm:flex-row gap-2 mt-8">
+            <Modal
+              showModal={showModal}
+              setShowModal={setShowModal}
+              isCheckout
+              paymentPlanType={paymentPlanType}
+            />
             <PricePlan
               type="Unlimited"
               headingClasses="text-blue-500"
@@ -60,6 +70,8 @@ function Home(props) {
               sect3="Childwatch"
               sect4="Shower access, locker access, and more"
               sect5="Cancel or change plan w/ email or text 48hr notice"
+              setShowModal={setShowModal}
+              setPaymentPlanType={setPaymentPlanType}
             />
             <PricePlan
               type="Gold"
@@ -69,6 +81,8 @@ function Home(props) {
               sect3="Childwatch"
               sect4="Shower access, locker access, and more"
               sect5="Cancel or change plan w/ email or text 48hr notice"
+              setShowModal={setShowModal}
+              setPaymentPlanType={setPaymentPlanType}
             />
             <PricePlan
               type="Silver"
@@ -78,6 +92,8 @@ function Home(props) {
               sect3="Childwatch"
               sect4="Shower access, locker access, and more"
               sect5="Cancel or change plan w/ email or text 48hr notice"
+              setShowModal={setShowModal}
+              setPaymentPlanType={setPaymentPlanType}
             />
           </div>
         </div>
@@ -128,7 +144,9 @@ function Home(props) {
               <textarea
                 id="message_field"
                 name="message_field"
-                className={`mb-4 rounded p-1 ${css`height: 200px;`}`}
+                className={`mb-4 rounded p-1 ${css`
+                  height: 200px;
+                `}`}
                 placeholder="Please type your message here"
                 required
               ></textarea>

@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import { css } from "@emotion/css";
 import SWButton from "./SWButton";
+
+import CheckoutForm from "./CheckoutForm";
+import { getProfile } from "../apirequests/authRequests";
+
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js/pure";
+
+const stripePromise = loadStripe(process.env.REACT_STRIPE_PUBLISHABLE_KEY);
 
 export default function Modal({
   showModal,
@@ -11,8 +19,19 @@ export default function Modal({
   isInput,
   setter,
   func,
+  isCheckout,
+  paymentPlanType,
 }) {
-  () => (document.getElementById("id01").style.display = "block");
+  const [userEmail, setUserEmail] = useState("");
+
+  const getProfileAsync = async () => {
+    await getProfile().then((res) => setUserEmail(res.email));
+  };
+
+  useEffect(() => {
+    isCheckout && getProfileAsync();
+    console.log(isCheckout, isInput);
+  }, [paymentPlanType]);
 
   return (
     <div
@@ -23,14 +42,18 @@ export default function Modal({
         background-color: rgb(0, 0, 0);
         background-color: rgba(0, 0, 0, 0.4);
       `}`}
-      onClick={() => !isInput && setShowModal(false)}
+      onClick={() => !isInput && !isCheckout && setShowModal(false)}
     >
-      <div className="w-1/3 bg-black text-white rounded border-blue-500 border-2">
+      <div
+        className={`w-1/3 ${
+          isCheckout ? "bg-white text-black" : "bg-black text-white"
+        } rounded border-blue-500 border-2`}
+      >
         <div className="px-4 pt-2 pb-8">
           <div className="flex  justify-end">
             <h3 className="w-full text-lg text-blue-500">{heading}</h3>
             <span
-              onClick={() => isInput && setShowModal(false)}
+              onClick={() => (isInput || isCheckout) && setShowModal(false)}
               className="realtive top-0 left-0 cursor-pointer"
             >
               &times;
@@ -54,6 +77,13 @@ export default function Modal({
                 Ok
               </SWButton>
             </div>
+          ) : isCheckout ? (
+            <Elements stripe={stripePromise}>
+              <CheckoutForm
+                paymentPlanType={paymentPlanType}
+                userEmail={userEmail}
+              />
+            </Elements>
           ) : (
             <div className="flex items-center">
               <WarningAmberIcon

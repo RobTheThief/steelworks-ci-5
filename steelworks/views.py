@@ -1,45 +1,67 @@
-import json
+from steelworks import serializers
 from steelworks import models
+
+import json
+import os
+import stripe
+
+from django.http import HttpResponse
+from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from django.views.generic import TemplateView
-
-import urllib.request
-from django.template import engines
-from django.http import HttpResponse
-from django.conf import settings
 
 from rest_framework import generics
 from rest_framework import permissions
 from rest_framework import views
 from rest_framework import status
 from rest_framework.response import Response
-from steelworks import serializers
-from django.contrib.auth import login, logout
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
+
+stripe.api_key = str(os.getenv('REACT_STRIPE_SECRET_KEY'))
 
 
-def catchall_dev(request, upstream='http://localhost:3000'):
-    upstream_url = upstream + request.path
-    with urllib.request.urlopen(upstream_url) as response:
-        content_type = response.headers.get('Content-Type')
+@api_view(['POST'])
+@authentication_classes([ SessionAuthentication ])
+@permission_classes([IsAuthenticated])
+def save_stripe_info(self, email, paymentMethodID, subscription_type):
 
-        if content_type == 'text/html; charset=UTF-8':
-            response_text = response.read().decode()
-            content = engines['django'].from_string(response_text).render()
+    try:
+        extra_msg = ''
+        customer_data = stripe.Customer.list(email=email).data
+        if len(customer_data) == 0:
+            # creating customer
+            customer = stripe.Customer.create(
+                email=email,
+                payment_method=paymentMethodID,
+                invoice_settings={
+                    'default_payment_method': paymentMethodID
+                }
+            )
         else:
-            content = response.read()
+            customer = customer_data[0]
+            extra_msg = "Customer already existed."
 
-        return HttpResponse(
-            content,
-            content_type=content_type,
-            status=response.status,
-            reason=response.reason,
+    
+        stripe.Subscription.create(
+            customer=customer,
+            items=[
+                {
+                    'price': str(os.getenv(subscription_type))
+                }
+            ]
         )
 
-
-catchall_prod = TemplateView.as_view(template_name='index.html')
-
-catchall = catchall_dev if settings.DEBUG else catchall_prod
-
+        return Response(
+        status=status.HTTP_200_OK,
+        data={
+            'data': {'message': 'Success', 'customer_id': customer.id, 'extra_msg': extra_msg}
+        }
+    )
+    except Exception as e:
+            return Response({'msg':'something went wrong while creating stripe session','error':str(e)}, status=500)
+    
 
 class ReactView(TemplateView):
     template_name = 'steelworks/react.html'
@@ -70,9 +92,9 @@ def SteelworksUserGetFunction(self, user_email):
                     'id': user.id,
                 }), content_type="application/json")
 
-        return HttpResponse(json.dumps({'response':'no user found'}))
+        return HttpResponse(json.dumps({'response': 'no user found'}))
     else:
-        return HttpResponse(json.dumps({'response':'You must enter an email address'}))
+        return HttpResponse(json.dumps({'response': 'You must enter an email address'}))
 
 
 class SteelworksUserDetail(generics.RetrieveAPIView):
@@ -96,10 +118,10 @@ def SteelworksUserUpdateFunction(self, pk, user_email, password,
                 obj.postcode = postcode
                 obj.phone = phone
                 obj.save()
-                return HttpResponse(json.dumps({'response':'updated'}))
+                return HttpResponse(json.dumps({'response': 'updated'}))
             else:
-                return HttpResponse(json.dumps({'response':'password incorrect'}))
-    return HttpResponse(json.dumps({'response':'user not found'}))
+                return HttpResponse(json.dumps({'response': 'password incorrect'}))
+    return HttpResponse(json.dumps({'response': 'user not found'}))
 
 
 class SteelworksUserDelete(generics.RetrieveDestroyAPIView):
@@ -147,7 +169,7 @@ class ProductUserPairDetail(generics.RetrieveAPIView):
 def ProductUserPairCreateFunction(prod, users):
 
     p = models.ProductUserPair(product=prod,
-                                  subscribed_users=users)
+                               subscribed_users=users)
     p.save()
 
 
@@ -161,6 +183,8 @@ def ProductUserPairUpdateFunction(pk, user_id, add_remove):
     obj.save()
 
 ############# """ GYM CLASSES VIEWS """#####################
+
+
 class ClassesList(generics.ListAPIView):
     queryset = models.Classes.objects.all()
     serializer_class = serializers.ClassesSerializer
@@ -173,15 +197,15 @@ class ClassesDetail(generics.RetrieveAPIView):
 
 def ClassesCreateFunction(name, details, instr, students):
 
-    p = models.InstructorUserPair(class_name=name,
-                                  class_details=details,
-                                  instructor=instr,
-                                  enrolled_students=students)
+    p = models.Classes(class_name=name,
+                       class_details=details,
+                       instructor=instr,
+                       enrolled_students=students)
     p.save()
 
 
 def ClassesUpdateFunction(pk, name, details, instr, students):
-    obj = models.Product.objects.get(pk=pk)
+    obj = models.Classes.objects.get(pk=pk)
     obj.class_name = name
     obj.class_details = details
     obj.instructor = instr

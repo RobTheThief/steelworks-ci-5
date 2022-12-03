@@ -25,7 +25,7 @@ function App() {
     <React.StrictMode>
       <BrowserRouter>
         <HelmetProvider>
-          <Sidebar profile={profile} setProfile={setProfile}/>
+          <Sidebar profile={profile} setProfile={setProfile} />
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route
@@ -38,9 +38,7 @@ function App() {
             <Route
               exact
               path="/user-account"
-              element={
-                <UserAccount profile={profile} />
-              }
+              element={<UserAccount profile={profile} />}
             />
           </Routes>
         </HelmetProvider>

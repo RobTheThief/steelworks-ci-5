@@ -1,4 +1,4 @@
-from django.urls import include, path
+from django.urls import path
 from steelworks import views
 
 
@@ -42,5 +42,7 @@ urlpatterns = [
     path('instructor/user-pair/',
          views.InstructorUserPairList.as_view()),
     path('instructor/user-pair/detail/<int:pk>/',
-         views.InstructorUserPairDetail.as_view())
+         views.InstructorUserPairDetail.as_view()),
+    path('save-stripe-info/<str:email>/<str:paymentMethodID>/<str:subscription_type>/',
+         views.save_stripe_info),
 ]
