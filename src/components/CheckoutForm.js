@@ -12,7 +12,7 @@ const CheckoutForm = ({ paymentPlanType, userEmail, userID }) => {
   const [responseMessage, setResponseMessage] = useState();
   const [loading, setLoading] = useState(false);
   const [passFunc, setPassFunc] = useState(true);
-  const [disableSubmit, setDisableSubmit] = useState(true); 
+  const [disableSubmit, setDisableSubmit] = useState(true);
 
   const stripe = useStripe();
   const elements = useElements();
@@ -27,7 +27,7 @@ const CheckoutForm = ({ paymentPlanType, userEmail, userID }) => {
   };
 
   const handleChange = (event) => {
-    setDisableSubmit(!event.complete)
+    setDisableSubmit(!event.complete);
     if (event.error) {
       setError(event.error.message.toString());
     } else {
@@ -110,7 +110,11 @@ const CheckoutForm = ({ paymentPlanType, userEmail, userID }) => {
         func={passFunc && setUpgradeState}
         setResponseMessage={setResponseMessage}
       />
-      <form onSubmit={handleSubmit('no-upgrade')} className="flex flex-col">
+      <h2 className="mb-4 -mt-4 text-2xl">
+        Sign up for 1 year <b className="text-blue-500">{paymentPlanType}</b>{" "}
+        Subscription
+      </h2>
+      <form onSubmit={handleSubmit("no-upgrade")} className="flex flex-col">
         <div className="mb-4">
           <label htmlFor="email" className="mr-4">
             Email Address
@@ -131,7 +135,12 @@ const CheckoutForm = ({ paymentPlanType, userEmail, userID }) => {
           <CardElement id="card-element" onChange={handleChange} />
         </div>
         <div className="flex items-center">
-          <LoadingButton disabled={disableSubmit} loading={loading} type="submit" variant="outlined">
+          <LoadingButton
+            disabled={disableSubmit}
+            loading={loading}
+            type="submit"
+            variant="outlined"
+          >
             Submit Payment
           </LoadingButton>
           <div className="h-full w-3/5 ml-4 text-red-500" role="alert">

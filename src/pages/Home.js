@@ -69,7 +69,6 @@ function Home() {
             />
             <PricePlan
               type="Unlimited"
-              headingClasses="text-blue-500"
               sect1="30 days of Unlimited classes at Gold price"
               sect2="8 classes a month after 1st 30 days"
               sect3="Childwatch"
@@ -83,7 +82,6 @@ function Home() {
             />
             <PricePlan
               type="Gold"
-              headingClasses="text-yellow-500"
               sect1="30 days of Unlimited classes at Gold price"
               sect2="8 classes a month after 1st 30 days"
               sect3="Childwatch"
@@ -97,7 +95,6 @@ function Home() {
             />
             <PricePlan
               type="Silver"
-              headingClasses="text-slate-500"
               sect1="30 days of Unlimited classes at Gold price"
               sect2="8 classes a month after 1st 30 days"
               sect3="Childwatch"
