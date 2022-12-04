@@ -10,7 +10,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js/pure";
 import { getSWUser } from "../apirequests/apiBackEndRequests";
 
-const stripePromise = loadStripe(`${process.env.REACT_STRIPE_PUBLISHABLE_KEY}`);
+const stripePromise = loadStripe(`${process.env.REACT_STRIPE_SECRET_KEY}`);
 
 export default function Modal({
   showModal,
