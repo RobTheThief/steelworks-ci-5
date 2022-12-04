@@ -10,7 +10,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js/pure";
 import { getSWUser } from "../apirequests/apiBackEndRequests";
 
-const stripePromise = loadStripe(`${process.env.REACT_STRIPE_SECRET_KEY}`);
+const stripePromise = loadStripe(process.env.REACT_STRIPE_PUBLISHABLE_KEY);
 
 export default function Modal({
   showModal,
@@ -26,7 +26,7 @@ export default function Modal({
 }) {
   const [userEmail, setUserEmail] = useState("");
   const [swUser, setSWUser] = useState("");
-console.log(process.env.REACT_STRIPE_PUBLISHABLE_KEY)
+
   const getProfileAsync = async () => {
     await getProfile().then((res) => setUserEmail(res.email)).then(() => {
       getUserAsync()
