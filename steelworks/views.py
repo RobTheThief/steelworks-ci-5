@@ -73,11 +73,15 @@ def check_sub_upgrade(current_product_id, subscription_type):
     return 'Are you sure you want to upgrade your subscription?' if current_prod_order > submitted_prod_order else 'You cannot downgrade your subscription'
 
 
-@api_view(['POST'])
 @authentication_classes([SessionAuthentication])
 @permission_classes([IsAuthenticated])
-def save_stripe_info(self, email, paymentMethodID, subscription_type, upgrade):
-
+@api_view(['POST'])
+def save_stripe_info(self, email, paymentMethodID, subscription_type, upgrade, user_id):
+    product_user_pair_ids = {
+        'REACT_STRIPE_UNLIMITED_ID': 4,
+        'REACT_STRIPE_GOLD_ID': 5,
+        'REACT_STRIPE_SILVER_ID': 6
+    }
     try:
         extra_msg = ''
         customer_data = stripe.Customer.list(email=email).data
@@ -98,7 +102,6 @@ def save_stripe_info(self, email, paymentMethodID, subscription_type, upgrade):
                     found_active_sub = True
                     for array in sub.items():
                         if array[0] == 'items':  # find sub and compare to current
-                            print('anything')
                             current_product_id = array[1].data[0].plan.id
                             isSubedCurrentProd = current_product_id == str(
                                 os.getenv(subscription_type))
@@ -125,9 +128,15 @@ def save_stripe_info(self, email, paymentMethodID, subscription_type, upgrade):
                     stripe.Subscription.delete(
                         sub.id,
                     )
+                    pair_id = 4 if str(os.getenv('REACT_STRIPE_UNLIMITED_ID')) == sub.plan.id else 5 if str(
+                        os.getenv('REACT_STRIPE_GOLD_ID')) == sub.plan.id else 6
+                    ProductUserPairUpdateFunction(pair_id, user_id, False)
+
             add_card_set_default_and_create_sub(
                 paymentMethodID, customer, subscription_type)
 
+        ProductUserPairUpdateFunction(
+            product_user_pair_ids[subscription_type], user_id, True)
         return Response(
             status=status.HTTP_200_OK,
             data={
@@ -231,6 +240,11 @@ class ProductDelete(generics.RetrieveDestroyAPIView):
 
 
 ############# """ PRODUCT/USER PAIR VIEWS """#####################
+class ProductUserPairCreate(generics.CreateAPIView):
+    queryset = models.ProductUserPair.objects.all(),
+    serializer_class = serializers.ProductUserPairSerializer
+
+
 class ProductUserPairList(generics.ListAPIView):
     queryset = models.ProductUserPair.objects.all()
     serializer_class = serializers.ProductUserPairSerializer
@@ -256,6 +270,13 @@ def ProductUserPairUpdateFunction(pk, user_id, add_remove):
     else:
         obj.subscribed_users.remove(user)
     obj.save()
+
+#ProductUserPairUpdateFunction(4, 18, False)
+
+
+class ProductUserPairDelete(generics.RetrieveDestroyAPIView):
+    queryset = models.ProductUserPair.objects.all()
+    serializer_class = serializers.ProductUserPairSerializer
 
 ############# """ GYM CLASSES VIEWS """#####################
 

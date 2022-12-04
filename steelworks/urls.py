@@ -24,6 +24,10 @@ urlpatterns = [
          views.ProductUserPairList.as_view()),
     path('product/user-pair/detail/<int:pk>/',
          views.ProductUserPairDetail.as_view()),
+    path('product/user-pair/delete/<int:pk>/',
+         views.ProductUserPairDelete.as_view()), # delete in prod
+     path('product/user-pair/create/',
+         views.ProductUserPairCreate.as_view()), # delete in prod
 
     path('instructor/',
          views.InstructorList.as_view()),
@@ -43,6 +47,6 @@ urlpatterns = [
          views.InstructorUserPairList.as_view()),
     path('instructor/user-pair/detail/<int:pk>/',
          views.InstructorUserPairDetail.as_view()),
-    path('save-stripe-info/<str:email>/<str:paymentMethodID>/<str:subscription_type>/<str:upgrade>/',
+    path('save-stripe-info/<str:email>/<str:paymentMethodID>/<str:subscription_type>/<str:upgrade>/<int:user_id>/',
          views.save_stripe_info),
 ]

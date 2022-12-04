@@ -8,6 +8,7 @@ import { getProfile } from "../apirequests/authRequests";
 
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js/pure";
+import { getSWUser } from "../apirequests/apiBackEndRequests";
 
 const stripePromise = loadStripe(process.env.REACT_STRIPE_PUBLISHABLE_KEY);
 
@@ -24,10 +25,27 @@ export default function Modal({
   setResponseMessage,
 }) {
   const [userEmail, setUserEmail] = useState("");
+  const [swUser, setSWUser] = useState("");
 
   const getProfileAsync = async () => {
-    await getProfile().then((res) => setUserEmail(res.email));
+    await getProfile().then((res) => setUserEmail(res.email)).then(() => {
+      getUserAsync()
+    });
   };
+
+  async function getUserAsync() {
+    try {
+      if (userEmail) {
+        await getSWUser(userEmail)
+          .then((res) => res.json())
+          .then((res) => {
+            setSWUser(res);
+          });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
     isCheckout && getProfileAsync();
@@ -109,6 +127,7 @@ export default function Modal({
               <CheckoutForm
                 paymentPlanType={paymentPlanType}
                 userEmail={userEmail}
+                userID={swUser?.id}
               />
             </Elements>
           ) : (
