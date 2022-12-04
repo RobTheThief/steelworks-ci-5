@@ -73,15 +73,31 @@ def check_sub_upgrade(current_product_id, subscription_type):
     return 'Are you sure you want to upgrade your subscription?' if current_prod_order > submitted_prod_order else 'You cannot downgrade your subscription'
 
 
+def find_product_user_pair_id(product_name):
+    product_user_pair = models.ProductUserPair.objects.filter(
+        product__product_name=product_name)
+    return product_user_pair.values()[0]['id']
+
+def pair_id_from_stripe_product_id(stripe_prod_id: str, product_names):
+    
+    if stripe_prod_id == os.getenv('REACT_STRIPE_UNLIMITED_ID'):
+            return find_product_user_pair_id(product_names['REACT_STRIPE_UNLIMITED_ID'])
+    elif stripe_prod_id == os.getenv('REACT_STRIPE_GOLD_ID'):
+            return find_product_user_pair_id(product_names['REACT_STRIPE_GOLD_ID'])
+    elif stripe_prod_id == str(os.getenv('REACT_STRIPE_SILVER_ID')):
+            return find_product_user_pair_id(product_names['REACT_STRIPE_SILVER_ID']) 
+
+
 @authentication_classes([SessionAuthentication])
 @permission_classes([IsAuthenticated])
 @api_view(['POST'])
 def save_stripe_info(self, email, paymentMethodID, subscription_type, upgrade, user_id):
-    product_user_pair_ids = {
-        'REACT_STRIPE_UNLIMITED_ID': 4,
-        'REACT_STRIPE_GOLD_ID': 5,
-        'REACT_STRIPE_SILVER_ID': 6
+    product_names = {
+        'REACT_STRIPE_UNLIMITED_ID': 'Unlimited',
+        'REACT_STRIPE_GOLD_ID': 'Gold',
+        'REACT_STRIPE_SILVER_ID': 'Silver'
     }
+    print(subscription_type)
     try:
         extra_msg = ''
         customer_data = stripe.Customer.list(email=email).data
@@ -128,15 +144,14 @@ def save_stripe_info(self, email, paymentMethodID, subscription_type, upgrade, u
                     stripe.Subscription.delete(
                         sub.id,
                     )
-                    pair_id = 4 if str(os.getenv('REACT_STRIPE_UNLIMITED_ID')) == sub.plan.id else 5 if str(
-                        os.getenv('REACT_STRIPE_GOLD_ID')) == sub.plan.id else 6
+                    pair_id = pair_id_from_stripe_product_id(sub.plan.id, product_names)
                     ProductUserPairUpdateFunction(pair_id, user_id, False)
 
             add_card_set_default_and_create_sub(
                 paymentMethodID, customer, subscription_type)
 
         ProductUserPairUpdateFunction(
-            product_user_pair_ids[subscription_type], user_id, True)
+            find_product_user_pair_id(product_names[subscription_type]), user_id, True)
         return Response(
             status=status.HTTP_200_OK,
             data={
@@ -271,7 +286,7 @@ def ProductUserPairUpdateFunction(pk, user_id, add_remove):
         obj.subscribed_users.remove(user)
     obj.save()
 
-#ProductUserPairUpdateFunction(4, 18, False)
+#ProductUserPairUpdateFunction(6, 18, False)
 
 
 class ProductUserPairDelete(generics.RetrieveDestroyAPIView):

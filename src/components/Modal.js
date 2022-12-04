@@ -28,9 +28,11 @@ export default function Modal({
   const [swUser, setSWUser] = useState("");
 
   const getProfileAsync = async () => {
-    await getProfile().then((res) => setUserEmail(res.email)).then(() => {
-      getUserAsync()
-    });
+    await getProfile()
+      .then((res) => setUserEmail(res.email))
+      .then(() => {
+        getUserAsync();
+      });
   };
 
   async function getUserAsync() {
@@ -55,7 +57,7 @@ export default function Modal({
   return (
     <div
       id="id01"
-      className={`p-96 fixed left-0 top-0 w-full h-full overflow-auto flex justify-center items-center ${
+      className={`py-96 fixed left-0 top-0 w-full h-full overflow-auto flex justify-center items-center ${
         showModal ? "block" : "hidden"
       } ${css`
         background-color: rgb(0, 0, 0);
@@ -70,7 +72,10 @@ export default function Modal({
       <div
         className={`${isCheckout ? "w-2/3" : "w-1/3"} ${
           isCheckout ? "bg-white text-black" : "bg-black text-white"
-        } rounded border-blue-500 border-2`}
+        } rounded border-blue-500 border-2 ${css`
+          min-width: 300px;
+          max-width: 600px;
+        `}`}
       >
         <div className="px-4 pt-2 pb-8">
           <div className="flex  justify-end">
