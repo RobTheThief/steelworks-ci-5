@@ -1,10 +1,19 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { saveStripeInfo } from "../apirequests/apiBackEndRequests";
-import SWButton from "./SWButton";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Modal from "./Modal";
 
 const CheckoutForm = ({ paymentPlanType, userEmail }) => {
   const [error, setError] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalHeading, setModalHeading] = useState("");
+  const [responseMessage, setResponseMessage] = useState();
+  const [loading, setLoading] = useState(false);
+  const [passFunc, setPassFunc] = useState(true);
+  const [disableSubmit, setDisableSubmit] = useState(true); 
+
   const stripe = useStripe();
   const elements = useElements();
   const paymentPlans = {
@@ -13,63 +22,123 @@ const CheckoutForm = ({ paymentPlanType, userEmail }) => {
     Silver: "REACT_STRIPE_SILVER_ID",
   };
 
+  const setUpgradeState = () => {
+    handleSubmit("upgrade")();
+  };
+
   const handleChange = (event) => {
+    setDisableSubmit(!event.complete)
     if (event.error) {
-      setError(event.error.message);
+      setError(event.error.message.toString());
     } else {
       setError(null);
     }
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = (upgrade) => async (event) => {
+    event && event.preventDefault();
+    setLoading(true);
     const card = elements.getElement(CardElement);
     const { paymentMethod, error } = await stripe.createPaymentMethod({
       type: "card",
       card: card,
     });
 
-    await saveStripeInfo(userEmail, paymentMethod.id, paymentPlans[paymentPlanType])
+    if (error) setError(error.toString());
+
+    await saveStripeInfo(
+      userEmail,
+      paymentMethod.id,
+      paymentPlans[paymentPlanType],
+      upgrade
+    )
       .then((response) => {
-        console.log(response?.data ? response.data : response);
-        setError(response?.data ? '' : response?.error);
+        setError(response?.data ? "" : response?.error.toString());
+        setResponseMessage(response.data?.message);
+        setLoading(false);
       })
       .catch((error) => {
-        setError(error);
+        setError(error.toString());
         console.log(error);
+        setLoading(false);
       });
   };
 
+  useEffect(() => {
+    switch (responseMessage) {
+      case "Subscription already active for same product":
+        setShowModal(true);
+        setModalMessage(responseMessage);
+        setModalHeading("Subscription information");
+        setPassFunc(false);
+        break;
+      case "Are you sure you want to upgrade your subscription?":
+        setShowModal(true);
+        setModalMessage(responseMessage);
+        setModalHeading("Subscription information");
+        setPassFunc(true);
+        break;
+      case "You cannot downgrade your subscription":
+        setShowModal(true);
+        setModalMessage(responseMessage);
+        setModalHeading("Subscription information");
+        setPassFunc(false);
+        break;
+      case "Success":
+        setShowModal(true);
+        setModalMessage(
+          `${responseMessage}! you have subscribed for ${paymentPlanType} membership`
+        );
+        setModalHeading("Subscription information");
+        setPassFunc(false);
+        break;
+      default:
+        setShowModal(false);
+        break;
+    }
+  }, [responseMessage]);
+
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col">
-      <div className="mb-4">
-        <label htmlFor="email" className="mr-4">
-          Email Address
-        </label>
-        <input
-          className=""
-          id="email"
-          name="name"
-          type="email"
-          value={userEmail}
-          readOnly
-        />
-      </div>
-      <div className="mb-4">
-        <label htmlFor="card-element" className="mr-4 mb-4">
-          Credit or debit card
-        </label>
-        <CardElement id="card-element" onChange={handleChange} />
-      </div>
-      <div className="flex items-center">
-        <SWButton type="submit" width="30%">
-          Submit Payment
-        </SWButton>
-        <div className="h-full w-3/5 ml-4 text-red-500" role="alert">
-          {error}
+    <>
+      <Modal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        message={modalMessage}
+        heading={modalHeading}
+        isInput
+        func={passFunc && setUpgradeState}
+        setResponseMessage={setResponseMessage}
+      />
+      <form onSubmit={handleSubmit('no-upgrade')} className="flex flex-col">
+        <div className="mb-4">
+          <label htmlFor="email" className="mr-4">
+            Email Address
+          </label>
+          <input
+            className=""
+            id="email"
+            name="name"
+            type="email"
+            value={userEmail}
+            readOnly
+          />
         </div>
-      </div>
-    </form>
+        <div className="mb-4">
+          <label htmlFor="card-element" className="mr-4 mb-4">
+            Credit or debit card
+          </label>
+          <CardElement id="card-element" onChange={handleChange} />
+        </div>
+        <div className="flex items-center">
+          <LoadingButton disabled={disableSubmit} loading={loading} type="submit" variant="outlined">
+            Submit Payment
+          </LoadingButton>
+          <div className="h-full w-3/5 ml-4 text-red-500" role="alert">
+            {error}
+          </div>
+        </div>
+      </form>
+    </>
   );
 };
 export default CheckoutForm;

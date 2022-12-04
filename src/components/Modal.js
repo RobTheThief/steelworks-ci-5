@@ -21,6 +21,7 @@ export default function Modal({
   func,
   isCheckout,
   paymentPlanType,
+  setResponseMessage,
 }) {
   const [userEmail, setUserEmail] = useState("");
 
@@ -41,8 +42,12 @@ export default function Modal({
       } ${css`
         background-color: rgb(0, 0, 0);
         background-color: rgba(0, 0, 0, 0.4);
+        z-index: 10000;
       `}`}
-      onClick={() => !isInput && !isCheckout && setShowModal(false)}
+      onClick={() => {
+        !isInput && !isCheckout && setShowModal(false);
+        setResponseMessage && setResponseMessage("");
+      }}
     >
       <div
         className={`${isCheckout ? "w-2/3" : "w-1/3"} ${
@@ -53,29 +58,51 @@ export default function Modal({
           <div className="flex  justify-end">
             <h3 className="w-full text-lg text-blue-500">{heading}</h3>
             <span
-              onClick={() => (isInput || isCheckout) && setShowModal(false)}
+              onClick={() => {
+                (isInput || isCheckout) && setShowModal(false);
+                setResponseMessage && setResponseMessage("");
+              }}
               className="realtive top-0 left-0 cursor-pointer text-3xl"
             >
               &times;
             </span>
           </div>
           {isInput ? (
-            <div className="flex">
-              <input
-                type="password"
-                className="text-black mt-2 rounded"
-                onChange={(e) => setter(e.target.value)}
-              ></input>{" "}
-              <SWButton
-                handleOnClick={() => {
-                  setShowModal(false);
-                  func();
-                }}
-                variant="outlined"
-                margin="0.5rem 0 0 1rem"
-              >
-                Ok
-              </SWButton>
+            <div className="flex flex-col">
+              {setter ? (
+                <input
+                  type="password"
+                  className="text-black mt-2 rounded"
+                  onChange={(e) => setter(e.target.value)}
+                ></input>
+              ) : (
+                <p className="w-full">{message}</p>
+              )}
+              <div className="flex w-full justify-center mt-4">
+                <div className="w-1/2 flex justify-between">
+                  <SWButton
+                    handleOnClick={() => {
+                      setShowModal(false);
+                      setResponseMessage && setResponseMessage("");
+                      func && func();
+                    }}
+                    variant="outlined"
+                    width="15%"
+                  >
+                    Ok
+                  </SWButton>
+                  <SWButton
+                    variant="outlined"
+                    width="15%"
+                    handleOnClick={() => {
+                      setShowModal(false);
+                      setResponseMessage && setResponseMessage("");
+                    }}
+                  >
+                    Cancel
+                  </SWButton>
+                </div>
+              </div>
             </div>
           ) : isCheckout ? (
             <Elements stripe={stripePromise}>

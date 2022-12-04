@@ -160,11 +160,11 @@ const getProductUserPairs = () => {
  * @param {string} subscription_type
  * @returns promise, object
  */
-const saveStripeInfo = (email, paymentMethodID, subscription_type) => {
+const saveStripeInfo = (email, paymentMethodID, subscription_type, upgrade) => {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        `/api/save-stripe-info/${email}/${paymentMethodID}/${subscription_type}/`,
+        `/api/save-stripe-info/${email}/${paymentMethodID}/${subscription_type}/${upgrade}/`,
         {
           method: "POST",
           headers: {

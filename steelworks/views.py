@@ -22,46 +22,121 @@ from rest_framework.permissions import IsAuthenticated
 stripe.api_key = str(os.getenv('REACT_STRIPE_SECRET_KEY'))
 
 
+def create_cust_and_sub(email, paymentMethodID, subscription_type):
+    customer = stripe.Customer.create(
+        email=email,
+        payment_method=paymentMethodID,
+        invoice_settings={
+            'default_payment_method': paymentMethodID
+        }
+    )
+    # creating subscription
+    stripe.Subscription.create(
+        customer=customer,
+        items=[
+            {
+                'price': str(os.getenv(subscription_type))
+            }
+        ]
+    )
+    return customer
+
+
+def add_card_set_default_and_create_sub(paymentMethodID, customer, subscription_type):
+    stripe.PaymentMethod.attach(
+        paymentMethodID,
+        customer=customer.id,
+    )
+    stripe.Customer.modify(
+        customer.id,
+        invoice_settings={
+            "default_payment_method": paymentMethodID},
+    )
+    # creating subscription
+    stripe.Subscription.create(
+        customer=customer,
+        items=[
+            {
+                'price': str(os.getenv(subscription_type))
+            }
+        ]
+    )
+
+
+def check_sub_upgrade(current_product_id, subscription_type):
+    product_order_array = [str(os.getenv('REACT_STRIPE_UNLIMITED_ID')), str(
+        os.getenv('REACT_STRIPE_GOLD_ID')), str(os.getenv('REACT_STRIPE_SILVER_ID'))]
+    current_prod_order = product_order_array.index(
+        current_product_id)
+    submitted_prod_order = product_order_array.index(
+        str(os.getenv(subscription_type)))
+    return 'Are you sure you want to upgrade your subscription?' if current_prod_order > submitted_prod_order else 'You cannot downgrade your subscription'
+
+
 @api_view(['POST'])
-@authentication_classes([ SessionAuthentication ])
+@authentication_classes([SessionAuthentication])
 @permission_classes([IsAuthenticated])
-def save_stripe_info(self, email, paymentMethodID, subscription_type):
+def save_stripe_info(self, email, paymentMethodID, subscription_type, upgrade):
 
     try:
         extra_msg = ''
         customer_data = stripe.Customer.list(email=email).data
         if len(customer_data) == 0:
-            # creating customer
-            customer = stripe.Customer.create(
-                email=email,
-                payment_method=paymentMethodID,
-                invoice_settings={
-                    'default_payment_method': paymentMethodID
-                }
-            )
-        else:
+            customer = create_cust_and_sub(
+                email, paymentMethodID, subscription_type)
+
+        elif upgrade == 'no-upgrade':  # As customer exists check for active subscription
+            # As customer exists check if active subscription exists for customer and return response
             customer = customer_data[0]
             extra_msg = "Customer already existed."
+            subs = stripe.Subscription.list(status='active')
+            found_active_sub = False
+            isSubedCurrentProd = False
+            upgrade_message = ''
+            for sub in subs.data:  # search for sub and see if it is the same one
+                if sub.customer == customer.id:  # find customer
+                    found_active_sub = True
+                    for array in sub.items():
+                        if array[0] == 'items':  # find sub and compare to current
+                            print('anything')
+                            current_product_id = array[1].data[0].plan.id
+                            isSubedCurrentProd = current_product_id == str(
+                                os.getenv(subscription_type))
 
-    
-        stripe.Subscription.create(
-            customer=customer,
-            items=[
-                {
-                    'price': str(os.getenv(subscription_type))
-                }
-            ]
-        )
+                            upgrade_message = 'Subscription already active for same product' if isSubedCurrentProd else check_sub_upgrade(
+                                current_product_id, subscription_type)
+                    return Response(
+                        status=status.HTTP_200_OK,
+                        data={
+                            'data': {'message': upgrade_message, 'customer_id': customer.id, 'extra_msg': extra_msg}
+                        }
+                    )
+
+            if found_active_sub == False:
+                add_card_set_default_and_create_sub(
+                    paymentMethodID, customer, subscription_type)
+
+        elif upgrade == 'upgrade':
+            customer = customer_data[0]
+            extra_msg = "Customer already existed."
+            subs = stripe.Subscription.list(status='active')
+            for sub in subs.data:
+                if sub.customer == customer.id:
+                    stripe.Subscription.delete(
+                        sub.id,
+                    )
+            add_card_set_default_and_create_sub(
+                paymentMethodID, customer, subscription_type)
 
         return Response(
-        status=status.HTTP_200_OK,
-        data={
-            'data': {'message': 'Success', 'customer_id': customer.id, 'extra_msg': extra_msg}
-        }
-    )
+            status=status.HTTP_200_OK,
+            data={
+                'data': {'message': 'Success', 'customer_id': customer.id, 'extra_msg': extra_msg}
+            }
+        )
     except Exception as e:
-            return Response({'msg':'something went wrong while creating stripe session','error':str(e)}, status=500)
-    
+        return Response({'msg': 'something went wrong while creating stripe session', 'error': str(e)}, status=500)
+
 
 class ReactView(TemplateView):
     template_name = 'steelworks/react.html'

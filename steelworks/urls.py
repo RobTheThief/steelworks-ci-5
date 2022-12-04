@@ -43,6 +43,6 @@ urlpatterns = [
          views.InstructorUserPairList.as_view()),
     path('instructor/user-pair/detail/<int:pk>/',
          views.InstructorUserPairDetail.as_view()),
-    path('save-stripe-info/<str:email>/<str:paymentMethodID>/<str:subscription_type>/',
+    path('save-stripe-info/<str:email>/<str:paymentMethodID>/<str:subscription_type>/<str:upgrade>/',
          views.save_stripe_info),
 ]
