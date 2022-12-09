@@ -4,7 +4,7 @@ from steelworks import views
 
 urlpatterns = [
     path('user/create/', views.SteelworksUserCreate.as_view(), name='create-User'),
-    path('user/<str:user_email>/', views.SteelworksUserGetFunction),
+    path('user/get/<str:user_email>/', views.SteelworksUserGetFunction),
     path('user/<int:pk>/', views.SteelworksUserDetail.as_view(), name='retrieve-User'),
     path('user/update/<int:pk>/<str:user_email>/<str:password>/<str:address_line_1>/<str:address_line_2>/<str:address_line_3>/<str:postcode>/<int:phone>/',
          views.SteelworksUserUpdateFunction, name='update-User'),
@@ -25,9 +25,9 @@ urlpatterns = [
     path('product/user-pair/detail/<int:pk>/',
          views.ProductUserPairDetail.as_view()),
     path('product/user-pair/delete/<int:pk>/',
-         views.ProductUserPairDelete.as_view()), # delete in prod
-     path('product/user-pair/create/',
-         views.ProductUserPairCreate.as_view()), # delete in prod
+         views.ProductUserPairDelete.as_view()),  # delete in prod
+    path('product/user-pair/create/',
+         views.ProductUserPairCreate.as_view()),  # delete in prod
 
     path('instructor/',
          views.InstructorList.as_view()),
@@ -37,11 +37,15 @@ urlpatterns = [
          views.InstructorUpdate.as_view()),
     path('instructor/create/',
          views.InstructorCreate.as_view()),
+    path('instructor/delete/<int:pk>/',
+         views.InstructorDelete.as_view()),  # delete in prod
 
     path('classes/',
          views.ClassesList.as_view()),
     path('classes/detail/<int:pk>/',
          views.ClassesDetail.as_view()),
+    path('classes/delete/<int:pk>/',
+         views.ClassesDelete.as_view()), # delete in prod
 
     path('instructor/user-pair/',
          views.InstructorUserPairList.as_view()),

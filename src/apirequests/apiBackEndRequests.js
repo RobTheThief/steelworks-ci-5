@@ -59,7 +59,7 @@ function createUser(
 const getSWUser = (email) => {
   return new Promise(async (resolve) => {
     try {
-      const response = await fetch(`/api/user/${email}/`, {
+      const response = await fetch(`/api/user/get/${email}/`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -67,8 +67,6 @@ const getSWUser = (email) => {
         },
         redirect: "follow",
       });
-
-      //const responseJson = await response.json();
 
       resolve(response);
     } catch (error) {

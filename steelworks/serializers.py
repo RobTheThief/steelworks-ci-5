@@ -57,8 +57,7 @@ class InstructorSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Instructor
         fields = ['pk', 'first_name', 'last_name',
-                  'email', 'address_line_1', 'address_line_2',
-                  'address_line_3', 'postcode', 'phone', 'created']
+                  'email', 'created']
 
 
 class InstructorUserPairSerializer(serializers.ModelSerializer):

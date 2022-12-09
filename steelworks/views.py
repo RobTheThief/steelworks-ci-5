@@ -17,7 +17,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.authentication import SessionAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 stripe.api_key = str(os.getenv('REACT_STRIPE_SECRET_KEY'))
 
@@ -306,22 +306,30 @@ class ClassesDetail(generics.RetrieveAPIView):
     serializer_class = serializers.ClassesSerializer
 
 
-def ClassesCreateFunction(name, details, instr, students):
+def ClassesCreateFunction(name, details):
 
-    p = models.Classes(class_name=name,
-                       class_details=details,
-                       instructor=instr,
-                       enrolled_students=students)
-    p.save()
-
-
-def ClassesUpdateFunction(pk, name, details, instr, students):
-    obj = models.Classes.objects.get(pk=pk)
-    obj.class_name = name
-    obj.class_details = details
-    obj.instructor = instr
-    obj.enrolled_students = students
+    obj = models.Classes(class_name=name,
+                       class_details=details,)
     obj.save()
+    
+
+def ClassesUpdateFunction( class_name, details, instr_email, student_id):
+
+    gym_class = models.Classes.objects.get(class_name=class_name)
+    student = models.SteelworksUser.objects.get(pk=student_id)
+    instructor = models.Instructor.objects.get(email=instr_email)
+
+    gym_class.enrolled_students.add(student)
+    gym_class.instructor.add(instructor)
+    gym_class.class_details = details
+    gym_class.save()
+
+class ClassesDelete(generics.RetrieveDestroyAPIView): 
+    queryset = models.Classes.objects.all()
+    serializer_class = serializers.ClassesSerializer
+
+#ClassesUpdateFunction( 'hiit', 'details updated', 'mcshanem@steelworks.com', 1)
+#ClassesCreateFunction('CrossFit', 'details')
 
 
 ############# """ INSTRUCTOR VIEWS """#####################
@@ -344,6 +352,9 @@ class InstructorCreate(generics.CreateAPIView):
     queryset = models.Instructor.objects.all()
     serializer_class = serializers.InstructorSerializer
 
+class InstructorDelete(generics.RetrieveDestroyAPIView): 
+    queryset = models.Instructor.objects.all()
+    serializer_class = serializers.InstructorSerializer
 
 ############# """ INSTRUCTOR USER PAIR VIEWS """#####################
 def InstructorUserPairCreateFunction(instr, stdns):

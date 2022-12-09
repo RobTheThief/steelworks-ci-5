@@ -27,6 +27,8 @@ export default function UserAccount({ profile }) {
   const [productUserPairs, setProductUserPairs] = useState();
   const [sub, setSub] = useState();
   const [subID, setSubID] = useState();
+  const [fitnessClass, setFitnessClass] = useState();
+  const [instructor, setInstructor] = useState();
 
   async function getUserAsync() {
     try {
@@ -129,18 +131,19 @@ export default function UserAccount({ profile }) {
         func={updateUserAddressPhoneAsync}
       />
       <div className="w-full min-h-screen flex justify-center items-center user-account-page overflow-y-scroll">
-        <form
+        <div
           className={`my-24 py-8 flex-col items-center account-details ${css`
             width: 30%;
-            min-width: 295px;
+            min-width: 310px;
             ${CONTAINER_CSS}
           `}`}
-          onSubmit={(e) => handleUpdadeInfo(e)}
         >
-          <div
-            className={`w-4/5 p-4 mb-4 text-white ${css`
-              ${CONTAINER_CSS}
+          <form
+            className={`p-8 mb-4 text-white ${css`
+              ${CONTAINER_CSS} background: black;
+              width: 90%;
             `}`}
+            onSubmit={(e) => handleUpdadeInfo(e)}
           >
             <ul>
               <li>Username: {profile?.username}</li>
@@ -195,23 +198,76 @@ export default function UserAccount({ profile }) {
                 Update
               </SWButton>
             </ul>
-          </div>
+          </form>
           <div
-            className={`w-4/5 p-4 text-white flex-col items- ${css`
-              ${CONTAINER_CSS}
+            className={`w-4/5 p-8 text-white flex-col ${css`
+              ${CONTAINER_CSS} background: black;
+              width: 90%;
             `}`}
           >
-            <p>Active Subscription: {sub}</p>
+            <p>
+              Active Subscription: {sub}.<br />
+              {sub === "None" && (
+                <span>
+                  Sign up to enroll in classes and access the facilities.
+                </span>
+              )}
+            </p>
             <SWButton
               margin="1rem 0 0 0"
-              width="25%"
+              width="6.75rem"
               component={HashLink}
-              link='/#price-plans'
+              link="/#price-plans"
             >
               Upgrade
             </SWButton>
           </div>
-        </form>
+          {sub !== "None" && (
+            <form
+              className={`w-4/5 p-8 mt-4 text-white flex-col ${css`
+                ${CONTAINER_CSS} background: black;
+                width: 90%;
+              `}`}
+              onSubmit={(e) => {
+                e.preventDefault();
+                console.log(fitnessClass, instructor);
+              }}
+            >
+              <label htmlFor="classes">Choose a class:</label>
+              <select
+                id="classes"
+                name="classes"
+                className="text-black mb-4"
+                onChange={(e) => setFitnessClass(e.target.value)}
+              >
+                <option>Choose class</option>
+                <option value="zumba">Zumba</option>
+                <option value="hiit">HIIT</option>
+                <option value="spin">Spin</option>
+                <option value="crossfit">CrossFit</option>
+              </select>
+
+              <label htmlFor="instructor">Choose an instructor:</label>
+              <select
+                id="instructor"
+                name="instructor"
+                className="text-black"
+                onChange={(e) => setInstructor(e.target.value)}
+              >
+                <option>Choose instructor</option>
+                <option value="John Morley">John Morley</option>
+                <option value="Conor McLennan">Conor McLennan</option>
+                <option value="Margaret McShane">Margaret McShane</option>
+                <option value="Suzan Áurea Hambleton">
+                  Suzan Áurea Hambleton
+                </option>
+              </select>
+              <SWButton type="submit" margin="1rem 0 0 0" width="6.75rem">
+                ENROLL
+              </SWButton>
+            </form>
+          )}
+        </div>
       </div>
     </>
   );

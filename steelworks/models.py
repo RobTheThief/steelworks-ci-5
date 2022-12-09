@@ -20,11 +20,6 @@ class Instructor(models.Model):
     first_name = models.CharField("first_name", max_length=240)
     last_name = models.CharField("last_name", max_length=240)
     email = models.EmailField()
-    address_line_1 = models.CharField("address_line_1", max_length=240)
-    address_line_2 = models.CharField("address_line_2", max_length=240)
-    address_line_3 = models.CharField("address_line_3", max_length=240)
-    postcode = models.CharField("postcode", max_length=240)
-    phone = models.CharField("phone", max_length=240)
     created = models.DateField(auto_now_add=True)
 
     def __str__(self):
