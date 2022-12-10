@@ -413,13 +413,10 @@ def InstructorUserPairUpdateFunction(self, instr_email, student_id, remove):
         if str(e) == 'InstructorUserPair matching query does not exist.':
             print('no exist')
             InstructorUserPairCreateFunction(instr_email)
-            InstructorUserPairUpdateFunction(self, instr_email, student_id, remove)
-            return Response({'msg': 'creating instructor student list'}, status=201)
-        return Response({'msg': 'something went wrong while updating instructor/student list', 'error': str(e)}, status=500)
-
-
-#InstructorUserPairUpdateFunction('mmmorleyj@steelworks.com', 1, 'add')
-# InstructorUserPairCreateFunction('morleyj@steelworks.com')
+            InstructorUserPairUpdateFunction(
+                self, instr_email, student_id, remove)
+            return HttpResponse(json.dumps({'msg': 'creating instructor student list'}), status=201)
+        return HttpResponse(json.dumps({'msg': 'something went wrong while updating instructor/student list', 'error': str(e)}), status=500)
 
 
 class InstructorUserPairList(generics.ListAPIView):
@@ -428,6 +425,10 @@ class InstructorUserPairList(generics.ListAPIView):
 
 
 class InstructorUserPairDetail(generics.RetrieveAPIView):
+    queryset = models.InstructorUserPair.objects.all()
+    serializer_class = serializers.InstructorUserPairSerializer
+
+class InstructorUserPairDelete(generics.RetrieveDestroyAPIView):
     queryset = models.InstructorUserPair.objects.all()
     serializer_class = serializers.InstructorUserPairSerializer
 

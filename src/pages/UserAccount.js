@@ -6,6 +6,7 @@ import {
   getSWUser,
   getUserClasses,
   updateGymClass,
+  updateInstructorUserPair,
   updateUserAddressPhone,
 } from "../apirequests/apiBackEndRequests";
 import SWButton from "../components/SWButton";
@@ -105,16 +106,18 @@ export default function UserAccount({ profile }) {
   };
 
   const handleClassesUpdate = async (e) => {
-    const option = e.target.innerText;
-    (instructor || option === "REMOVE") &&
-      fitnessClass &&
-      (await updateGymClass(
-        fitnessClass,
-        "from frontend",
-        instructor,
-        swUser?.id,
-        option === "REMOVE" ? "remove" : "add"
-      ).then(() => swUser?.id && getUserClassesAsync(swUser?.id)));
+    const option = e.target.innerText === "REMOVE" ? "remove" : "add";
+    if ((instructor || option === "REMOVE") && fitnessClass) {
+      
+        await updateGymClass(
+          fitnessClass,
+          "from frontend",
+          instructor,
+          swUser?.id,
+          option
+        ).then(() => swUser?.id && getUserClassesAsync(swUser?.id))
+      .then(await updateInstructorUserPair(instructor, swUser?.id, option));
+    }
   };
 
   const handleDetailsExpand = (e) => {

@@ -287,6 +287,36 @@ const getUserClasses = (student_id) => {
   });
 };
 
+/**
+ * Sends a GET request to the backend to update the instructor
+ * user pair and returns a response object.
+ * @returns promise, object
+ */
+const updateInstructorUserPair = (instr_email, student_id, remove='add') => {
+  return new Promise(async (resolve) => {
+    try {
+      const response = await fetch(
+        `api/instructor/user-pair/update/${instr_email}/${student_id}/${remove}/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie(),
+          },
+          redirect: "follow",
+        }
+      );
+      console.log(response)
+
+      const jsonResponse = await response.json();
+      resolve(jsonResponse);
+    } catch (error) {
+      console.log(error);
+      resolve();
+    }
+  });
+};
+
 export {
   createUser,
   getSWUser,
@@ -296,4 +326,5 @@ export {
   updateGymClass,
   getGymClasses,
   getUserClasses,
+  updateInstructorUserPair
 };

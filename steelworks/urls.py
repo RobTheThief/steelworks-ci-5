@@ -57,6 +57,10 @@ urlpatterns = [
          views.InstructorUserPairDetail.as_view()),
     path('instructor/user-pair/update/<str:instr_email>/<int:student_id>/<str:remove>/',
          views.InstructorUserPairUpdateFunction),
+         path('instructor/user-pair/delete/<int:pk>/',
+         views.InstructorUserPairDelete.as_view()),
+
+         
     path('save-stripe-info/<str:email>/<str:paymentMethodID>/<str:subscription_type>/<str:upgrade>/<int:user_id>/',
          views.save_stripe_info),
 ]
