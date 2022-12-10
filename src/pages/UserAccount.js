@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { css } from "@emotion/css";
 import {
+  getGymClasses,
   getProductUserPairs,
   getSWUser,
+  getUserClasses,
+  updateGymClass,
   updateUserAddressPhone,
 } from "../apirequests/apiBackEndRequests";
 import SWButton from "../components/SWButton";
@@ -29,6 +32,16 @@ export default function UserAccount({ profile }) {
   const [subID, setSubID] = useState();
   const [fitnessClass, setFitnessClass] = useState();
   const [instructor, setInstructor] = useState();
+  const [gymClassesString, setGymClassesString] = useState();
+  const [gymClassesArray, setGymClassesArray] = useState();
+  const [enrolledClassesArray, setEnrolledClassesArray] = useState();
+  const [enrolledClassesDetails, setEnrolledClassesDetails] = useState();
+  const [detailsExpandArray, setDetailsExpandArray] = useState([
+    "h-6",
+    "h-6",
+    "h-6",
+    "h-6",
+  ]);
 
   async function getUserAsync() {
     try {
@@ -78,6 +91,57 @@ export default function UserAccount({ profile }) {
     setter(e.target.value);
   }
 
+  const getGymClassesAsync = async () => {
+    await getGymClasses().then((res) => setGymClassesArray(res));
+  };
+
+  const getUserClassesAsync = async (student_id) => {
+    await getUserClasses(student_id)
+      .then((res) => {
+        setEnrolledClassesArray(res.response);
+        return res;
+      })
+      .then((res) => setGymClassesString(res.response.join(", ")));
+  };
+
+  const handleClassesUpdate = async (e) => {
+    const option = e.target.innerText;
+    (instructor || option === "REMOVE") &&
+      fitnessClass &&
+      (await updateGymClass(
+        fitnessClass,
+        "from frontend",
+        instructor,
+        swUser?.id,
+        option === "REMOVE" ? "remove" : "add"
+      ).then(() => swUser?.id && getUserClassesAsync(swUser?.id)));
+  };
+
+  const handleDetailsExpand = (e) => {
+    const reset = ["h-6", "h-6", "h-6", "h-6"];
+    setDetailsExpandArray([...reset]);
+    let detailsExpandArrayTemp = [...reset];
+    detailsExpandArrayTemp[e.target.id] =
+      detailsExpandArray[e.target.id] === "h-6"
+        ? "h-32 overflow-scroll border-2 border-blue-500 rounded px-2"
+        : "h-6";
+    setDetailsExpandArray(detailsExpandArrayTemp);
+  };
+
+  useEffect(() => {
+    const enrolledClassesDetailsTemp = [];
+    gymClassesArray &&
+      enrolledClassesArray &&
+      gymClassesArray.forEach((gClass) => {
+        enrolledClassesArray.forEach((enrolled) => {
+          if (gClass.class_name === enrolled) {
+            enrolledClassesDetailsTemp.push(gClass);
+          }
+        });
+      });
+    setEnrolledClassesDetails(enrolledClassesDetailsTemp);
+  }, [gymClassesArray, enrolledClassesArray]);
+
   useEffect(() => {
     getUserAsync();
   }, [profile]);
@@ -119,6 +183,11 @@ export default function UserAccount({ profile }) {
     getProductUserPairsAsync();
   }, [swUser]);
 
+  useEffect(() => {
+    swUser?.id && getUserClassesAsync(swUser?.id);
+    getGymClassesAsync();
+  }, [swUser]);
+
   return (
     <>
       <Modal
@@ -130,7 +199,7 @@ export default function UserAccount({ profile }) {
         setter={setPassword}
         func={updateUserAddressPhoneAsync}
       />
-      <div className="w-full min-h-screen flex justify-center items-center user-account-page overflow-y-scroll">
+      <div className="w-full min-h-screen max-h-screen flex justify-center items-center user-account-page overflow-y-scroll">
         <div
           className={`my-24 py-8 flex-col items-center account-details ${css`
             width: 30%;
@@ -223,49 +292,82 @@ export default function UserAccount({ profile }) {
             </SWButton>
           </div>
           {sub !== "None" && (
-            <form
+            <section
+              id="update-classes"
               className={`w-4/5 p-8 mt-4 text-white flex-col ${css`
                 ${CONTAINER_CSS} background: black;
                 width: 90%;
               `}`}
-              onSubmit={(e) => {
-                e.preventDefault();
-                console.log(fitnessClass, instructor);
-              }}
             >
-              <label htmlFor="classes">Choose a class:</label>
-              <select
-                id="classes"
-                name="classes"
-                className="text-black mb-4"
-                onChange={(e) => setFitnessClass(e.target.value)}
-              >
-                <option>Choose class</option>
-                <option value="zumba">Zumba</option>
-                <option value="hiit">HIIT</option>
-                <option value="spin">Spin</option>
-                <option value="crossfit">CrossFit</option>
-              </select>
+              <h2 className="text-white">
+                Enrolled classes: {gymClassesString}{" "}
+              </h2>
+              {enrolledClassesDetails &&
+                enrolledClassesDetails.map((item, idx) => {
+                  return (
+                    <p
+                      key={`class-details-${idx}`}
+                      className={`${detailsExpandArray[idx]} cursor-pointer transition-all duration-300 ease-in-out overflow-hidden`}
+                      onClick={(e) => handleDetailsExpand(e)}
+                      id={idx}
+                    >
+                      <b>{item.class_name}:</b> {item.class_details}
+                    </p>
+                  );
+                })}
 
-              <label htmlFor="instructor">Choose an instructor:</label>
-              <select
-                id="instructor"
-                name="instructor"
-                className="text-black"
-                onChange={(e) => setInstructor(e.target.value)}
-              >
-                <option>Choose instructor</option>
-                <option value="John Morley">John Morley</option>
-                <option value="Conor McLennan">Conor McLennan</option>
-                <option value="Margaret McShane">Margaret McShane</option>
-                <option value="Suzan Áurea Hambleton">
-                  Suzan Áurea Hambleton
-                </option>
-              </select>
-              <SWButton type="submit" margin="1rem 0 0 0" width="6.75rem">
-                ENROLL
-              </SWButton>
-            </form>
+              <form className="flex flex-col">
+                <label htmlFor="classes">Choose a class:</label>
+                <select
+                  id="classes"
+                  name="classes"
+                  className="text-black mb-4"
+                  onChange={(e) => setFitnessClass(e.target.value)}
+                >
+                  <option>Choose class</option>
+                  <option value="Zumba">Zumba</option>
+                  <option value="HIIT">HIIT</option>
+                  <option value="Spin">Spin</option>
+                  <option value="CrossFit">CrossFit</option>
+                </select>
+
+                <label htmlFor="instructor">Choose an instructor:</label>
+                <select
+                  id="instructor"
+                  name="instructor"
+                  className="text-black"
+                  onChange={(e) => setInstructor(e.target.value)}
+                >
+                  <option>Choose instructor</option>
+                  <option value="morleyj@steelworks.com">John Morley</option>
+                  <option value="mclennanc@steelworks.com">
+                    Conor McLennan
+                  </option>
+                  <option value="mcshanem@steelworks.com">
+                    Margaret McShane
+                  </option>
+                  <option value="hambletonsa@steelworks.com">
+                    Suzan Áurea Hambleton
+                  </option>
+                </select>
+                <div>
+                  <SWButton
+                    handleOnClick={(e) => handleClassesUpdate(e)}
+                    margin="1rem 1rem 0 0"
+                    width="6.75rem"
+                  >
+                    ENROLL
+                  </SWButton>
+                  <SWButton
+                    handleOnClick={(e) => handleClassesUpdate(e)}
+                    margin="1rem 0 0 0"
+                    width="6.75rem"
+                  >
+                    REMOVE
+                  </SWButton>
+                </div>
+              </form>
+            </section>
           )}
         </div>
       </div>

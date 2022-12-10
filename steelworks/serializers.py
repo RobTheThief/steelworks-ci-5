@@ -64,7 +64,7 @@ class InstructorUserPairSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.InstructorUserPair
-        fields = ['pk', 'instructor', 'students', 'created']
+        fields = ['pk', 'instructor_email', 'instructor', 'students', 'created']
 
 
 class LoginSerializer(serializers.Serializer):

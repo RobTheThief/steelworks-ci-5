@@ -78,14 +78,15 @@ def find_product_user_pair_id(product_name):
         product__product_name=product_name)
     return product_user_pair.values()[0]['id']
 
+
 def pair_id_from_stripe_product_id(stripe_prod_id: str, product_names):
-    
+
     if stripe_prod_id == os.getenv('REACT_STRIPE_UNLIMITED_ID'):
-            return find_product_user_pair_id(product_names['REACT_STRIPE_UNLIMITED_ID'])
+        return find_product_user_pair_id(product_names['REACT_STRIPE_UNLIMITED_ID'])
     elif stripe_prod_id == os.getenv('REACT_STRIPE_GOLD_ID'):
-            return find_product_user_pair_id(product_names['REACT_STRIPE_GOLD_ID'])
+        return find_product_user_pair_id(product_names['REACT_STRIPE_GOLD_ID'])
     elif stripe_prod_id == str(os.getenv('REACT_STRIPE_SILVER_ID')):
-            return find_product_user_pair_id(product_names['REACT_STRIPE_SILVER_ID']) 
+        return find_product_user_pair_id(product_names['REACT_STRIPE_SILVER_ID'])
 
 
 @authentication_classes([SessionAuthentication])
@@ -144,7 +145,8 @@ def save_stripe_info(self, email, paymentMethodID, subscription_type, upgrade, u
                     stripe.Subscription.delete(
                         sub.id,
                     )
-                    pair_id = pair_id_from_stripe_product_id(sub.plan.id, product_names)
+                    pair_id = pair_id_from_stripe_product_id(
+                        sub.plan.id, product_names)
                     ProductUserPairUpdateFunction(pair_id, user_id, False)
 
             add_card_set_default_and_create_sub(
@@ -309,27 +311,54 @@ class ClassesDetail(generics.RetrieveAPIView):
 def ClassesCreateFunction(name, details):
 
     obj = models.Classes(class_name=name,
-                       class_details=details,)
+                         class_details=details,)
     obj.save()
-    
 
-def ClassesUpdateFunction( class_name, details, instr_email, student_id):
 
-    gym_class = models.Classes.objects.get(class_name=class_name)
-    student = models.SteelworksUser.objects.get(pk=student_id)
-    instructor = models.Instructor.objects.get(email=instr_email)
+def ClassesUpdateFunction(self, class_name, details, instr_email, student_id, remove_user):
+    if instr_email == 'undefined' or instr_email == 'Choose instructor':
+        instr_email = 'morleyj@steelworks.com'
+    try:
+        gym_class = models.Classes.objects.get(class_name=class_name)
+        student = models.SteelworksUser.objects.get(pk=student_id)
+        instructor = models.Instructor.objects.get(email=instr_email)
+        try:
+            if remove_user == 'remove':
+                gym_class.enrolled_students.remove(student)
+                return HttpResponse(json.dumps({'response': 'user removed from class'}), status=200)
+        except Exception as e:
+            return Response({'msg': 'something went wrong while updating classes', 'error': str(e)}, status=500)
 
-    gym_class.enrolled_students.add(student)
-    gym_class.instructor.add(instructor)
-    gym_class.class_details = details
-    gym_class.save()
+        gym_class.enrolled_students.add(student)
+        gym_class.instructor.add(instructor)
+        if details != 'from frontend':
+            gym_class.class_details = details
+        gym_class.save()
+        return HttpResponse(json.dumps({'response': 'updated'}), status=200)
+    except Exception as e:
+        return Response({'msg': 'something went wrong while updating classes', 'error': str(e)}, status=500)
 
-class ClassesDelete(generics.RetrieveDestroyAPIView): 
+
+#ClassesUpdateFunction('CrossFit', 'A form of high intensity interval training, CrossFit is a strength and conditioning workout that is made up of functional movement performed at a high intensity level. These movements are actions that you perform in your day-to-day life, like squatting, pulling, pushing etc.', 'morleyj@steelworks.com', 1, 'add')
+
+
+def getUserClasses(self, student_id):
+    try:
+        gym_class = models.Classes.objects.filter(
+            enrolled_students__pk=student_id)
+        values = gym_class.values()
+        user_classes_list = []
+        for i in values:
+            user_classes_list.append(i['class_name'])
+        return HttpResponse(json.dumps({'response': user_classes_list}), status=200)
+
+    except Exception as e:
+        return Response({'msg': 'something went wrong while retrieving user classes', 'error': str(e)}, status=500)
+
+
+class ClassesDelete(generics.RetrieveDestroyAPIView):
     queryset = models.Classes.objects.all()
     serializer_class = serializers.ClassesSerializer
-
-#ClassesUpdateFunction( 'hiit', 'details updated', 'mcshanem@steelworks.com', 1)
-#ClassesCreateFunction('CrossFit', 'details')
 
 
 ############# """ INSTRUCTOR VIEWS """#####################
@@ -352,23 +381,45 @@ class InstructorCreate(generics.CreateAPIView):
     queryset = models.Instructor.objects.all()
     serializer_class = serializers.InstructorSerializer
 
-class InstructorDelete(generics.RetrieveDestroyAPIView): 
+
+class InstructorDelete(generics.RetrieveDestroyAPIView):
     queryset = models.Instructor.objects.all()
     serializer_class = serializers.InstructorSerializer
 
 ############# """ INSTRUCTOR USER PAIR VIEWS """#####################
-def InstructorUserPairCreateFunction(instr, stdns):
 
-    p = models.InstructorUserPair(instructor=instr,
-                                  students=stdns)
+
+def InstructorUserPairCreateFunction(instr_email):
+
+    p = models.InstructorUserPair(instructor_email=instr_email)
     p.save()
 
 
-def InstructorUserPairUpdateFunction(pk, inst, stdns):
-    obj = models.Product.objects.get(pk=pk)
-    obj.instructor = inst
-    obj.students = stdns
-    obj.save()
+def InstructorUserPairUpdateFunction(self, instr_email, student_id, remove):
+    try:
+        student = models.SteelworksUser.objects.get(pk=student_id)
+        pair = models.InstructorUserPair.objects.get(
+            instructor_email=instr_email)
+
+        if remove == 'add':
+            pair.students.add(student)
+            pair.save()
+            return HttpResponse(json.dumps({'response': 'student added to instructor student list'}), status=200)
+        else:
+            pair.students.remove(student)
+            pair.save()
+            return HttpResponse(json.dumps({'response': 'student removed from the instructor student list'}), status=200)
+    except Exception as e:
+        if str(e) == 'InstructorUserPair matching query does not exist.':
+            print('no exist')
+            InstructorUserPairCreateFunction(instr_email)
+            InstructorUserPairUpdateFunction(self, instr_email, student_id, remove)
+            return Response({'msg': 'creating instructor student list'}, status=201)
+        return Response({'msg': 'something went wrong while updating instructor/student list', 'error': str(e)}, status=500)
+
+
+#InstructorUserPairUpdateFunction('mmmorleyj@steelworks.com', 1, 'add')
+# InstructorUserPairCreateFunction('morleyj@steelworks.com')
 
 
 class InstructorUserPairList(generics.ListAPIView):

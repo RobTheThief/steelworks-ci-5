@@ -57,6 +57,7 @@ class Classes(models.Model):
 
 
 class InstructorUserPair(models.Model):
+    instructor_email = models.CharField("instructor_name", default='no-instructor-email', max_length=240)
     instructor = models.ManyToManyField(Instructor)
     students = models.ManyToManyField(SteelworksUser)
     created = models.DateField(auto_now_add=True)

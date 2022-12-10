@@ -51,7 +51,6 @@ export default function Modal({
 
   useEffect(() => {
     isCheckout && getProfileAsync();
-    console.log(isCheckout, isInput);
   }, [paymentPlanType]);
 
   return (

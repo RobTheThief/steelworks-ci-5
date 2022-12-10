@@ -158,7 +158,13 @@ const getProductUserPairs = () => {
  * @param {string} subscription_type
  * @returns promise, object
  */
-const saveStripeInfo = (email, paymentMethodID, subscription_type, upgrade, userID) => {
+const saveStripeInfo = (
+  email,
+  paymentMethodID,
+  subscription_type,
+  upgrade,
+  userID
+) => {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
@@ -183,10 +189,111 @@ const saveStripeInfo = (email, paymentMethodID, subscription_type, upgrade, user
   });
 };
 
+/**
+ * Sends a GET request to the backend to update a gym class. Takes the
+ * class name, details, instructor email and student id as parameters
+ * and returns a response object.
+ * @param {string} class_name
+ * @param {string} details
+ * @param {string} instr_email
+ * @param {int} student_id
+ * @returns promise, object
+ */
+const updateGymClass = (
+  class_name,
+  details,
+  instr_email,
+  student_id,
+  remove_user = "add"
+) => {
+  return new Promise(async (resolve) => {
+    try {
+      const response = await fetch(
+        `/api/classes/update/${class_name}/${details}/${instr_email}/${student_id}/${remove_user}/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie(),
+          },
+          redirect: "follow",
+        }
+      );
+
+      const jsonResponse = await response.json();
+
+      resolve(jsonResponse);
+    } catch (error) {
+      console.log(error);
+      resolve();
+    }
+  });
+};
+
+/**
+ * Sends a GET request to the backend to get a list of all gym classes
+ * and returns a response object.
+ * @returns promise, object
+ */
+const getGymClasses = () => {
+  return new Promise(async (resolve) => {
+    try {
+      const response = await fetch(`/api/classes/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCookie(),
+        },
+        redirect: "follow",
+      });
+
+      const jsonResponse = await response.json();
+
+      resolve(jsonResponse);
+    } catch (error) {
+      console.log(error);
+      resolve();
+    }
+  });
+};
+
+/**
+ * Sends a GET request to the backend to get a list of all gym classes
+ * that a specific student is in and returns a response object.
+ * @returns promise, object
+ */
+const getUserClasses = (student_id) => {
+  return new Promise(async (resolve) => {
+    try {
+      const response = await fetch(
+        `/api/classes/user/get-classes/${student_id}/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie(),
+          },
+          redirect: "follow",
+        }
+      );
+
+      const jsonResponse = await response.json();
+
+      resolve(jsonResponse);
+    } catch (error) {
+      console.log(error);
+      resolve();
+    }
+  });
+};
+
 export {
   createUser,
   getSWUser,
   updateUserAddressPhone,
   getProductUserPairs,
   saveStripeInfo,
+  updateGymClass,
+  getGymClasses,
+  getUserClasses,
 };
