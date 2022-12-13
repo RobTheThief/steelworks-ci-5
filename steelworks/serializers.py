@@ -60,11 +60,11 @@ class InstructorSerializer(serializers.ModelSerializer):
                   'email', 'created']
 
 
-class InstructorUserPairSerializer(serializers.ModelSerializer):
+class ClassTimeUserPairSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = models.InstructorUserPair
-        fields = ['pk', 'instructor_email', 'instructor', 'students', 'created']
+        model = models.ClassTimeUserPair
+        fields = ['pk', 'gym_class', 'time_slot_1', 'time_slot_2', 'created']
 
 
 class LoginSerializer(serializers.Serializer):

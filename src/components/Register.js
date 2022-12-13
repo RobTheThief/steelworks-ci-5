@@ -52,6 +52,7 @@ export default function Register({
       firstName,
       lastName
     );
+    console.log({result})
     if (result.email && result.email[0] !== "This field must be unique.") {
       createUser(
         email,

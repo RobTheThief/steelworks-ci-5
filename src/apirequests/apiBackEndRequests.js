@@ -202,14 +202,13 @@ const saveStripeInfo = (
 const updateGymClass = (
   class_name,
   details,
-  instr_email,
   student_id,
   remove_user = "add"
 ) => {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        `/api/classes/update/${class_name}/${details}/${instr_email}/${student_id}/${remove_user}/`,
+        `/api/classes/update/${class_name}/${details}/${student_id}/${remove_user}/`,
         {
           method: "GET",
           headers: {
@@ -288,15 +287,20 @@ const getUserClasses = (student_id) => {
 };
 
 /**
- * Sends a GET request to the backend to update the instructor
+ * Sends a GET request to the backend to update the class time
  * user pair and returns a response object.
  * @returns promise, object
  */
-const updateInstructorUserPair = (instr_email, student_id, remove='add') => {
+const classTimeUserPairUpdate = (
+  gym_class_name,
+  user_id,
+  add_remove = "add",
+  time_slot
+) => {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        `api/instructor/user-pair/update/${instr_email}/${student_id}/${remove}/`,
+        `api/class-time/user-pair/update/${gym_class_name}/${user_id}/${add_remove}/${time_slot}/`,
         {
           method: "GET",
           headers: {
@@ -306,7 +310,35 @@ const updateInstructorUserPair = (instr_email, student_id, remove='add') => {
           redirect: "follow",
         }
       );
-      console.log(response)
+
+      const jsonResponse = await response.json();
+      resolve(jsonResponse);
+    } catch (error) {
+      console.log(error);
+      resolve();
+    }
+  });
+};
+
+/**
+ * Sends a GET request to the backend to get the
+ * users class time slots and returns a response object.
+ * @returns promise, object
+ */
+const findUserTimeSlots = (user_id) => {
+  return new Promise(async (resolve) => {
+    try {
+      const response = await fetch(
+        `api/class-time/user-pair/user-time-slots/${user_id}/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie(),
+          },
+          redirect: "follow",
+        }
+      );
 
       const jsonResponse = await response.json();
       resolve(jsonResponse);
@@ -326,5 +358,6 @@ export {
   updateGymClass,
   getGymClasses,
   getUserClasses,
-  updateInstructorUserPair
+  classTimeUserPairUpdate,
+  findUserTimeSlots
 };

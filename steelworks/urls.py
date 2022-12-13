@@ -46,21 +46,20 @@ urlpatterns = [
          views.ClassesDetail.as_view()),
     path('classes/delete/<int:pk>/',
          views.ClassesDelete.as_view()),  # delete in prod
-    path('classes/update/<str:class_name>/<str:details>/<str:instr_email>/<int:student_id>/<str:remove_user>/',
+    path('classes/update/<str:class_name>/<str:details>/<int:student_id>/<str:remove_user>/',
          views.ClassesUpdateFunction),
     path('classes/user/get-classes/<int:student_id>/',
          views.getUserClasses),
 
-    path('instructor/user-pair/',
-         views.InstructorUserPairList.as_view()),
-    path('instructor/user-pair/detail/<int:pk>/',
-         views.InstructorUserPairDetail.as_view()),
-    path('instructor/user-pair/update/<str:instr_email>/<int:student_id>/<str:remove>/',
-         views.InstructorUserPairUpdateFunction),
-         path('instructor/user-pair/delete/<int:pk>/',
-         views.InstructorUserPairDelete.as_view()),
 
-         
     path('save-stripe-info/<str:email>/<str:paymentMethodID>/<str:subscription_type>/<str:upgrade>/<int:user_id>/',
          views.save_stripe_info),
+    path('class-time/user-pair/create/',
+         views.ClassTimeUserPairCreate.as_view()),  # DELETE ?
+    path('class-time/user-pair/',
+         views.ClassTimeUserPairList.as_view()),  # DELETE ?
+    path('class-time/user-pair/update/<str:gym_class_name>/<int:user_id>/<str:add_remove>/<str:time_slot>/',
+         views.ClassTimeUserPairUpdateFunction),  # DELETE ?
+    path('class-time/user-pair/user-time-slots/<int:user_id>/',
+         views.findUserTimeSlots),  # DELETE ?
 ]

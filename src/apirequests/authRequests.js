@@ -29,7 +29,6 @@ const register = (user, pass, pass2, email, firstName, lastName) => {
       let response = await fetch(`/register/`, requestOptions);
 
       let responseJson = await response.json();
-
       resolve(responseJson);
     } catch (error) {
       console.log(error);

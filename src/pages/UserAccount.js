@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { css } from "@emotion/css";
 import {
+  classTimeUserPairUpdate,
+  findUserTimeSlots,
   getGymClasses,
   getProductUserPairs,
   getSWUser,
   getUserClasses,
   updateGymClass,
-  updateInstructorUserPair,
   updateUserAddressPhone,
 } from "../apirequests/apiBackEndRequests";
 import SWButton from "../components/SWButton";
@@ -32,17 +33,13 @@ export default function UserAccount({ profile }) {
   const [sub, setSub] = useState();
   const [subID, setSubID] = useState();
   const [fitnessClass, setFitnessClass] = useState();
-  const [instructor, setInstructor] = useState();
+  const [timeSlot, setTimeSlot] = useState();
   const [gymClassesString, setGymClassesString] = useState();
   const [gymClassesArray, setGymClassesArray] = useState();
   const [enrolledClassesArray, setEnrolledClassesArray] = useState();
-  const [enrolledClassesDetails, setEnrolledClassesDetails] = useState();
-  const [detailsExpandArray, setDetailsExpandArray] = useState([
-    "h-6",
-    "h-6",
-    "h-6",
-    "h-6",
-  ]);
+  const [selectedClass, setSelectedClass] = useState();
+  const [slot1ClassNames, setSlot1ClassNames] = useState();
+  const [slot2ClassNames, setSlot2ClassNames] = useState();
 
   async function getUserAsync() {
     try {
@@ -107,43 +104,47 @@ export default function UserAccount({ profile }) {
 
   const handleClassesUpdate = async (e) => {
     const option = e.target.innerText === "REMOVE" ? "remove" : "add";
-    if ((instructor || option === "REMOVE") && fitnessClass) {
-      
-        await updateGymClass(
-          fitnessClass,
-          "from frontend",
-          instructor,
-          swUser?.id,
-          option
-        ).then(() => swUser?.id && getUserClassesAsync(swUser?.id))
-      .then(await updateInstructorUserPair(instructor, swUser?.id, option));
+    if (enrolledClassesArray.includes(fitnessClass) && option === "add") {
+      setShowModal(true);
+      setModalHeading("Input error");
+      setModalMessage(`Youa are already enrolled in a ${fitnessClass} class`);
+      return;
+    }
+    if (fitnessClass && timeSlot) {
+      await updateGymClass(fitnessClass, "from frontend", swUser?.id, option)
+        .then(() => swUser?.id && getUserClassesAsync(swUser?.id))
+        .then(() =>
+          classTimeUserPairUpdate(fitnessClass, swUser?.id, option, timeSlot)
+        );
+    }
+    if ((!fitnessClass || !timeSlot) && option === "add") {
+      setShowModal(true);
+      setModalHeading("Input error");
+      setModalMessage("You must select a class and time slot to enroll.");
+    } else if ((!fitnessClass || !timeSlot) && option === "remove") {
+      setShowModal(true);
+      setModalHeading("Input error");
+      setModalMessage(
+        "You must select an enrolled class and time slot to remove."
+      );
     }
   };
 
-  const handleDetailsExpand = (e) => {
-    const reset = ["h-6", "h-6", "h-6", "h-6"];
-    setDetailsExpandArray([...reset]);
-    let detailsExpandArrayTemp = [...reset];
-    detailsExpandArrayTemp[e.target.id] =
-      detailsExpandArray[e.target.id] === "h-6"
-        ? "h-32 overflow-scroll border-2 border-blue-500 rounded px-2"
-        : "h-6";
-    setDetailsExpandArray(detailsExpandArrayTemp);
+  const getSelectedClassDetails = () => {
+    gymClassesArray &&
+      gymClassesArray.forEach((item) => {
+        if (item.class_name === fitnessClass) {
+          setSelectedClass(item);
+        }
+      });
   };
 
-  useEffect(() => {
-    const enrolledClassesDetailsTemp = [];
-    gymClassesArray &&
-      enrolledClassesArray &&
-      gymClassesArray.forEach((gClass) => {
-        enrolledClassesArray.forEach((enrolled) => {
-          if (gClass.class_name === enrolled) {
-            enrolledClassesDetailsTemp.push(gClass);
-          }
-        });
-      });
-    setEnrolledClassesDetails(enrolledClassesDetailsTemp);
-  }, [gymClassesArray, enrolledClassesArray]);
+  const findUserTimeSlotsAsync = async () => {
+    await findUserTimeSlots(swUser?.id).then((res) => {
+      setSlot1ClassNames(res.slot_1);
+      setSlot2ClassNames(res.slot_2);
+    });
+  };
 
   useEffect(() => {
     getUserAsync();
@@ -190,6 +191,20 @@ export default function UserAccount({ profile }) {
     swUser?.id && getUserClassesAsync(swUser?.id);
     getGymClassesAsync();
   }, [swUser]);
+
+  useEffect(() => {
+    getSelectedClassDetails();
+  }, [fitnessClass]);
+
+  useEffect(() => {
+    slot1ClassNames &&
+      slot2ClassNames &&
+      console.log({ slot1ClassNames, slot2ClassNames });
+  }, [slot1ClassNames, slot2ClassNames]);
+
+  useEffect(() => {
+    swUser && findUserTimeSlotsAsync();
+  }, [swUser, enrolledClassesArray]);
 
   return (
     <>
@@ -303,22 +318,23 @@ export default function UserAccount({ profile }) {
               `}`}
             >
               <h2 className="text-white">
-                Enrolled classes: {gymClassesString}{" "}
+                {/* {gymClassesString ? gymClassesString : "None"}{" "} */}
+                Enrolled classes slot 1:{" "}
+                {slot1ClassNames &&
+                  slot1ClassNames.map((item, idx) => {
+                    return (
+                      <span key={`enrolled-class-slot-1-${idx}`}> {item} </span>
+                    );
+                  })}
+                <br />
+                Enrolled classes slot 2:{" "}
+                {slot2ClassNames &&
+                  slot2ClassNames.map((item, idx) => {
+                    return (
+                      <span key={`enrolled-class-slot-2-${idx}`}> {item} </span>
+                    );
+                  })}
               </h2>
-              {enrolledClassesDetails &&
-                enrolledClassesDetails.map((item, idx) => {
-                  return (
-                    <p
-                      key={`class-details-${idx}`}
-                      className={`${detailsExpandArray[idx]} cursor-pointer transition-all duration-300 ease-in-out overflow-hidden`}
-                      onClick={(e) => handleDetailsExpand(e)}
-                      id={idx}
-                    >
-                      <b>{item.class_name}:</b> {item.class_details}
-                    </p>
-                  );
-                })}
-
               <form className="flex flex-col">
                 <label htmlFor="classes">Choose a class:</label>
                 <select
@@ -327,31 +343,23 @@ export default function UserAccount({ profile }) {
                   className="text-black mb-4"
                   onChange={(e) => setFitnessClass(e.target.value)}
                 >
-                  <option>Choose class</option>
+                  <option value={undefined}></option>
                   <option value="Zumba">Zumba</option>
                   <option value="HIIT">HIIT</option>
                   <option value="Spin">Spin</option>
                   <option value="CrossFit">CrossFit</option>
                 </select>
 
-                <label htmlFor="instructor">Choose an instructor:</label>
+                <label htmlFor="time-slot">Choose a time slot:</label>
                 <select
-                  id="instructor"
-                  name="instructor"
+                  id="time-slot"
+                  name="time-slot"
                   className="text-black"
-                  onChange={(e) => setInstructor(e.target.value)}
+                  onChange={(e) => setTimeSlot(e.target.value)}
                 >
-                  <option>Choose instructor</option>
-                  <option value="morleyj@steelworks.com">John Morley</option>
-                  <option value="mclennanc@steelworks.com">
-                    Conor McLennan
-                  </option>
-                  <option value="mcshanem@steelworks.com">
-                    Margaret McShane
-                  </option>
-                  <option value="hambletonsa@steelworks.com">
-                    Suzan Áurea Hambleton
-                  </option>
+                  <option value={undefined}></option>
+                  <option value="time_slot_1">Time slot 1</option>
+                  <option value="time_slot_2">Time slot 2</option>
                 </select>
                 <div>
                   <SWButton
@@ -370,6 +378,15 @@ export default function UserAccount({ profile }) {
                   </SWButton>
                 </div>
               </form>
+              <div
+                className={`${
+                  selectedClass
+                    ? "h-32 p-2 border-2 border-blue-500 rounded"
+                    : "h-4"
+                } mt-4 transition-all duration-300 ease-in-out overflow-scroll`}
+              >
+                {selectedClass ? selectedClass.class_details : null}
+              </div>
             </section>
           )}
         </div>

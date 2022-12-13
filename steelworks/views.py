@@ -98,7 +98,6 @@ def save_stripe_info(self, email, paymentMethodID, subscription_type, upgrade, u
         'REACT_STRIPE_GOLD_ID': 'Gold',
         'REACT_STRIPE_SILVER_ID': 'Silver'
     }
-    print(subscription_type)
     try:
         extra_msg = ''
         customer_data = stripe.Customer.list(email=email).data
@@ -272,13 +271,6 @@ class ProductUserPairDetail(generics.RetrieveAPIView):
     serializer_class = serializers.ProductUserPairSerializer
 
 
-def ProductUserPairCreateFunction(prod, users):
-
-    p = models.ProductUserPair(product=prod,
-                               subscribed_users=users)
-    p.save()
-
-
 def ProductUserPairUpdateFunction(pk, user_id, add_remove):
     obj = models.ProductUserPair.objects.get(pk=pk)
     user = models.SteelworksUser.objects.get(pk=user_id)
@@ -288,12 +280,73 @@ def ProductUserPairUpdateFunction(pk, user_id, add_remove):
         obj.subscribed_users.remove(user)
     obj.save()
 
-#ProductUserPairUpdateFunction(6, 18, False)
-
+#ProductUserPairUpdateFunction(3, 1, False) ## *********************************** Delete!!!!!
 
 class ProductUserPairDelete(generics.RetrieveDestroyAPIView):
     queryset = models.ProductUserPair.objects.all()
     serializer_class = serializers.ProductUserPairSerializer
+
+############# """ CLASS TIME USER PAIR VIEWS """#####################
+
+class ClassTimeUserPairList(generics.ListAPIView):
+    queryset = models.ClassTimeUserPair.objects.all()
+    serializer_class = serializers.ClassTimeUserPairSerializer
+
+class ClassTimeUserPairCreate(generics.CreateAPIView):
+    queryset = models.ClassTimeUserPair.objects.all(),
+    serializer_class = serializers.ClassTimeUserPairSerializer
+
+class ClassTimeUserPairDelete(generics.RetrieveDestroyAPIView):
+    queryset = models.ClassTimeUserPair.objects.all()
+    serializer_class = serializers.ClassTimeUserPairSerializer
+
+def ClassTimeUserPairUpdateFunction(self, gym_class_name, user_id, add_remove, time_slot):
+    try:
+        gym_class = models.Classes.objects.get(class_name=gym_class_name)
+        pair = models.ClassTimeUserPair.objects.get(gym_class=gym_class)
+        user = models.SteelworksUser.objects.get(pk=user_id)
+        if add_remove == 'add' and time_slot == 'time_slot_1':
+            pair.time_slot_1.add(user)
+            pair.save()
+            return HttpResponse(json.dumps({'response': 'added to time slot 1'}))
+        elif time_slot == 'time_slot_1':
+            pair.time_slot_1.remove(user)
+            pair.save()
+            return HttpResponse(json.dumps({'response': 'removed from time slot 1'}))
+        if add_remove == 'add' and time_slot == 'time_slot_2':
+            pair.time_slot_2.add(user)
+            pair.save()
+            return HttpResponse(json.dumps({'response': 'added to time slot 2'}))
+        elif time_slot == 'time_slot_2':
+            pair.time_slot_2.remove(user)
+            pair.save()
+            return HttpResponse(json.dumps({'response': 'removed from time slot 2'}))
+        
+    except Exception as e:
+        return Response({'msg': 'something went wrong while updating class time slot', 'error': str(e)}, status=500)
+
+
+def findUserTimeSlots(self, user_id):
+    try:
+        find_slot_1 = models.ClassTimeUserPair.objects.filter(
+            time_slot_1__id=user_id)
+        find_slot_2 = models.ClassTimeUserPair.objects.filter(
+            time_slot_2__id=user_id)
+            
+        slot_1_gym_class_ids = []
+        slot_2_gym_class_ids = []
+        for slot in find_slot_1.values():
+            gym_class = models.Classes.objects.get(pk=slot['gym_class_id'])
+            slot_1_gym_class_ids.append(gym_class.class_name)
+        for slot in find_slot_2.values():
+            gym_class = models.Classes.objects.get(pk=slot['gym_class_id'])
+            slot_2_gym_class_ids.append(gym_class.class_name)
+        return HttpResponse(json.dumps({'slot_1': slot_1_gym_class_ids, 'slot_2': slot_2_gym_class_ids}))
+    except Exception as e:
+        return Response({'msg': 'something went wrong while getting user class time slots', 'error': str(e)}, status=500)
+
+#findUserTimeSlots(1)
+#ClassTimeUserPairUpdateFunction('Zumba', 1, False, 'time_slot_1')
 
 ############# """ GYM CLASSES VIEWS """#####################
 
@@ -308,20 +361,19 @@ class ClassesDetail(generics.RetrieveAPIView):
     serializer_class = serializers.ClassesSerializer
 
 
-def ClassesCreateFunction(name, details):
-
+def ClassesCreateFunction(name, details, instr_email):
+    instructor = models.Instructor.objects.get(email=instr_email)
     obj = models.Classes(class_name=name,
-                         class_details=details,)
+                         class_details=details, instructor=instructor)
     obj.save()
 
 
-def ClassesUpdateFunction(self, class_name, details, instr_email, student_id, remove_user):
-    if instr_email == 'undefined' or instr_email == 'Choose instructor':
-        instr_email = 'morleyj@steelworks.com'
+def ClassesUpdateFunction(self, class_name, details, student_id, remove_user):
+
     try:
         gym_class = models.Classes.objects.get(class_name=class_name)
         student = models.SteelworksUser.objects.get(pk=student_id)
-        instructor = models.Instructor.objects.get(email=instr_email)
+       
         try:
             if remove_user == 'remove':
                 gym_class.enrolled_students.remove(student)
@@ -330,17 +382,17 @@ def ClassesUpdateFunction(self, class_name, details, instr_email, student_id, re
             return Response({'msg': 'something went wrong while updating classes', 'error': str(e)}, status=500)
 
         gym_class.enrolled_students.add(student)
-        gym_class.instructor.add(instructor)
         if details != 'from frontend':
             gym_class.class_details = details
         gym_class.save()
         return HttpResponse(json.dumps({'response': 'updated'}), status=200)
     except Exception as e:
+        print(str(e))
         return Response({'msg': 'something went wrong while updating classes', 'error': str(e)}, status=500)
 
 
-#ClassesUpdateFunction('CrossFit', 'A form of high intensity interval training, CrossFit is a strength and conditioning workout that is made up of functional movement performed at a high intensity level. These movements are actions that you perform in your day-to-day life, like squatting, pulling, pushing etc.', 'morleyj@steelworks.com', 1, 'add')
-
+#ClassesCreateFunction('CrossFit', 'Not only does a Spin class benefit your muscles—everything from your legs to your core—but its also a great low-impact cardiovascular workout, which improves your blood flow, increases your stamina, boosts your mood, and prevents against chronic issues such as high blood pressure, heart disease, stroke, and diabetes', 'hambletonsa@steelworks.com')
+## *********************************** Delete!!!!!
 
 def getUserClasses(self, student_id):
     try:
@@ -385,52 +437,6 @@ class InstructorCreate(generics.CreateAPIView):
 class InstructorDelete(generics.RetrieveDestroyAPIView):
     queryset = models.Instructor.objects.all()
     serializer_class = serializers.InstructorSerializer
-
-############# """ INSTRUCTOR USER PAIR VIEWS """#####################
-
-
-def InstructorUserPairCreateFunction(instr_email):
-
-    p = models.InstructorUserPair(instructor_email=instr_email)
-    p.save()
-
-
-def InstructorUserPairUpdateFunction(self, instr_email, student_id, remove):
-    try:
-        student = models.SteelworksUser.objects.get(pk=student_id)
-        pair = models.InstructorUserPair.objects.get(
-            instructor_email=instr_email)
-
-        if remove == 'add':
-            pair.students.add(student)
-            pair.save()
-            return HttpResponse(json.dumps({'response': 'student added to instructor student list'}), status=200)
-        else:
-            pair.students.remove(student)
-            pair.save()
-            return HttpResponse(json.dumps({'response': 'student removed from the instructor student list'}), status=200)
-    except Exception as e:
-        if str(e) == 'InstructorUserPair matching query does not exist.':
-            print('no exist')
-            InstructorUserPairCreateFunction(instr_email)
-            InstructorUserPairUpdateFunction(
-                self, instr_email, student_id, remove)
-            return HttpResponse(json.dumps({'msg': 'creating instructor student list'}), status=201)
-        return HttpResponse(json.dumps({'msg': 'something went wrong while updating instructor/student list', 'error': str(e)}), status=500)
-
-
-class InstructorUserPairList(generics.ListAPIView):
-    queryset = models.InstructorUserPair.objects.all()
-    serializer_class = serializers.InstructorUserPairSerializer
-
-
-class InstructorUserPairDetail(generics.RetrieveAPIView):
-    queryset = models.InstructorUserPair.objects.all()
-    serializer_class = serializers.InstructorUserPairSerializer
-
-class InstructorUserPairDelete(generics.RetrieveDestroyAPIView):
-    queryset = models.InstructorUserPair.objects.all()
-    serializer_class = serializers.InstructorUserPairSerializer
 
 
 ############# """ AUTH VIEWS """#####################
