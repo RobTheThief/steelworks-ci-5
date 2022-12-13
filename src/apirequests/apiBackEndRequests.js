@@ -1,4 +1,4 @@
-import { getCookie } from "../helpers";
+import { makeFetchRequest } from "../helpers";
 
 /**
  * Makes a POST request to create a user in the database.
@@ -12,7 +12,7 @@ import { getCookie } from "../helpers";
  * @param {string} phone
  * @returns promise
  */
-function createUser(
+const createUser = async (
   email,
   firstName,
   lastName,
@@ -21,59 +21,30 @@ function createUser(
   address3,
   postCode,
   phone
-) {
-  return new Promise(async (resolve) => {
-    try {
-      let response = fetch(`/api/user/create/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": getCookie(),
-        },
-        body: JSON.stringify({
-          first_name: firstName,
-          last_name: lastName,
-          email: email,
-          address_line_1: address1,
-          address_line_2: address2,
-          address_line_3: address3,
-          postcode: postCode,
-          phone: phone,
-        }),
-      }).then((res) => {
-        if (res.ok) return res.json();
-      });
-      resolve(response);
-    } catch (error) {
-      resolve();
-      console.log(error);
-    }
-  });
-}
+) => {
+  return await makeFetchRequest(
+    "POST",
+    `/api/user/create/`,
+    JSON.stringify({
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      address_line_1: address1,
+      address_line_2: address2,
+      address_line_3: address3,
+      postcode: postCode,
+      phone: phone,
+    })
+  );
+};
 
 /**
  * Takes in a string for email and returns the steelworks user object.
  * @param {string} email
  * @returns promise, object
  */
-const getSWUser = (email) => {
-  return new Promise(async (resolve) => {
-    try {
-      const response = await fetch(`/api/user/get/${email}/`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": getCookie(),
-        },
-        redirect: "follow",
-      });
-
-      resolve(response);
-    } catch (error) {
-      console.log(error);
-      resolve();
-    }
-  });
+const getSWUser = async (email) => {
+  return await makeFetchRequest("GET", `/api/user/get/${email}/`);
 };
 
 /**
@@ -90,7 +61,7 @@ const getSWUser = (email) => {
  * @param {int} phone
  * @returns promise, object
  */
-const updateUserAddressPhone = (
+const updateUserAddressPhone = async (
   pk,
   user_email,
   password,
@@ -100,56 +71,10 @@ const updateUserAddressPhone = (
   postcode,
   phone
 ) => {
-  return new Promise(async (resolve) => {
-    try {
-      const response = await fetch(
-        `/api/user/update/${pk}/${user_email}/${password}/${address_line_1}/${address_line_2}/${address_line_3}/${postcode}/${phone}/`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": getCookie(),
-          },
-          redirect: "follow",
-        }
-      );
-
-      resolve(response);
-    } catch (error) {
-      console.log(error);
-      resolve();
-    }
-  });
-};
-
-/**
- * Takes in a method and a url as strings, makes
- * a fetch request, converts response to json and
- * returns a promise object.
- * @param {string} address_line_3
- * @param {string} postcode
- * @returns promise, array
- */
-const makeFetchRequest = (method, url) => {
-  return new Promise(async (resolve) => {
-    try {
-      const response = await fetch(url, {
-        method: method,
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": getCookie(),
-        },
-        redirect: "follow",
-      });
-
-      const jsonResponse = await response.json();
-
-      resolve(jsonResponse);
-    } catch (error) {
-      console.log(error);
-      resolve();
-    }
-  });
+  return await makeFetchRequest(
+    "GET",
+    `/api/user/update/${pk}/${user_email}/${password}/${address_line_1}/${address_line_2}/${address_line_3}/${postcode}/${phone}/`
+  );
 };
 
 /**

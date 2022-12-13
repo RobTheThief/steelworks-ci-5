@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import Login from "../components/Login";
 import Register from "../components/Register";
 import { Helmet } from "react-helmet-async";
-import Modal from '../components/Modal';
+import Modal from "../components/Modal";
 
-export default function LoginRegister({profile, setProfile}) {
+export default function LoginRegister({ setProfile }) {
   const [isRegister, setIsRegister] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalHeading, setModalHeading] = useState("");

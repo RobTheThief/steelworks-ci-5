@@ -39,7 +39,6 @@ export default function Modal({
     try {
       if (userEmail) {
         await getSWUser(userEmail)
-          .then((res) => res.json())
           .then((res) => {
             setSWUser(res);
           });

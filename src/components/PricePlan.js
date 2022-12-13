@@ -23,7 +23,6 @@ export default function PricePlan({
   const handleClick = async () => {
     await getProfile().then((res) => {
       if (res.email) {
-        console.log(res.email);
         setPaymentPlanType(type);
         setShowModal(true);
       } else {

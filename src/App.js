@@ -14,7 +14,6 @@ function App() {
   async function checkForProfile() {
     const profile = await getProfile();
     setProfile(profile);
-    console.log(profile);
   }
 
   useEffect(() => {
@@ -32,7 +31,7 @@ function App() {
               exact
               path="/login-register"
               element={
-                <LoginRegister profile={profile} setProfile={setProfile} />
+                <LoginRegister setProfile={setProfile} />
               }
             />
             <Route

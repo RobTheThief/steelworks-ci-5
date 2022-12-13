@@ -45,11 +45,9 @@ export default function UserAccount({ profile }) {
   const getUserAsync = async () => {
     try {
       if (profile && profile.email) {
-        await getSWUser(profile.email)
-          .then((res) => res.json())
-          .then((res) => {
-            setSWUser(res);
-          });
+        await getSWUser(profile.email).then((res) => {
+          setSWUser(res);
+        });
       }
     } catch (error) {
       console.log(error);
@@ -78,9 +76,9 @@ export default function UserAccount({ profile }) {
       postcode,
       phone
     );
-    let json = await response.json();
-    if (json.response !== "updated") {
-      setModalHeading(`Error: ${json.response}`);
+
+    if (response.response !== "updated") {
+      setModalHeading(`Error: ${response.response}`);
       setShowModal(true);
       setIsModalInput(false);
     }
@@ -110,7 +108,10 @@ export default function UserAccount({ profile }) {
   const handleClassesUpdate = async (e) => {
     const option = e.target.innerText === "REMOVE" ? "remove" : "add";
     if (enrolledClassesArray.includes(fitnessClass) && option === "add") {
-      openModal("Input error", `You are already enrolled in a ${fitnessClass} class`)
+      openModal(
+        "Input error",
+        `You are already enrolled in a ${fitnessClass} class`
+      );
       return;
     }
     if (
@@ -125,12 +126,21 @@ export default function UserAccount({ profile }) {
           classTimeUserPairUpdate(fitnessClass, swUser?.id, option, timeSlot)
         );
     } else if (slot1ClassNames.length + slot2ClassNames.length >= subLimit) {
-      openModal("Input error", `You cannot sign up to anymore classes with ${sub} subscription`)
+      openModal(
+        "Input error",
+        `You cannot sign up to anymore classes with ${sub} subscription`
+      );
     }
     if ((!fitnessClass || !timeSlot) && option === "add") {
-      openModal("Input error", "You must select a class and time slot to enroll.")
+      openModal(
+        "Input error",
+        "You must select a class and time slot to enroll."
+      );
     } else if ((!fitnessClass || !timeSlot) && option === "remove") {
-      openModal("Input error", "You must select an enrolled class and time slot to remove.")
+      openModal(
+        "Input error",
+        "You must select an enrolled class and time slot to remove."
+      );
     }
   };
 
@@ -205,12 +215,6 @@ export default function UserAccount({ profile }) {
   useEffect(() => {
     getSelectedClassDetails();
   }, [fitnessClass]);
-
-  useEffect(() => {
-    slot1ClassNames &&
-      slot2ClassNames &&
-      console.log({ slot1ClassNames, slot2ClassNames });
-  }, [slot1ClassNames, slot2ClassNames]);
 
   useEffect(() => {
     swUser && findUserTimeSlotsAsync();

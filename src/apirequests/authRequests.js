@@ -1,4 +1,4 @@
-import { getCookie } from "../helpers";
+import { makeFetchRequest } from "../helpers";
 
 /**
  * Sends a POST request to the backend to registers a new user.
@@ -68,49 +68,17 @@ const login = (user, pass) => {
  * Sends a POST request to the backend to logout user
  * @returns promise
  */
- const logout = () => {
-    return new Promise(async (resolve) => {
-      try {
-        var requestOptions = {
-          credentials: "include",
-          method: "POST",
-        };
-  
-        let response = await fetch(`/logout/`, requestOptions);
-  
-        resolve(response);
-      } catch (error) {
-        console.log(error);
-        resolve(error);
-      }
-    });
-  };
+const logout = async () => {
+  return await makeFetchRequest("POST", `/logout/`, null, true);
+};
 
 /**
  * Sends a GET request to the backend to get profile
  * information about the user.
  * @returns object, promise
  */
- const getProfile = () => {
-    return new Promise(async (resolve) => {
-      try {
-        const response = await fetch(`/profile/`, {
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": getCookie(),
-          },
-          credentials: "include",
-          method: "GET",
-        });
-  
-        const responseJson = await response.json();
-  
-        resolve(responseJson);
-      } catch (error) {
-        console.log(error);
-        resolve(error);
-      }
-    });
-  };
+const getProfile = async () => {
+  return await makeFetchRequest("GET", `/profile/`);
+};
 
 export { register, login, getProfile, logout };
