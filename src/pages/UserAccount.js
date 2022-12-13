@@ -34,14 +34,15 @@ export default function UserAccount({ profile }) {
   const [subID, setSubID] = useState();
   const [fitnessClass, setFitnessClass] = useState();
   const [timeSlot, setTimeSlot] = useState();
-  const [gymClassesString, setGymClassesString] = useState();
   const [gymClassesArray, setGymClassesArray] = useState();
   const [enrolledClassesArray, setEnrolledClassesArray] = useState();
   const [selectedClass, setSelectedClass] = useState();
   const [slot1ClassNames, setSlot1ClassNames] = useState();
   const [slot2ClassNames, setSlot2ClassNames] = useState();
+  const [subLimit, setSubLimit] = useState();
+  const [instructor, setInstructor] = useState();
 
-  async function getUserAsync() {
+  const getUserAsync = async () => {
     try {
       if (profile && profile.email) {
         await getSWUser(profile.email)
@@ -53,20 +54,20 @@ export default function UserAccount({ profile }) {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function getProductUserPairsAsync() {
+  const getProductUserPairsAsync = async () => {
     setProductUserPairs(await getProductUserPairs());
-  }
+  };
 
-  function handleUpdadeInfo(e) {
+  const handleUpdadeInfo = (e) => {
     e.preventDefault();
     setModalHeading("Enter Password to update details.");
     setShowModal(true);
     setIsModalInput(true);
-  }
+  };
 
-  async function updateUserAddressPhoneAsync() {
+  const updateUserAddressPhoneAsync = async () => {
     let response = await updateUserAddressPhone(
       swUser?.id,
       profile?.email,
@@ -83,50 +84,53 @@ export default function UserAccount({ profile }) {
       setShowModal(true);
       setIsModalInput(false);
     }
-  }
+  };
 
-  function changeInput(e, setter) {
+  const changeInput = (e, setter) => {
     setter(e.target.value);
-  }
+  };
 
   const getGymClassesAsync = async () => {
     await getGymClasses().then((res) => setGymClassesArray(res));
   };
 
   const getUserClassesAsync = async (student_id) => {
-    await getUserClasses(student_id)
-      .then((res) => {
-        setEnrolledClassesArray(res.response);
-        return res;
-      })
-      .then((res) => setGymClassesString(res.response.join(", ")));
+    await getUserClasses(student_id).then((res) => {
+      setEnrolledClassesArray(res.response);
+      return res;
+    });
+  };
+
+  const openModal = (heading, message) => {
+    setShowModal(true);
+    setModalHeading(heading);
+    setModalMessage(message);
   };
 
   const handleClassesUpdate = async (e) => {
     const option = e.target.innerText === "REMOVE" ? "remove" : "add";
     if (enrolledClassesArray.includes(fitnessClass) && option === "add") {
-      setShowModal(true);
-      setModalHeading("Input error");
-      setModalMessage(`Youa are already enrolled in a ${fitnessClass} class`);
+      openModal("Input error", `You are already enrolled in a ${fitnessClass} class`)
       return;
     }
-    if (fitnessClass && timeSlot) {
+    if (
+      (fitnessClass &&
+        timeSlot &&
+        slot1ClassNames.length + slot2ClassNames.length < subLimit) ||
+      option === "remove"
+    ) {
       await updateGymClass(fitnessClass, "from frontend", swUser?.id, option)
         .then(() => swUser?.id && getUserClassesAsync(swUser?.id))
         .then(() =>
           classTimeUserPairUpdate(fitnessClass, swUser?.id, option, timeSlot)
         );
+    } else if (slot1ClassNames.length + slot2ClassNames.length >= subLimit) {
+      openModal("Input error", `You cannot sign up to anymore classes with ${sub} subscription`)
     }
     if ((!fitnessClass || !timeSlot) && option === "add") {
-      setShowModal(true);
-      setModalHeading("Input error");
-      setModalMessage("You must select a class and time slot to enroll.");
+      openModal("Input error", "You must select a class and time slot to enroll.")
     } else if ((!fitnessClass || !timeSlot) && option === "remove") {
-      setShowModal(true);
-      setModalHeading("Input error");
-      setModalMessage(
-        "You must select an enrolled class and time slot to remove."
-      );
+      openModal("Input error", "You must select an enrolled class and time slot to remove.")
     }
   };
 
@@ -135,6 +139,9 @@ export default function UserAccount({ profile }) {
       gymClassesArray.forEach((item) => {
         if (item.class_name === fitnessClass) {
           setSelectedClass(item);
+          fetch(`/api/instructor/detail/${item.instructor}/`)
+            .then((res) => res.json())
+            .then((res) => setInstructor(res));
         }
       });
   };
@@ -165,12 +172,15 @@ export default function UserAccount({ profile }) {
     switch (subID) {
       case 1:
         setSub("Unlimited");
+        setSubLimit(4);
         break;
       case 2:
         setSub("Gold");
+        setSubLimit(2);
         break;
       case 3:
         setSub("Silver");
+        setSubLimit(1);
         break;
       default:
         setSub("None");
@@ -317,24 +327,6 @@ export default function UserAccount({ profile }) {
                 width: 90%;
               `}`}
             >
-              <h2 className="text-white">
-                {/* {gymClassesString ? gymClassesString : "None"}{" "} */}
-                Enrolled classes slot 1:{" "}
-                {slot1ClassNames &&
-                  slot1ClassNames.map((item, idx) => {
-                    return (
-                      <span key={`enrolled-class-slot-1-${idx}`}> {item} </span>
-                    );
-                  })}
-                <br />
-                Enrolled classes slot 2:{" "}
-                {slot2ClassNames &&
-                  slot2ClassNames.map((item, idx) => {
-                    return (
-                      <span key={`enrolled-class-slot-2-${idx}`}> {item} </span>
-                    );
-                  })}
-              </h2>
               <form className="flex flex-col">
                 <label htmlFor="classes">Choose a class:</label>
                 <select
@@ -358,8 +350,8 @@ export default function UserAccount({ profile }) {
                   onChange={(e) => setTimeSlot(e.target.value)}
                 >
                   <option value={undefined}></option>
-                  <option value="time_slot_1">Time slot 1</option>
-                  <option value="time_slot_2">Time slot 2</option>
+                  <option value="time_slot_1">Wednesdays 7-8pm</option>
+                  <option value="time_slot_2">Saturdays 12-1pm</option>
                 </select>
                 <div>
                   <SWButton
@@ -378,6 +370,24 @@ export default function UserAccount({ profile }) {
                   </SWButton>
                 </div>
               </form>
+              <h3 className="mt-4 text-xl">Enrolled classes</h3>
+              <p className="p-2 text-white border-2 border-blue-500 rounded">
+                Wed 7-8pm:{" "}
+                {slot1ClassNames &&
+                  slot1ClassNames.map((item, idx) => {
+                    return (
+                      <span key={`enrolled-class-slot-1-${idx}`}> {item} </span>
+                    );
+                  })}
+                <br />
+                Sat 12-1pm:{" "}
+                {slot2ClassNames &&
+                  slot2ClassNames.map((item, idx) => {
+                    return (
+                      <span key={`enrolled-class-slot-2-${idx}`}> {item} </span>
+                    );
+                  })}
+              </p>
               <div
                 className={`${
                   selectedClass
@@ -385,6 +395,10 @@ export default function UserAccount({ profile }) {
                     : "h-4"
                 } mt-4 transition-all duration-300 ease-in-out overflow-scroll`}
               >
+                {instructor
+                  ? `Class Instructor: ${instructor.first_name} ${instructor.last_name}`
+                  : null}
+                <br />
                 {selectedClass ? selectedClass.class_details : null}
               </div>
             </section>

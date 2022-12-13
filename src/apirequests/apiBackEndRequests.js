@@ -123,15 +123,18 @@ const updateUserAddressPhone = (
 };
 
 /**
- * Gets a list of product/user pairs as objects
- * and returns an array with a promise.
+ * Takes in a method and a url as strings, makes
+ * a fetch request, converts response to json and
+ * returns a promise object.
+ * @param {string} address_line_3
+ * @param {string} postcode
  * @returns promise, array
  */
-const getProductUserPairs = () => {
+const makeFetchRequest = (method, url) => {
   return new Promise(async (resolve) => {
     try {
-      const response = await fetch(`/api/product/user-pair/`, {
-        method: "GET",
+      const response = await fetch(url, {
+        method: method,
         headers: {
           "Content-Type": "application/json",
           "X-CSRFToken": getCookie(),
@@ -139,7 +142,7 @@ const getProductUserPairs = () => {
         redirect: "follow",
       });
 
-      let jsonResponse = await response.json();
+      const jsonResponse = await response.json();
 
       resolve(jsonResponse);
     } catch (error) {
@@ -147,6 +150,15 @@ const getProductUserPairs = () => {
       resolve();
     }
   });
+};
+
+/**
+ * Gets a list of product/user pairs as objects
+ * and returns an array with a promise.
+ * @returns promise, array
+ */
+const getProductUserPairs = async () => {
+  return await makeFetchRequest("GET", "/api/product/user-pair/");
 };
 
 /**
@@ -158,35 +170,17 @@ const getProductUserPairs = () => {
  * @param {string} subscription_type
  * @returns promise, object
  */
-const saveStripeInfo = (
+const saveStripeInfo = async (
   email,
   paymentMethodID,
   subscription_type,
   upgrade,
   userID
 ) => {
-  return new Promise(async (resolve) => {
-    try {
-      const response = await fetch(
-        `/api/save-stripe-info/${email}/${paymentMethodID}/${subscription_type}/${upgrade}/${userID}/`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": getCookie(),
-          },
-          redirect: "follow",
-        }
-      );
-
-      const jsonResponse = await response.json();
-
-      resolve(jsonResponse);
-    } catch (error) {
-      console.log(error);
-      resolve();
-    }
-  });
+  return await makeFetchRequest(
+    "POST",
+    `/api/save-stripe-info/${email}/${paymentMethodID}/${subscription_type}/${upgrade}/${userID}/`
+  );
 };
 
 /**
@@ -199,34 +193,16 @@ const saveStripeInfo = (
  * @param {int} student_id
  * @returns promise, object
  */
-const updateGymClass = (
+const updateGymClass = async (
   class_name,
   details,
   student_id,
   remove_user = "add"
 ) => {
-  return new Promise(async (resolve) => {
-    try {
-      const response = await fetch(
-        `/api/classes/update/${class_name}/${details}/${student_id}/${remove_user}/`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": getCookie(),
-          },
-          redirect: "follow",
-        }
-      );
-
-      const jsonResponse = await response.json();
-
-      resolve(jsonResponse);
-    } catch (error) {
-      console.log(error);
-      resolve();
-    }
-  });
+  return await makeFetchRequest(
+    "GET",
+    `/api/classes/update/${class_name}/${details}/${student_id}/${remove_user}/`
+  );
 };
 
 /**
@@ -234,26 +210,8 @@ const updateGymClass = (
  * and returns a response object.
  * @returns promise, object
  */
-const getGymClasses = () => {
-  return new Promise(async (resolve) => {
-    try {
-      const response = await fetch(`/api/classes/`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": getCookie(),
-        },
-        redirect: "follow",
-      });
-
-      const jsonResponse = await response.json();
-
-      resolve(jsonResponse);
-    } catch (error) {
-      console.log(error);
-      resolve();
-    }
-  });
+const getGymClasses = async () => {
+  return await makeFetchRequest("GET", `/api/classes/`);
 };
 
 /**
@@ -261,29 +219,11 @@ const getGymClasses = () => {
  * that a specific student is in and returns a response object.
  * @returns promise, object
  */
-const getUserClasses = (student_id) => {
-  return new Promise(async (resolve) => {
-    try {
-      const response = await fetch(
-        `/api/classes/user/get-classes/${student_id}/`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": getCookie(),
-          },
-          redirect: "follow",
-        }
-      );
-
-      const jsonResponse = await response.json();
-
-      resolve(jsonResponse);
-    } catch (error) {
-      console.log(error);
-      resolve();
-    }
-  });
+const getUserClasses = async (student_id) => {
+  return await makeFetchRequest(
+    "GET",
+    `/api/classes/user/get-classes/${student_id}/`
+  );
 };
 
 /**
@@ -291,33 +231,16 @@ const getUserClasses = (student_id) => {
  * user pair and returns a response object.
  * @returns promise, object
  */
-const classTimeUserPairUpdate = (
+const classTimeUserPairUpdate = async (
   gym_class_name,
   user_id,
   add_remove = "add",
   time_slot
 ) => {
-  return new Promise(async (resolve) => {
-    try {
-      const response = await fetch(
-        `api/class-time/user-pair/update/${gym_class_name}/${user_id}/${add_remove}/${time_slot}/`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": getCookie(),
-          },
-          redirect: "follow",
-        }
-      );
-
-      const jsonResponse = await response.json();
-      resolve(jsonResponse);
-    } catch (error) {
-      console.log(error);
-      resolve();
-    }
-  });
+  return await makeFetchRequest(
+    "GET",
+    `api/class-time/user-pair/update/${gym_class_name}/${user_id}/${add_remove}/${time_slot}/`
+  );
 };
 
 /**
@@ -325,28 +248,11 @@ const classTimeUserPairUpdate = (
  * users class time slots and returns a response object.
  * @returns promise, object
  */
-const findUserTimeSlots = (user_id) => {
-  return new Promise(async (resolve) => {
-    try {
-      const response = await fetch(
-        `api/class-time/user-pair/user-time-slots/${user_id}/`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": getCookie(),
-          },
-          redirect: "follow",
-        }
-      );
-
-      const jsonResponse = await response.json();
-      resolve(jsonResponse);
-    } catch (error) {
-      console.log(error);
-      resolve();
-    }
-  });
+const findUserTimeSlots = async (user_id) => {
+  return await makeFetchRequest(
+    "GET",
+    `api/class-time/user-pair/user-time-slots/${user_id}/`
+  );
 };
 
 export {
@@ -359,5 +265,5 @@ export {
   getGymClasses,
   getUserClasses,
   classTimeUserPairUpdate,
-  findUserTimeSlots
+  findUserTimeSlots,
 };
