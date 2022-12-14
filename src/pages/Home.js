@@ -4,6 +4,7 @@ import PricePlan from "../components/PricePlan";
 import { css } from "@emotion/css";
 import { Button } from "@mui/material";
 import Modal from "../components/Modal";
+import { Helmet } from "react-helmet-async";
 
 function Home() {
   const [showModal, setShowModal] = useState(false);
@@ -15,6 +16,26 @@ function Home() {
   const classes = "hidden";
   return (
     <>
+    <Helmet>
+        <meta charSet="utf-8" />
+        <title>Steelworks</title>
+        <link
+          rel="canonical"
+          href="https://steelworks-fitness.herokuapp.com/"
+        />
+        <meta
+          name="description"
+          content="Home page for Steelworks Fitness gym web site."
+        ></meta>
+        <meta
+          name="keywords"
+          content="Steelworks, Fitness, Gym, subscription, class, classes, plans, about, contact"
+        ></meta>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0"
+        ></meta>
+      </Helmet>
       <section className="hero-container" id="hero">
         <div className="mt-16">
           <h2 className="absolute w-full h-full top-0 left-0 text-center px-4 py-64 text-2xl lg:text-6xl md:text-4xl sm:text-3xl text-blue-500">

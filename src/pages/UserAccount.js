@@ -13,6 +13,7 @@ import {
 import SWButton from "../components/SWButton";
 import Modal from "../components/Modal";
 import { HashLink } from "react-router-hash-link";
+import { Helmet } from "react-helmet-async";
 
 const CONTAINER_CSS =
   "border-radius: 5px;border: #64748b solid 2px;background-color: rgba(0, 0, 0, 0.473);display: flex;";
@@ -222,6 +223,26 @@ export default function UserAccount({ profile }) {
 
   return (
     <>
+    <Helmet>
+        <meta charSet="utf-8" />
+        <title>Steelworks-account</title>
+        <link
+          rel="canonical"
+          href="https://steelworks-fitness.herokuapp.com/"
+        />
+        <meta
+          name="description"
+          content="User account page for Steelworks Fitness gym web site."
+        ></meta>
+        <meta
+          name="keywords"
+          content="Steelworks, Fitness, Gym, subscription, class, classes, plans, profile, update"
+        ></meta>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0"
+        ></meta>
+      </Helmet>
       <Modal
         showModal={showModal}
         setShowModal={setShowModal}

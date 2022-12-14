@@ -1,7 +1,8 @@
 import { makeFetchRequest } from "../helpers";
 
 /**
- * Makes a POST request to create a user in the database.
+ * Makes a POST request to create a user in the database
+ * and returns a promise.
  * @param {string} email
  * @param {string} firstName
  * @param {string} lastName
