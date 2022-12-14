@@ -37,7 +37,7 @@ const options = ["Account", "Log out"];
 
 function Sidebar({ profile, setProfile }) {
   const [toggle, setToggle] = useState(false);
-  const steelworksBlue = "rgb(0, 89, 255) !important";
+  const steelworksBlue = "#3b82f6 !important";
   const navigate = useNavigate();
 
   const toggleDrawer = (option) => (event) => {
@@ -148,6 +148,7 @@ function Sidebar({ profile, setProfile }) {
                 to={profile?.username ? "/user-account" : "/login-register"}
                 className={css`
                   color: ${steelworksBlue};
+                  padding: 0 !important;
                   @media (max-width: 491px) {
                     font-size: 0.8rem !important;
                   }
@@ -160,7 +161,7 @@ function Sidebar({ profile, setProfile }) {
                 {profile?.username ? profile.username : "Login / Register"}
               </Button>
 
-              <FormControl sx={{ m: 1, width: 40, mt: 3, pb: 2 }}>
+              <FormControl sx={{ mt: 1, mb:1, width: 40, mt: 3, pb: 2 }}>
                 <Select
                   displayEmpty
                   value={""}
@@ -175,11 +176,12 @@ function Sidebar({ profile, setProfile }) {
                       disableUnderline={true}
                     />
                   }
+                  IconComponent={() => <span></span>}
                   renderValue={() => {
                     return (
                       <AccountCircleIcon
                         className={`ml-2 ${css`
-                          color: rgb(0, 89, 255);
+                          color: ${steelworksBlue};
                         `}`}
                       />
                     );

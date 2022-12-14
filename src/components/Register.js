@@ -10,7 +10,7 @@ export default function Register({
   setShowModal,
   setModalHeading,
   setModalMessage,
-  setProfile
+  setProfile,
 }) {
   const [user, setUser] = useState();
   const [pass, setPass] = useState();
@@ -79,7 +79,12 @@ export default function Register({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleRegister();
+    user.length <= 14
+      ? handleRegister()
+      : createModal(
+          "Inpur error!",
+          "Username can be no longer than 14 characters."
+        );
   };
 
   return (
