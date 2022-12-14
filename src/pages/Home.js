@@ -8,15 +8,15 @@ import { Helmet } from "react-helmet-async";
 
 function Home() {
   const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
-  const [modalHeading, setModalHeading] = useState('');
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalHeading, setModalHeading] = useState("");
   const [paymentPlanType, setPaymentPlanType] = useState("");
   const [isCheckout, setIsCheckOut] = useState(true);
 
   const classes = "hidden";
   return (
     <>
-    <Helmet>
+      <Helmet>
         <meta charSet="utf-8" />
         <title>Steelworks</title>
         <link
@@ -76,10 +76,10 @@ function Home() {
       />
       <section id="price-plans" className="price-plan-section">
         <div className="border-slate-500 border-y-2 flex flex-col justify-center items-center bg-black p-8 py-32 w-full">
-          <h2 className="lg:text-6xl md:text-4xl sm:text-3xl text-3xl text-blue-500">
+          <h2 className="lg:text-6xl md:text-4xl sm:text-4xl mb-4 text-4xl text-blue-500">
             Price Plans
           </h2>
-          <div className="max-w-2xl flex flex-col items-center sm:flex-row gap-2 mt-8">
+          <div className="w-1/3 flex flex-col items-center justify-center lg:flex-row gap-4 mt-8">
             <Modal
               showModal={showModal}
               setShowModal={setShowModal}
@@ -90,11 +90,6 @@ function Home() {
             />
             <PricePlan
               type="Unlimited"
-              sect1="30 days of Unlimited classes at Gold price"
-              sect2="8 classes a month after 1st 30 days"
-              sect3="Childwatch"
-              sect4="Shower access, locker access, and more"
-              sect5="Cancel or change plan w/ email or text 48hr notice"
               setShowModal={setShowModal}
               setPaymentPlanType={setPaymentPlanType}
               setIsCheckOut={setIsCheckOut}
@@ -103,11 +98,6 @@ function Home() {
             />
             <PricePlan
               type="Gold"
-              sect1="30 days of Unlimited classes at Gold price"
-              sect2="8 classes a month after 1st 30 days"
-              sect3="Childwatch"
-              sect4="Shower access, locker access, and more"
-              sect5="Cancel or change plan w/ email or text 48hr notice"
               setShowModal={setShowModal}
               setPaymentPlanType={setPaymentPlanType}
               setIsCheckOut={setIsCheckOut}
@@ -116,11 +106,6 @@ function Home() {
             />
             <PricePlan
               type="Silver"
-              sect1="30 days of Unlimited classes at Gold price"
-              sect2="8 classes a month after 1st 30 days"
-              sect3="Childwatch"
-              sect4="Shower access, locker access, and more"
-              sect5="Cancel or change plan w/ email or text 48hr notice"
               setShowModal={setShowModal}
               setPaymentPlanType={setPaymentPlanType}
               setIsCheckOut={setIsCheckOut}

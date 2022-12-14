@@ -4,14 +4,10 @@ import SWButton from "./SWButton";
 import { getProfile } from "../apirequests/authRequests";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOutlined";
+import DoneAllOutlinedIcon from "@mui/icons-material/DoneAllOutlined";
 
 export default function PricePlan({
   type,
-  sect1,
-  sect2,
-  sect3,
-  sect4,
-  sect5,
   setShowModal,
   setPaymentPlanType,
   setIsCheckOut,
@@ -19,6 +15,11 @@ export default function PricePlan({
   setModalHeading,
 }) {
   const sectStyle = "text-white text-center my-4";
+  const planPrices = {
+    'Silver': '€99',
+    'Gold': '€129',
+    'Unlimited': '€159'
+  }
 
   const handleClick = async () => {
     await getProfile().then((res) => {
@@ -37,10 +38,11 @@ export default function PricePlan({
   return (
     <>
       <div
-        className={`w-1/3 border-slate-500 border-2 rounded-lg p-4 flex flex-col items-center ${css`
-          min-width: 182px;
+        className={`w-1/3 mb-8 border-slate-500 border-2 rounded-lg p-4 flex flex-col items-center ${css`
+          min-width: 260px;
+          height: 659.3px;
           @media (max-width: 639px) {
-            min-width: 295px;
+            
           }
         `}`}
       >
@@ -85,18 +87,56 @@ export default function PricePlan({
             />
           )}
         </div>
-        <h3
-          className={`${css`
-            color: #0059ff;
-          `} text-center text-2xl`}
-        >
+        <h3 className="text-blue-500 text-center text-3xl">
           <b>{type}</b>
         </h3>
-        <p className={sectStyle}>{sect1 && sect1}</p>
-        <p className={sectStyle}>{sect2 && sect2}</p>
-        <p className={sectStyle}>{sect3 && sect3}</p>
-        <p className={sectStyle}>{sect4 && sect4}</p>
-        <p className={sectStyle}>{sect5 && sect5}</p>
+        <p className={`text-2xl font-extrabold ${sectStyle}`}>{planPrices[type]}</p>
+        <p className={sectStyle}>
+          {type !== "Unlimited" ? (
+            <span>
+              <b>30 days of Unlimited</b> classes at <b>{type}</b> price
+            </span>
+          ) : (
+            <span>
+              <b>Unlimited access</b> to classes for a full year
+            </span>
+          )}
+        </p>
+        <p className={sectStyle}>
+          {type === "Silver" ? 1 : type === "Gold" ? 2 : 4} classes a month
+          after 1st 30 days
+          <span className="ml-2">
+            <DoneAllOutlinedIcon className="text-yellow-200" />
+          </span>
+        </p>
+        <p className={sectStyle}>
+          Shower access, locker access, and more
+          <span className="ml-2">
+            <DoneAllOutlinedIcon className="text-yellow-200" />
+          </span>
+        </p>
+        <p className={sectStyle}>
+          Cancel or change plan w/ email or text 48hr notice
+          <span className="ml-2">
+            <DoneAllOutlinedIcon className="text-yellow-200" />
+          </span>
+        </p>
+        <p className={`${type === "Silver" && "text-slate-400"} ${sectStyle}`}>
+          Access to swimming pool
+          {type !== "Silver" ? (
+            <span className="ml-2">
+              <DoneAllOutlinedIcon className="text-yellow-200" />
+            </span>
+          ) : null}
+        </p>
+        <p className={`${type === "Silver" && "text-slate-400"} ${sectStyle}`}>
+          Childwatch
+          {type !== "Silver" ? (
+            <span className="ml-2">
+              <DoneAllOutlinedIcon className="text-yellow-200" />
+            </span>
+          ) : null}
+        </p>
         <SWButton handleOnClick={handleClick}>Sign up</SWButton>
       </div>
     </>
