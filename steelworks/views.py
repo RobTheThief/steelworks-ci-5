@@ -311,11 +311,11 @@ class ProductUserPairDelete(generics.RetrieveDestroyAPIView):
 ############# """ CLASS TIME USER PAIR VIEWS """#####################
 
 
-""" class ClassTimeUserPairList(generics.ListAPIView):
+class ClassTimeUserPairList(generics.ListAPIView):
     authentication_classes = [SessionAuthentication]
     permission_classes = [IsAdminUser]
     queryset = models.ClassTimeUserPair.objects.all()
-    serializer_class = serializers.ClassTimeUserPairSerializer """
+    serializer_class = serializers.ClassTimeUserPairSerializer
 
 
 class ClassTimeUserPairCreate(generics.CreateAPIView):
@@ -325,14 +325,14 @@ class ClassTimeUserPairCreate(generics.CreateAPIView):
     serializer_class = serializers.ClassTimeUserPairSerializer
 
 
-""" class ClassTimeUserPairDelete(generics.RetrieveDestroyAPIView):
+class ClassTimeUserPairDelete(generics.RetrieveDestroyAPIView):
     authentication_classes = [SessionAuthentication]
     permission_classes = [IsAdminUser]
     queryset = models.ClassTimeUserPair.objects.all()
-    serializer_class = serializers.ClassTimeUserPairSerializer """
+    serializer_class = serializers.ClassTimeUserPairSerializer
 
 
-""" @api_view(['GET'])
+@api_view(['GET'])
 @authentication_classes([SessionAuthentication])
 @permission_classes([IsAuthenticated])
 def ClassTimeUserPairUpdateFunction(self, gym_class_name, user_id, add_remove, time_slot):
@@ -358,10 +358,10 @@ def ClassTimeUserPairUpdateFunction(self, gym_class_name, user_id, add_remove, t
             return HttpResponse(json.dumps({'response': 'removed from time slot 2'}))
 
     except Exception as e:
-        return Response({'msg': 'something went wrong while updating class time slot', 'error': str(e)}, status=500) """
+        return Response({'msg': 'something went wrong while updating class time slot', 'error': str(e)}, status=500)
 
 
-""" @api_view(['GET'])
+@api_view(['GET'])
 @authentication_classes([SessionAuthentication])
 @permission_classes([IsAuthenticated])
 def findUserTimeSlots(self, user_id):
@@ -381,7 +381,7 @@ def findUserTimeSlots(self, user_id):
             slot_2_gym_class_ids.append(gym_class.class_name)
         return HttpResponse(json.dumps({'slot_1': slot_1_gym_class_ids, 'slot_2': slot_2_gym_class_ids}))
     except Exception as e:
-        return Response({'msg': 'something went wrong while getting user class time slots', 'error': str(e)}, status=500) """
+        return Response({'msg': 'something went wrong while getting user class time slots', 'error': str(e)}, status=500)
 
 # findUserTimeSlots(1)
 #ClassTimeUserPairUpdateFunction('Zumba', 1, False, 'time_slot_1')
