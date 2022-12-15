@@ -47,7 +47,7 @@ class ProductUserPair(models.Model):
 
 class Classes(models.Model):
     class_name = models.CharField("class_name", max_length=240)
-    class_details = models.CharField("class_details", max_length=240)
+    class_details = models.CharField("class_details", max_length=340)
     instructor = models.OneToOneField(
         Instructor,
         on_delete=models.CASCADE,
