@@ -312,22 +312,22 @@ class ProductUserPairDelete(generics.RetrieveDestroyAPIView):
 
 
 class ClassTimeUserPairList(generics.ListAPIView):
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAdminUser]
+    """ authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser] """
     queryset = models.ClassTimeUserPair.objects.all()
     serializer_class = serializers.ClassTimeUserPairSerializer
 
 
 class ClassTimeUserPairCreate(generics.CreateAPIView):
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAdminUser]
+    """ authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser] """
     queryset = models.ClassTimeUserPair.objects.all(),
     serializer_class = serializers.ClassTimeUserPairSerializer
 
 
 class ClassTimeUserPairDelete(generics.RetrieveDestroyAPIView):
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAdminUser]
+    """ authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser] """
     queryset = models.ClassTimeUserPair.objects.all()
     serializer_class = serializers.ClassTimeUserPairSerializer
 
@@ -390,15 +390,15 @@ def findUserTimeSlots(self, user_id):
 
 
 class ClassesList(generics.ListAPIView):
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    """ authentication_classes = [SessionAuthentication]
+    permission_classes = [permissions.IsAuthenticated] """
     queryset = models.Classes.objects.all()
     serializer_class = serializers.ClassesSerializer
 
 
 class ClassesCreate(generics.CreateAPIView):
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAdminUser]
+    """ authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser] """
     queryset = models.Classes.objects.all()
     serializer_class = serializers.ClassesSerializer
 
@@ -450,44 +450,44 @@ def getUserClasses(self, student_id):
 
 
 class ClassesDelete(generics.RetrieveDestroyAPIView):
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAdminUser]
+    """ authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser] """
     queryset = models.Classes.objects.all()
     serializer_class = serializers.ClassesSerializer
 
 
 ############# """ INSTRUCTOR VIEWS """#####################
 class InstructorList(generics.ListAPIView):
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAdminUser]
+    """ authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser] """
     queryset = models.Instructor.objects.all()
     serializer_class = serializers.InstructorSerializer
 
 
 class InstructorDetail(generics.RetrieveAPIView):
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAuthenticated]
+    """ authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated] """
     queryset = models.Instructor.objects.all()
     serializer_class = serializers.InstructorSerializer
 
 
 class InstructorUpdate(generics.RetrieveUpdateAPIView):
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAdminUser]
+    """ authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser] """
     queryset = models.Instructor.objects.all()
     serializer_class = serializers.InstructorSerializer
 
 
 class InstructorCreate(generics.CreateAPIView):
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAdminUser]
+    """ authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser] """
     queryset = models.Instructor.objects.all()
     serializer_class = serializers.InstructorSerializer
 
 
 class InstructorDelete(generics.RetrieveDestroyAPIView):
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAdminUser]
+    """ authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser] """
     queryset = models.Instructor.objects.all()
     serializer_class = serializers.InstructorSerializer
 
