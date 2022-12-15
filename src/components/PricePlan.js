@@ -41,9 +41,6 @@ export default function PricePlan({
         className={`w-1/3 mb-8 border-slate-500 border-2 rounded-lg p-4 flex flex-col items-center ${css`
           min-width: 260px;
           height: 659.3px;
-          @media (max-width: 639px) {
-            
-          }
         `}`}
       >
         <div

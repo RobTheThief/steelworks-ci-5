@@ -50,7 +50,7 @@ urlpatterns = [
          views.getUserClasses),
     path('classes/create/',
          views.ClassesCreate.as_view()),
-    path('classes/update-admin/<int:pk>',
+    path('classes/update-admin/<int:pk>/',
          views.ClassesUpdate.as_view()),
 
     path('save-stripe-info/<str:email>/<str:paymentMethodID>/<str:subscription_type>/<str:upgrade>/<int:user_id>/',
@@ -64,6 +64,6 @@ urlpatterns = [
          views.ClassTimeUserPairUpdateFunction),
     path('class-time/user-pair/user-time-slots/<int:user_id>/',
          views.findUserTimeSlots),
-    path('class-time/user-pair/update-admin/<int:pk>',
+    path('class-time/user-pair/update-admin/<int:pk>/',
          views.ClassTimeUserPairUpdate.as_view()),
 ]

@@ -7,6 +7,8 @@ import LoginRegister from "./pages/LoginRegister";
 import { HelmetProvider } from "react-helmet-async";
 import { getProfile } from "./apirequests/authRequests";
 import UserAccount from "./pages/UserAccount";
+import Favicon from "react-favicon";
+import favicon from './favicon.png';
 
 function App() {
   const [profile, setProfile] = useState();
@@ -24,6 +26,7 @@ function App() {
     <React.StrictMode>
       <BrowserRouter>
         <HelmetProvider>
+          <Favicon url={favicon}></Favicon>
           <Sidebar profile={profile} setProfile={setProfile} />
           <Routes>
             <Route exact path="/" element={<Home />} />
@@ -38,6 +41,11 @@ function App() {
               exact
               path="/user-account"
               element={<UserAccount profile={profile} />}
+            />
+            <Route
+              exact
+              path="/favicon"
+              element={favicon}
             />
           </Routes>
         </HelmetProvider>

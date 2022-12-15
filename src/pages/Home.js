@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import pullups from "../img/pullups1024.jpg";
 import PricePlan from "../components/PricePlan";
 import { css } from "@emotion/css";
 import { Button } from "@mui/material";
@@ -14,7 +13,6 @@ function Home() {
   const [paymentPlanType, setPaymentPlanType] = useState("");
   const [isCheckout, setIsCheckOut] = useState(true);
 
-  const classes = "hidden";
   return (
     <>
       <Helmet>
@@ -51,7 +49,14 @@ function Home() {
       >
         <h2
           className={`lg:text-6xl md:text-4xl sm:text-3xl text-3xl w-1/2 mb-12 mt-64 ${css`
-            min-width: 260px;
+            width: 45%;
+            min-width: 822px;
+            @media (max-width: 700px) {
+              width: 70%;
+            }
+            @media (max-width: 1024px) {
+              min-width: 0;
+            }
           `}`}
         >
           <b>About</b>
@@ -59,8 +64,15 @@ function Home() {
           Steelworks Fitness
         </h2>
         <p
-          className={`w-1/2 m-2 text-lg sm:text-xl ${css`
-            min-width: 260px;
+          className={`m-2 text-lg sm:text-xl ${css`
+            width: 45%;
+            min-width: 822px;
+            @media (max-width: 700px) {
+              width: 70%;
+            }
+            @media (max-width: 1024px) {
+              min-width: 0;
+            }
           `}`}
         >
           There is no limit to what you are capable of, physically and mentally.
@@ -71,8 +83,15 @@ function Home() {
           <br />
         </p>
         <div
-          className={`w-1/2 m-2 text-lg sm:text-xl mt-8 ${css`
-            min-width: 260px;
+          className={`m-2 text-lg sm:text-xl mt-8 ${css`
+            width: 45%;
+            min-width: 822px;
+            @media (max-width: 700px) {
+              width: 70%;
+            }
+            @media (max-width: 1024px) {
+              min-width: 0;
+            }
           `}`}
         >
           <p>
@@ -89,7 +108,7 @@ function Home() {
             recommend Steelworks gym to everybody who would like to get results
             and have fun at the same time."
           </p>
-          <div className="flex xl:flex-row lg:flex-row xl:items-end lg:items-end sm:flex-col flex-col items-center mt-8">
+          <div className="flex xl:flex-row lg:flex-row xl:items-end lg:items-end sm:flex-col flex-col items-center mt-16">
             <img
               className="inline w-48 ml-4 rounded-full border-2 border-blue-500"
               src={gabbyC}
@@ -142,17 +161,17 @@ function Home() {
       </section>
       <section
         id="contact_section"
-        className="contact-section"
+        className="contact-section py-96"
         aria-labelledby="contact_section_heading"
       >
         <h2 id="contact_section_heading" className="hidden">
           Contact
         </h2>
-        <div className="w-full h-full flex flex-col justify-center items-center mt-8 ">
+        <div className="w-full h-full flex flex-col justify-center items-center py-8 ">
           <fieldset
             className={css`
-              width: 33%;
-              min-width: 295px;
+              width: 44%;
+              min-width: 822px;
               border-radius: 5px;
               border: #64748b solid 2px;
               background-color: rgba(0, 0, 0, 0.473);
@@ -160,6 +179,13 @@ function Home() {
               flex-direction: column;
               justify-content: center;
               align-items: center;
+              @media (max-width: 1024px) {
+                min-width: 0;
+                width: 65%;
+              }
+              @media (max-width: 700px) {
+                width: 95%;
+              }
             `}
           >
             <form
@@ -189,6 +215,9 @@ function Home() {
                 name="message_field"
                 className={`mb-4 rounded p-1 ${css`
                   height: 300px;
+                  @media (max-width: 1024px) {
+                    height: 170px;
+                  }
                 `}`}
                 placeholder="Please type your message here"
                 required
@@ -209,7 +238,7 @@ function Home() {
               </Button>
             </form>
             <div className="flex lg:flex-row md:flex-col sm:flex-col flex-col w-4/5 text-white font-extrabold text-xl mb-4">
-              <div className="mt-4 w-full">
+              <div className="mt-12 w-full">
                 <span className="mt-4 w-full">Address:</span>
                 <address className="mt-4 w-full">
                   9 Moss Lane
@@ -223,7 +252,7 @@ function Home() {
                   T12 K5FW
                 </address>
               </div>
-              <div className="mt-4 w-full">
+              <div className="mt-12 w-full">
                 <span className=" mt-4 w-full">Tel:</span>
                 <br />
                 <p>+00353 021 1234567</p>
