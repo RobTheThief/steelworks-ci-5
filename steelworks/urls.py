@@ -53,10 +53,11 @@ urlpatterns = [
          views.save_stripe_info),
     path('class-time/user-pair/create/',
          views.ClassTimeUserPairCreate.as_view()),
-    """  path('class-time/user-pair/',
-         views.ClassTimeUserPairList.as_view()),
-    path('class-time/user-pair/update/<str:gym_class_name>/<int:user_id>/<str:add_remove>/<str:time_slot>/',
-         views.ClassTimeUserPairUpdateFunction),
-    path('class-time/user-pair/user-time-slots/<int:user_id>/',
-         views.findUserTimeSlots), """
 ]
+
+"""  path('class-time/user-pair/',
+     views.ClassTimeUserPairList.as_view()),
+path('class-time/user-pair/update/<str:gym_class_name>/<int:user_id>/<str:add_remove>/<str:time_slot>/',
+     views.ClassTimeUserPairUpdateFunction),
+path('class-time/user-pair/user-time-slots/<int:user_id>/',
+     views.findUserTimeSlots), """
