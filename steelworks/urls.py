@@ -46,7 +46,8 @@ urlpatterns = [
          views.ClassesUpdateFunction),
     path('classes/user/get-classes/<int:student_id>/',
          views.getUserClasses),
-
+    path('classes/create/',
+         views.ClassesCreate.as_view()),
 
     path('save-stripe-info/<str:email>/<str:paymentMethodID>/<str:subscription_type>/<str:upgrade>/<int:user_id>/',
          views.save_stripe_info),

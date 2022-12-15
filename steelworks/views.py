@@ -396,11 +396,11 @@ class ClassesList(generics.ListAPIView):
     serializer_class = serializers.ClassesSerializer
 
 
-def ClassesCreateFunction(name, details, instr_email):
-    instructor = models.Instructor.objects.get(email=instr_email)
-    obj = models.Classes(class_name=name,
-                         class_details=details, instructor=instructor)
-    obj.save()
+class ClassesCreate(generics.CreateAPIView):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser]
+    queryset = models.Classes.objects.all()
+    serializer_class = serializers.ClassesSerializer
 
 
 @api_view(['GET'])

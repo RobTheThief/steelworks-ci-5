@@ -99,11 +99,6 @@ function Home() {
           </div>
         </div>
       </section>
-      <img
-        className="w-full"
-        src={pullups}
-        alt="Man hanging from a bar, doing pullups"
-      />
       <section id="price-plans" className="price-plan-section">
         <div className="border-slate-500 border-y-2 flex flex-col justify-center items-center bg-black p-8 py-32 w-full">
           <h2 className="lg:text-6xl md:text-4xl sm:text-4xl mb-4 text-4xl text-blue-500">
