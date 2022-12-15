@@ -26,6 +26,8 @@ urlpatterns = [
          views.ProductUserPairDelete.as_view()),
     path('product/user-pair/create/',
          views.ProductUserPairCreate.as_view()),
+    path('product/user-pair/update/<int:pk>/',
+         views.ProductUserPairUpdate.as_view()),
 
     path('instructor/',
          views.InstructorList.as_view()),
@@ -48,9 +50,12 @@ urlpatterns = [
          views.getUserClasses),
     path('classes/create/',
          views.ClassesCreate.as_view()),
+    path('classes/update-admin/<int:pk>',
+         views.ClassesUpdate.as_view()),
 
     path('save-stripe-info/<str:email>/<str:paymentMethodID>/<str:subscription_type>/<str:upgrade>/<int:user_id>/',
          views.save_stripe_info),
+
     path('class-time/user-pair/create/',
          views.ClassTimeUserPairCreate.as_view()),
     path('class-time/user-pair/',
@@ -59,4 +64,6 @@ urlpatterns = [
          views.ClassTimeUserPairUpdateFunction),
     path('class-time/user-pair/user-time-slots/<int:user_id>/',
          views.findUserTimeSlots),
+    path('class-time/user-pair/update-admin/<int:pk>',
+         views.ClassTimeUserPairUpdate.as_view()),
 ]

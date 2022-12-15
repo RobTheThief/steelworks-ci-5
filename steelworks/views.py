@@ -292,6 +292,13 @@ class ProductUserPairDetail(generics.RetrieveAPIView):
     serializer_class = serializers.ProductUserPairSerializer
 
 
+class ProductUserPairUpdate(generics.RetrieveUpdateAPIView):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser]
+    queryset = models.ProductUserPair.objects.all()
+    serializer_class = serializers.ProductUserPairSerializer
+
+
 def ProductUserPairUpdateFunction(pk, user_id, add_remove):
     obj = models.ProductUserPair.objects.get(pk=pk)
     user = models.SteelworksUser.objects.get(pk=user_id)
@@ -322,6 +329,13 @@ class ClassTimeUserPairCreate(generics.CreateAPIView):
     """ authentication_classes = [SessionAuthentication]
     permission_classes = [IsAdminUser] """
     queryset = models.ClassTimeUserPair.objects.all(),
+    serializer_class = serializers.ClassTimeUserPairSerializer
+
+
+class ClassTimeUserPairUpdate(generics.RetrieveUpdateAPIView):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser]
+    queryset = models.ClassTimeUserPair.objects.all()
     serializer_class = serializers.ClassTimeUserPairSerializer
 
 
@@ -399,6 +413,13 @@ class ClassesList(generics.ListAPIView):
 class ClassesCreate(generics.CreateAPIView):
     """ authentication_classes = [SessionAuthentication]
     permission_classes = [IsAdminUser] """
+    queryset = models.Classes.objects.all()
+    serializer_class = serializers.ClassesSerializer
+
+
+class ClassesUpdate(generics.RetrieveUpdateAPIView):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser]
     queryset = models.Classes.objects.all()
     serializer_class = serializers.ClassesSerializer
 
