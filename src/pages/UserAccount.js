@@ -101,6 +101,7 @@ export default function UserAccount({ profile }) {
   };
 
   const openModal = (heading, message) => {
+    setIsModalInput(false);
     setShowModal(true);
     setModalHeading(heading);
     setModalMessage(message);
@@ -252,7 +253,7 @@ export default function UserAccount({ profile }) {
         setter={setPassword}
         func={updateUserAddressPhoneAsync}
       />
-      <div className="w-full min-h-screen max-h-screen flex justify-center items-center user-account-page overflow-y-scroll">
+      <div className="w-full min-h-screen flex justify-center items-center user-account-page overflow-y-scroll">
         <div
           className={`my-24 py-8 flex-col items-center account-details ${css`
             width: 30%;

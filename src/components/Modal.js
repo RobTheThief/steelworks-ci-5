@@ -72,7 +72,8 @@ export default function Modal({
           isCheckout ? "bg-white text-black" : "bg-black text-white"
         } rounded border-blue-500 border-2 ${css`
           min-width: 300px;
-          max-width: 600px;
+          max-width: 390px;
+          ${isCheckout && 'max-width: 600px;'}
         `}`}
       >
         <div className="px-4 pt-2 pb-8">
@@ -100,7 +101,7 @@ export default function Modal({
                 <p className="w-full">{message}</p>
               )}
               <div className="flex w-full justify-center mt-4">
-                <div className="w-1/2 flex justify-between">
+                <div className="w-3/5 flex justify-between">
                   <SWButton
                     handleOnClick={() => {
                       setShowModal(false);
@@ -109,6 +110,7 @@ export default function Modal({
                     }}
                     variant="outlined"
                     width="15%"
+                    margin='0 1rem 0 -1rem'
                   >
                     Ok
                   </SWButton>

@@ -66,31 +66,27 @@ const CheckoutForm = ({ paymentPlanType, userEmail, userID }) => {
   };
 
   useEffect(() => {
+    setShowModal(true);
+    setModalHeading("Subscription information");
     switch (responseMessage) {
-      case "Subscription already active for same product":
-        setShowModal(true);
+      case "Subscription already active for same product.":
         setModalMessage(responseMessage);
-        setModalHeading("Subscription information");
         setPassFunc(false);
         break;
       case "Are you sure you want to upgrade your subscription?":
-        setShowModal(true);
-        setModalMessage(responseMessage);
-        setModalHeading("Subscription information");
+        setModalMessage(
+          `${responseMessage} You will need to contact support to cancel your current subscription.`
+        );
         setPassFunc(true);
         break;
-      case "You cannot downgrade your subscription":
-        setShowModal(true);
+      case "You cannot downgrade your subscription.":
         setModalMessage(responseMessage);
-        setModalHeading("Subscription information");
         setPassFunc(false);
         break;
       case "Success":
-        setShowModal(true);
         setModalMessage(
-          `${responseMessage}! you have subscribed for ${paymentPlanType} membership`
+          `${responseMessage}! you have subscribed for ${paymentPlanType} membership.`
         );
-        setModalHeading("Subscription information");
         setPassFunc(false);
         break;
       default:
