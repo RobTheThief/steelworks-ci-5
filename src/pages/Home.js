@@ -191,8 +191,6 @@ function Home() {
           <fieldset
             className={`rounded flex flex-col justify-center items-center py-4 ${css`
               min-width: 822px;
-              border: #64748b solid 2px;
-              background-color: rgba(0, 0, 0, 0.473);
               @media (max-width: 1024px) {
                 min-width: 0;
                 width: 65%;
@@ -204,7 +202,7 @@ function Home() {
           >
             <form
               action="https://formspree.io/f/xqkjjegb"
-              className="w-11/12 flex flex-col z-50 pt-0 pb-0"
+              className="w-11/12 lg:w-full flex flex-col z-50 pt-0 pb-0"
               method="POST"
               target="_blank"
             >
@@ -254,7 +252,7 @@ function Home() {
                 Submit
               </Button>
             </form>
-            <div className="flex lg:flex-row md:flex-col sm:flex-col flex-col w-4/5 text-white font-extrabold text-xl mb-4">
+            <div className="flex lg:flex-row md:flex-col sm:flex-col flex-col w-11/12 lg:w-full text-white font-extrabold text-xl mb-4">
               <div className="mt-12 w-full">
                 <span className="mt-4 w-full">Address:</span>
                 <address className="mt-4 w-full">

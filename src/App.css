@@ -41,7 +41,8 @@ footer {
 }
 
 .contact-section {
-  background: url("./img/exercise-bike1024.jpg");
+  background: linear-gradient(rgb(0, 0, 0, 0.753), rgb(0, 0, 0, 0.753)),
+  url("./img/exercise-bike1024.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
