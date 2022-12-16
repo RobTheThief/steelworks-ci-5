@@ -31,7 +31,7 @@ export default function LoginRegister({ setProfile }) {
         ></meta>
         <meta
           name="keywords"
-          content="Steelworks, Fitness, Gym, login, register, subscription, class, classes"
+          content="Steelworks, Fitness, Gym, login, register, subscription, class, classes, zumba, crossfit, hiit, spin"
         ></meta>
         <meta
           name="viewport"

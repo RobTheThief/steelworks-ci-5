@@ -28,14 +28,20 @@ function Home() {
         ></meta>
         <meta
           name="keywords"
-          content="Steelworks, Fitness, Gym, subscription, class, classes, plans, about, contact"
+          content="Steelworks, Fitness, Gym, subscription, class, classes, plans, about, contact, zumba, crossfit, hiit, spin"
         ></meta>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0"
         ></meta>
       </Helmet>
-      <section className="hero-container" id="hero">
+      <section
+        className={`hero-container ${css`
+          box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+            rgba(0, 0, 0, 0.22) 0px 15px 12px;
+        `}`}
+        id="hero"
+      >
         <div className="mt-16">
           <h2 className="absolute w-full h-full top-0 left-0 text-center px-4 py-64 text-2xl lg:text-6xl md:text-4xl sm:text-3xl text-blue-500">
             Forge your dream body
@@ -48,9 +54,10 @@ function Home() {
         id="about"
       >
         <h2
-          className={`lg:text-6xl md:text-4xl sm:text-3xl text-3xl w-1/2 mb-12 mt-64 ${css`
+          className={`lg:text-6xl md:text-4xl sm:text-3xl text-3xl mb-12 mt-16 lg:mt-64 md:mt-48 sm:mt-16 ${css`
             width: 45%;
             min-width: 822px;
+            max-width: 822px;
             @media (max-width: 700px) {
               width: 70%;
             }
@@ -67,6 +74,7 @@ function Home() {
           className={`m-2 text-lg sm:text-xl ${css`
             width: 45%;
             min-width: 822px;
+            max-width: 822px;
             @media (max-width: 700px) {
               width: 70%;
             }
@@ -86,6 +94,7 @@ function Home() {
           className={`m-2 text-lg sm:text-xl mt-8 ${css`
             width: 45%;
             min-width: 822px;
+            max-width: 822px;
             @media (max-width: 700px) {
               width: 70%;
             }
@@ -108,9 +117,9 @@ function Home() {
             recommend Steelworks gym to everybody who would like to get results
             and have fun at the same time."
           </p>
-          <div className="flex xl:flex-row lg:flex-row xl:items-end lg:items-end sm:flex-col flex-col items-center mt-16">
+          <div className="flex flex-col xl:flex-row lg:flex-row sm:flex-col xl:items-end lg:items-end  items-center mt-16">
             <img
-              className="inline w-48 ml-4 rounded-full border-2 border-blue-500"
+              className="inline w-48 lg:ml-4 rounded-full border-2 border-blue-500"
               src={gabbyC}
               alt="Avatar of Gabby C."
             />
@@ -119,11 +128,22 @@ function Home() {
         </div>
       </section>
       <section id="price-plans" className="price-plan-section">
-        <div className="border-slate-500 border-y-2 flex flex-col justify-center items-center bg-black p-8 py-32 w-full">
+        <div
+          className={`border-slate-500 border-y-2 flex flex-col justify-center items-center bg-black p-8 py-32 w-full ${css`
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+              rgba(0, 0, 0, 0.12) 0px -12px 30px,
+              rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px,
+              rgba(0, 0, 0, 0.09) 0px -3px 5px;
+          `}`}
+        >
           <h2 className="lg:text-6xl md:text-4xl sm:text-4xl mb-4 text-4xl text-blue-500">
             Price Plans
           </h2>
-          <div className="w-1/3 flex flex-col items-center justify-center lg:flex-row gap-4 mt-8">
+          <div
+            className={`w-1/3 flex flex-col items-center justify-center lg:flex-row gap-4 mt-8 ${css`
+              max-width: 691px;
+            `}`}
+          >
             <Modal
               showModal={showModal}
               setShowModal={setShowModal}
@@ -167,18 +187,12 @@ function Home() {
         <h2 id="contact_section_heading" className="hidden">
           Contact
         </h2>
-        <div className="w-full h-full flex flex-col justify-center items-center py-8 ">
+        <div className="w-full h-full flex flex-col justify-center items-center">
           <fieldset
-            className={css`
-              width: 44%;
+            className={`rounded flex flex-col justify-center items-center py-4 ${css`
               min-width: 822px;
-              border-radius: 5px;
               border: #64748b solid 2px;
               background-color: rgba(0, 0, 0, 0.473);
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-              align-items: center;
               @media (max-width: 1024px) {
                 min-width: 0;
                 width: 65%;
@@ -186,11 +200,11 @@ function Home() {
               @media (max-width: 700px) {
                 width: 95%;
               }
-            `}
+            `}`}
           >
             <form
               action="https://formspree.io/f/xqkjjegb"
-              className="w-4/5 h-3/5 flex flex-col z-50 pt-0 pb-0"
+              className="w-11/12 flex flex-col z-50 pt-0 pb-0"
               method="POST"
               target="_blank"
             >
@@ -202,7 +216,9 @@ function Home() {
                 id="email_field"
                 name="email_field"
                 type="email"
-                className="w-full mb-4 rounded p-1"
+                className={`w-full mb-4 rounded p-1 border-2 border-blue-500 text-white ${css`
+                  background-color: rgba(0, 0, 0, 0.473);
+                `}`}
                 placeholder="example@yourmail.com"
                 required
               />
@@ -213,8 +229,9 @@ function Home() {
               <textarea
                 id="message_field"
                 name="message_field"
-                className={`mb-4 rounded p-1 ${css`
-                  height: 300px;
+                className={`mb-4 rounded p-1 text-white border-2 border-blue-500 ${css`
+                  height: 200px;
+                  background-color: rgba(0, 0, 0, 0.473);
                   @media (max-width: 1024px) {
                     height: 170px;
                   }
@@ -241,7 +258,7 @@ function Home() {
               <div className="mt-12 w-full">
                 <span className="mt-4 w-full">Address:</span>
                 <address className="mt-4 w-full">
-                  9 Moss Lane
+                  25 Boss Lane
                   <br />
                   Riverway
                   <br />
@@ -249,7 +266,7 @@ function Home() {
                   <br />
                   Cork
                   <br />
-                  T12 K5FW
+                  T12 K5TP
                 </address>
               </div>
               <div className="mt-12 w-full">
