@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import PricePlan from "../components/PricePlan";
 import { css } from "@emotion/css";
-import { Button } from "@mui/material";
+import { Button, Divider } from "@mui/material";
 import Modal from "../components/Modal";
 import { Helmet } from "react-helmet-async";
 import gabbyC from "../img/gabbyc.png";
+import SWButton from "../components/SWButton";
 
 function Home() {
   const [showModal, setShowModal] = useState(false);
@@ -181,7 +182,9 @@ function Home() {
       </section>
       <section
         id="contact_section"
-        className="contact-section py-96"
+        className={`contact-section pt-96 pb-64 ${css`
+          height: 1280px;
+        `}`}
         aria-labelledby="contact_section_heading"
       >
         <h2 id="contact_section_heading" className="hidden">
@@ -206,7 +209,9 @@ function Home() {
               method="POST"
               target="_blank"
             >
-              <span className="text-white w-full my-4 text-2xl">Contact</span>
+              <span className="text-white w-full my-4 text-2xl font-bold">
+                Contact
+              </span>
               <label htmlFor="email_field" className="text-white mb-1">
                 Email
               </label>
@@ -214,7 +219,7 @@ function Home() {
                 id="email_field"
                 name="email_field"
                 type="email"
-                className={`w-full mb-4 rounded p-1 border-2 border-blue-500 text-white ${css`
+                className={`w-full mb-4 rounded p-4 border-2 border-blue-500 text-white ${css`
                   background-color: rgba(0, 0, 0, 0.473);
                 `}`}
                 placeholder="example@yourmail.com"
@@ -227,7 +232,7 @@ function Home() {
               <textarea
                 id="message_field"
                 name="message_field"
-                className={`mb-4 rounded p-1 text-white border-2 border-blue-500 ${css`
+                className={`mb-4 rounded p-4 text-white border-2 border-blue-500 ${css`
                   height: 200px;
                   background-color: rgba(0, 0, 0, 0.473);
                   @media (max-width: 1024px) {
@@ -272,6 +277,123 @@ function Home() {
                 <br />
                 <p>+00353 021 1234567</p>
               </div>
+            </div>
+            <Divider
+              variant="middle"
+              className={`w-11/12 lg:w-full ${css`
+                border-color: #3b82f6 !important;
+              `}`}
+            />
+
+            <div
+              id="mc_embed_signup"
+              className={`w-11/12 lg:w-full text-white mb-32 ${css`
+                background: none;
+                clear: left;
+                font: 14px;
+              `}`}
+            >
+              <h2 className="text-white text-2xl font-bold w-full pb-4 pt-8">
+                Subscribe
+              </h2>
+              <form
+                action="https://herokuapp.us21.list-manage.com/subscribe/post?u=e77a33553944023204b369227&amp;id=2c397b90d9&amp;f_id=005dc8e1f0"
+                method="post"
+                id="mc-embedded-subscribe-form"
+                name="mc-embedded-subscribe-form"
+                className={`validate m-0 ${css`
+                  margin: 0 !important;
+                `}`}
+                target="_blank"
+                noValidate
+              >
+                <div
+                  id="mc_embed_signup_scroll"
+                  className={`w-full ${css`
+                    width: 100% !important;
+                  `}`}
+                >
+                  <h2 className="hidden">Subscribe</h2>
+                  <div className="indicates-required w-full">
+                    <span className="asterisk">*</span> indicates required
+                  </div>
+                  <div
+                    className={`mc-field-group ${css`
+                      width: 100% !important;
+                    `}`}
+                  >
+                    <label htmlFor="mce-EMAIL">
+                      Email Address <span className="asterisk">*</span>
+                    </label>
+                    <input
+                      placeholder="example@yourmail.com"
+                      type="email"
+                      name="EMAIL"
+                      className={`required email rounded ${css`
+                        background-color: rgba(0, 0, 0, 0.473);
+                        border: #3b82f6 2px solid !important;
+                      `}`}
+                      id="mce-EMAIL"
+                      required
+                    />
+                    <span
+                      id="mce-EMAIL-HELPERTEXT"
+                      className={`helper_text ${css`
+                        background-color: rgba(255, 255, 255, 0) !important;
+                      `}`}
+                    ></span>
+                  </div>
+                  <div id="mce-responses" className="clear foot">
+                    <div
+                      className="response"
+                      id="mce-error-response"
+                      style={{ display: "none" }}
+                    ></div>
+                    <div
+                      className="response"
+                      id="mce-success-response"
+                      style={{ display: "none" }}
+                    ></div>
+                  </div>
+                  <div
+                    style={{ position: "absolute", left: "-5000px" }}
+                    aria-hidden="true"
+                  >
+                    <input
+                      type="text"
+                      name="b_e77a33553944023204b369227_2c397b90d9"
+                      tabIndex="-1"
+                    />
+                  </div>
+                  <div className="optionalParent">
+                    <div
+                      className={`clear foot ${css`
+                        width: 100% !important;
+                      `}`}
+                    >
+                      <SWButton type="submit" width="55.5%">
+                        Subscribe
+                      </SWButton>
+                      <p className="brandingLogo">
+                        <a
+                          href="http://eepurl.com/igoQMn"
+                          title="Mailchimp - email marketing made easy and fun"
+                        >
+                          <img
+                            className={css`
+                              @media (max-width: 400px) {
+                                margin-top: 1rem;
+                                max-width: 88%;
+                              }
+                            `}
+                            src="https://eep.io/mc-cdn-images/template_images/branding_logo_text_dark_dtp.svg"
+                          />
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </form>
             </div>
           </fieldset>
         </div>
