@@ -9,6 +9,7 @@ import Sidebar from "./components/Sidebar";
 import LoginRegister from "./pages/LoginRegister";
 import UserAccount from "./pages/UserAccount";
 import Home from "./pages/Home";
+import Page404 from "./pages/Page404";
 
 function App() {
   const [profile, setProfile] = useState();
@@ -40,6 +41,7 @@ function App() {
               path="/user-account"
               element={<UserAccount profile={profile} />}
             />
+            <Route path="/*" element={<Page404 />} />
           </Routes>
         </HelmetProvider>
       </BrowserRouter>
