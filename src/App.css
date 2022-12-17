@@ -42,7 +42,7 @@ footer {
 
 .contact-section {
   background: linear-gradient(rgb(0, 0, 0, 0.753), rgb(0, 0, 0, 0.753)),
-  url("./img/exercise-bike1024.jpg");
+    url("./img/exercise-bike1024.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
@@ -51,7 +51,8 @@ footer {
 }
 
 .login-register-page {
-  background: url("./img/weight-rack1024.jpg");
+  background: linear-gradient(rgb(0, 0, 0, 0.753), rgb(0, 0, 0, 0.753)),
+    url("./img/weight-rack1024.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }

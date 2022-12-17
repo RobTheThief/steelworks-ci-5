@@ -9,7 +9,7 @@ export default function Login({
   setShowModal,
   setModalHeading,
   setModalMessage,
-  setProfile
+  setProfile,
 }) {
   const [user, setUser] = useState();
   const [pass, setPass] = useState();
@@ -57,25 +57,20 @@ export default function Login({
 
   return (
     <form
-      className={`login-form w-1/3 ${css`
+      className={`login-form w-full flex justify-center items-center ${css`
         min-width: 295px;
       `}`}
       onSubmit={handleSubmit}
     >
       <fieldset
-        className={`my-24 ${css`
+        className={`w-1/3 my-24 p-6 rounded flex flex-col justify-center items-start ${css`
           min-width: 295px;
-          padding: 2rem;
-          border-radius: 5px;
+          max-width: 400px;
           border: #64748b solid 2px;
           background-color: rgba(0, 0, 0, 0.473);
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: flex-start;
         `}`}
       >
-        <h2 className="text-white mb-8 font-extrabold">Login</h2>
+        <h2 className="text-white text-xl mb-8 font-extrabold">Login</h2>
         <label htmlFor="username_field" className="text-white">
           Username
         </label>

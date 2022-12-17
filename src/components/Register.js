@@ -18,11 +18,11 @@ export default function Register({
   const [email, setEmail] = useState();
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
-  const [address1, setAddress1] = useState();
-  const [address2, setAddress2] = useState();
-  const [address3, setAddress3] = useState();
   const [postCode, setPostCode] = useState();
   const [phone, setPhone] = useState();
+  const address1 = "address line 1";
+  const address2 = "address line 2";
+  const address3 = "address line 3";
 
   const navigate = useNavigate();
 
@@ -93,20 +93,15 @@ export default function Register({
       onSubmit={(e) => handleSubmit(e)}
     >
       <fieldset
-        className={`my-24 ${css`
-          width: 30%;
+        className={`my-24 w-1/3 rounded flex justify-center items-start p-6 ${css`
           min-width: 295px;
-          padding: 2rem 0;
-          border-radius: 5px;
+          max-width: 400px;
           border: #64748b solid 2px;
           background-color: rgba(0, 0, 0, 0.473);
-          display: flex;
-          justify-content: center;
-          align-items: flex-start;
         `}`}
       >
-        <div className=" w-2/3 h-2/3 flex flex-col">
-          <h2 className="text-white mb-8 font-extrabold">Register</h2>
+        <div className="w-full h-2/3 flex flex-col">
+          <h2 className="text-white text-xl mb-8 font-extrabold">Register</h2>
           <label htmlFor="first_name_field" className="text-white">
             First name
           </label>
@@ -176,39 +171,6 @@ export default function Register({
             className={inputClasses}
             required
             onChange={(e) => setPass2(e.target.value)}
-          />
-          <label htmlFor="address_1_field" className="text-white">
-            Address line 1
-          </label>
-          <input
-            id="address_1_field"
-            name="address_1_field"
-            type="text"
-            className={inputClasses}
-            required
-            onChange={(e) => setAddress1(e.target.value)}
-          />
-          <label htmlFor="address_2_field" className="text-white">
-            Address line 2
-          </label>
-          <input
-            id="address_2_field"
-            name="address_2_field"
-            type="text"
-            className={inputClasses}
-            required
-            onChange={(e) => setAddress2(e.target.value)}
-          />
-          <label htmlFor="address_3_field" className="text-white">
-            Address line 3
-          </label>
-          <input
-            id="address_3_field"
-            name="address_3_field"
-            type="text"
-            className={inputClasses}
-            required
-            onChange={(e) => setAddress3(e.target.value)}
           />
           <label htmlFor="postcode_field" className="text-white">
             Postcode
