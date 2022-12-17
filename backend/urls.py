@@ -10,7 +10,7 @@ urlpatterns = [
     path("robots.txt", TemplateView.as_view(
         template_name="robots.txt", content_type="text/plain")),
     path("sitemap.xml", TemplateView.as_view(
-        template_name="sitemap.xml", content_type="text/plain")),
+        template_name="sitemap.xml", content_type="application/xml")),
     path('admin/', admin.site.urls),
     path('api/', include('steelworks.urls')),
     path('login/', views.LoginView.as_view()),
