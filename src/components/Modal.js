@@ -38,10 +38,9 @@ export default function Modal({
   async function getUserAsync() {
     try {
       if (userEmail) {
-        await getSWUser(userEmail)
-          .then((res) => {
-            setSWUser(res);
-          });
+        await getSWUser(userEmail).then((res) => {
+          setSWUser(res);
+        });
       }
     } catch (error) {
       console.log(error);
@@ -73,18 +72,18 @@ export default function Modal({
         } rounded border-blue-500 border-2 ${css`
           min-width: 300px;
           max-width: 390px;
-          ${isCheckout && 'max-width: 600px;'}
+          ${isCheckout && "max-width: 600px;"}
         `}`}
       >
         <div className="px-4 pt-2 pb-8">
-          <div className="flex  justify-end">
+          <div className="flex  justify-end items-end">
             <h3 className="w-full text-lg text-blue-500">{heading}</h3>
             <span
               onClick={() => {
                 (isInput || isCheckout) && setShowModal(false);
                 setResponseMessage && setResponseMessage("");
               }}
-              className="realtive top-0 left-0 cursor-pointer text-3xl"
+              className="cursor-pointer text-3xl mb-2"
             >
               &times;
             </span>
@@ -94,14 +93,14 @@ export default function Modal({
               {setter ? (
                 <input
                   type="password"
-                  className="text-black mt-2 rounded"
+                  className="text-black mt-4 rounded"
                   onChange={(e) => setter(e.target.value)}
                 ></input>
               ) : (
                 <p className="w-full">{message}</p>
               )}
               <div className="flex w-full justify-center mt-4">
-                <div className="w-3/5 flex justify-between">
+                <div className="w-3/5 flex justify-between mt-4">
                   <SWButton
                     handleOnClick={() => {
                       setShowModal(false);
@@ -110,7 +109,7 @@ export default function Modal({
                     }}
                     variant="outlined"
                     width="15%"
-                    margin='0 1rem 0 -1rem'
+                    margin="0 1rem 0 -1rem"
                   >
                     Ok
                   </SWButton>

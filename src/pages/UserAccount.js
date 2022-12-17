@@ -16,7 +16,7 @@ import { HashLink } from "react-router-hash-link";
 import { Helmet } from "react-helmet-async";
 
 const CONTAINER_CSS =
-  "border-radius: 5px;border: #64748b solid 2px;background-color: rgba(0, 0, 0, 0.473);display: flex;";
+  "border-radius: 4px;border: #64748b solid 2px;background-color: rgba(0, 0, 0, 0.473);display: flex;";
 
 export default function UserAccount({ profile }) {
   const [swUser, setSWUser] = useState();
@@ -358,7 +358,7 @@ export default function UserAccount({ profile }) {
                 <select
                   id="classes"
                   name="classes"
-                  className="text-black mb-4"
+                  className="text-black mb-4 rounded"
                   onChange={(e) => setFitnessClass(e.target.value)}
                 >
                   <option value={undefined}></option>
@@ -372,7 +372,7 @@ export default function UserAccount({ profile }) {
                 <select
                   id="time-slot"
                   name="time-slot"
-                  className="text-black"
+                  className="text-black rounded"
                   onChange={(e) => setTimeSlot(e.target.value)}
                 >
                   <option value={undefined}></option>
