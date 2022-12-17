@@ -16,10 +16,10 @@ export default function PricePlan({
 }) {
   const sectStyle = "text-white text-center my-4";
   const planPrices = {
-    'Silver': '€99',
-    'Gold': '€129',
-    'Unlimited': '€159'
-  }
+    Silver: "€99",
+    Gold: "€129",
+    Unlimited: "€159",
+  };
 
   const handleClick = async () => {
     await getProfile().then((res) => {
@@ -87,7 +87,9 @@ export default function PricePlan({
         <h3 className="text-blue-500 text-center text-3xl">
           <b>{type}</b>
         </h3>
-        <p className={`text-2xl font-extrabold ${sectStyle}`}>{planPrices[type]}</p>
+        <p className={`text-2xl font-extrabold ${sectStyle}`}>
+          {planPrices[type]}
+        </p>
         <p className={sectStyle}>
           {type !== "Unlimited" ? (
             <span>

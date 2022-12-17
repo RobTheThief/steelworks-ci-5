@@ -120,7 +120,7 @@ const CheckoutForm = ({ paymentPlanType, userEmail, userID }) => {
             id="email"
             name="name"
             type="email"
-            value={userEmail}
+            value={userEmail ? userEmail : 'invalid@nomail.com'}
             readOnly
           />
         </div>

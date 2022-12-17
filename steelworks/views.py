@@ -166,8 +166,6 @@ def save_stripe_info(self, email, paymentMethodID, subscription_type, upgrade, u
 class ReactView(TemplateView):
     template_name = 'steelworks/react.html'
 
-############# """ USER VIEWS """#####################
-
 
 class SteelworksUserCreate(generics.CreateAPIView):
     authentication_classes = []
@@ -234,7 +232,6 @@ def SteelworksUserUpdateFunction(self, pk, user_email, password,
     return HttpResponse(json.dumps({'response': 'user not found'}))
 
 
-############# """ PRODUCT VIEWS """#####################
 class ProductCreate(generics.CreateAPIView):
     authentication_classes = [SessionAuthentication]
     permission_classes = [IsAdminUser]
@@ -270,7 +267,6 @@ class ProductDelete(generics.RetrieveDestroyAPIView):
     serializer_class = serializers.ProductSerializer
 
 
-############# """ PRODUCT/USER PAIR VIEWS """#####################
 class ProductUserPairCreate(generics.CreateAPIView):
     authentication_classes = [SessionAuthentication]
     permission_classes = [IsAdminUser]
@@ -315,19 +311,17 @@ class ProductUserPairDelete(generics.RetrieveDestroyAPIView):
     queryset = models.ProductUserPair.objects.all()
     serializer_class = serializers.ProductUserPairSerializer
 
-############# """ CLASS TIME USER PAIR VIEWS """#####################
-
 
 class ClassTimeUserPairList(generics.ListAPIView):
-    """ authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAdminUser] """
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser]
     queryset = models.ClassTimeUserPair.objects.all()
     serializer_class = serializers.ClassTimeUserPairSerializer
 
 
 class ClassTimeUserPairCreate(generics.CreateAPIView):
-    """ authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAdminUser] """
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser]
     queryset = models.ClassTimeUserPair.objects.all(),
     serializer_class = serializers.ClassTimeUserPairSerializer
 
@@ -340,8 +334,8 @@ class ClassTimeUserPairUpdate(generics.RetrieveUpdateAPIView):
 
 
 class ClassTimeUserPairDelete(generics.RetrieveDestroyAPIView):
-    """ authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAdminUser] """
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser]
     queryset = models.ClassTimeUserPair.objects.all()
     serializer_class = serializers.ClassTimeUserPairSerializer
 
@@ -397,27 +391,29 @@ def findUserTimeSlots(self, user_id):
     except Exception as e:
         return Response({'msg': 'something went wrong while getting user class time slots', 'error': str(e)}, status=500)
 
-# findUserTimeSlots(1)
-#ClassTimeUserPairUpdateFunction('Zumba', 1, False, 'time_slot_1')
-
-############# """ GYM CLASSES VIEWS """#####################
-
 
 class ClassesList(generics.ListAPIView):
-    """ authentication_classes = [SessionAuthentication]
-    permission_classes = [permissions.IsAuthenticated] """
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
     queryset = models.Classes.objects.all()
     serializer_class = serializers.ClassesSerializer
 
 
 class ClassesCreate(generics.CreateAPIView):
-    """ authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAdminUser] """
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser]
     queryset = models.Classes.objects.all()
     serializer_class = serializers.ClassesSerializer
 
 
 class ClassesUpdate(generics.RetrieveUpdateAPIView):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser]
+    queryset = models.Classes.objects.all()
+    serializer_class = serializers.ClassesSerializer
+
+
+class ClassesDelete(generics.RetrieveDestroyAPIView):
     authentication_classes = [SessionAuthentication]
     permission_classes = [IsAdminUser]
     queryset = models.Classes.objects.all()
@@ -450,9 +446,6 @@ def ClassesUpdateFunction(self, class_name, details, student_id, remove_user):
         return Response({'msg': 'something went wrong while updating classes', 'error': str(e)}, status=500)
 
 
-#ClassesCreateFunction('CrossFit', 'Not only does a Spin class benefit your muscles—everything from your legs to your core—but its also a great low-impact cardiovascular workout, which improves your blood flow, increases your stamina, boosts your mood, and prevents against chronic issues such as high blood pressure, heart disease, stroke, and diabetes', 'hambletonsa@steelworks.com')
-# *********************************** Delete!!!!!
-
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication])
 @permission_classes([IsAuthenticated])
@@ -470,50 +463,41 @@ def getUserClasses(self, student_id):
         return Response({'msg': 'something went wrong while retrieving user classes', 'error': str(e)}, status=500)
 
 
-class ClassesDelete(generics.RetrieveDestroyAPIView):
-    """ authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAdminUser] """
-    queryset = models.Classes.objects.all()
-    serializer_class = serializers.ClassesSerializer
-
-
-############# """ INSTRUCTOR VIEWS """#####################
 class InstructorList(generics.ListAPIView):
-    """ authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAdminUser] """
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser]
     queryset = models.Instructor.objects.all()
     serializer_class = serializers.InstructorSerializer
 
 
 class InstructorDetail(generics.RetrieveAPIView):
-    """ authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAuthenticated] """
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = models.Instructor.objects.all()
     serializer_class = serializers.InstructorSerializer
 
 
 class InstructorUpdate(generics.RetrieveUpdateAPIView):
-    """ authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAdminUser] """
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser]
     queryset = models.Instructor.objects.all()
     serializer_class = serializers.InstructorSerializer
 
 
 class InstructorCreate(generics.CreateAPIView):
-    """ authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAdminUser] """
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser]
     queryset = models.Instructor.objects.all()
     serializer_class = serializers.InstructorSerializer
 
 
 class InstructorDelete(generics.RetrieveDestroyAPIView):
-    """ authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAdminUser] """
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser]
     queryset = models.Instructor.objects.all()
     serializer_class = serializers.InstructorSerializer
 
 
-############# """ AUTH VIEWS """#####################
 class LoginView(views.APIView):
     """ Endpoint that logs in a regestered user """
     permission_classes = [permissions.AllowAny]
@@ -546,8 +530,7 @@ class LogoutView(views.APIView):
 class ProfileView(generics.RetrieveAPIView):
     """ Endpoint that gets profile information on a logged in user
     if a user is logged in"""
-    #authentication_classes = [authentication.SessionAuthentication]
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     permission_classes = [permissions.AllowAny]
     serializer_class = serializers.UserSerializer
 
