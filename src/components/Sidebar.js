@@ -13,6 +13,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import FacebookIcon from "@mui/icons-material/Facebook";
 import { useNavigate } from "react-router-dom";
 
 import { getProfile, logout } from "../apirequests/authRequests";
@@ -57,7 +58,8 @@ function Sidebar({ profile, setProfile }) {
   async function handleLogout() {
     await logout()
       .then(() => getProfile())
-      .then((res) => setProfile(res)).then(handleNavigateLogin());
+      .then((res) => setProfile(res))
+      .then(handleNavigateLogin());
   }
 
   return (
@@ -161,7 +163,7 @@ function Sidebar({ profile, setProfile }) {
                 {profile?.username ? profile.username : "Login / Register"}
               </Button>
 
-              <FormControl sx={{ mt: 1, mb:1, width: 40, mt: 3, pb: 2 }}>
+              <FormControl sx={{ mt: 1, mb: 1, width: 40, mt: 3, pb: 2 }}>
                 <Select
                   displayEmpty
                   value={""}
@@ -244,6 +246,16 @@ function Sidebar({ profile, setProfile }) {
       </Drawer>
       <footer className="h-24 w-full bg-black flex flex-col justify-center items-center">
         <p className="text-white">Copyright &#169; Steelworks 2022</p>
+        <a
+          href="https://www.facebook.com/people/Steelworks-Fitness/100088910285306/"
+          target="_blank"
+          className={`text-white flex mt-4 ${css`
+            z-index: 9000000000000;
+          `}`}
+        >
+          <FacebookIcon className="mr-2 text-blue-500" />
+          Follow us on Facebook!
+        </a>
       </footer>
     </>
   );

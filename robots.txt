@@ -1,0 +1,3 @@
+user-agent: *
+Disallow: /user-account
+Sitemap: https://steelworks-fitness.herokuapp.com/sitemap.xml

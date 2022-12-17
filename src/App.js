@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
 import "./App.css";
-import Sidebar from "./components/Sidebar";
-import LoginRegister from "./pages/LoginRegister";
 import { HelmetProvider } from "react-helmet-async";
 import { getProfile } from "./apirequests/authRequests";
-import UserAccount from "./pages/UserAccount";
 import Favicon from "react-favicon";
-import favicon from './favicon.png';
+import favicon from "./favicon.png";
+import Sidebar from "./components/Sidebar";
+import LoginRegister from "./pages/LoginRegister";
+import UserAccount from "./pages/UserAccount";
+import Home from "./pages/Home";
 
 function App() {
   const [profile, setProfile] = useState();
@@ -33,19 +33,12 @@ function App() {
             <Route
               exact
               path="/login-register"
-              element={
-                <LoginRegister setProfile={setProfile} />
-              }
+              element={<LoginRegister setProfile={setProfile} />}
             />
             <Route
               exact
               path="/user-account"
               element={<UserAccount profile={profile} />}
-            />
-            <Route
-              exact
-              path="/favicon"
-              element={favicon}
             />
           </Routes>
         </HelmetProvider>
