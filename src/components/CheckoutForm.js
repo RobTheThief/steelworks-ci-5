@@ -66,10 +66,10 @@ const CheckoutForm = ({ paymentPlanType, userEmail, userID }) => {
   };
 
   useEffect(() => {
-    setShowModal(true);
     setModalHeading("Subscription information");
+    setShowModal(true);
     switch (responseMessage) {
-      case "Subscription already active for same product.":
+      case "Subscription already active for same product":
         setModalMessage(responseMessage);
         setPassFunc(false);
         break;
@@ -79,7 +79,7 @@ const CheckoutForm = ({ paymentPlanType, userEmail, userID }) => {
         );
         setPassFunc(true);
         break;
-      case "You cannot downgrade your subscription.":
+      case "You cannot downgrade your subscription":
         setModalMessage(responseMessage);
         setPassFunc(false);
         break;
@@ -120,7 +120,7 @@ const CheckoutForm = ({ paymentPlanType, userEmail, userID }) => {
             id="email"
             name="name"
             type="email"
-            value={userEmail ? userEmail : 'invalid@nomail.com'}
+            value={userEmail ? userEmail : "invalid@nomail.com"}
             readOnly
           />
         </div>
