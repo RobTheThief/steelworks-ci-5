@@ -2,7 +2,12 @@ import React from "react";
 import { css } from "@emotion/css";
 import { Button } from "@mui/material";
 
-export default function DrawerButton({ label, link, toggleDrawer, HashLink }) {
+/**
+ * Uses MUI to create a side bar/ drawer button as a HashLink component.
+ * @param {object} param0
+ * @returns
+ */
+const DrawerButton = ({ label, link, toggleDrawer, HashLink }) => {
   return (
     <Button
       onClick={toggleDrawer(false)}
@@ -17,4 +22,6 @@ export default function DrawerButton({ label, link, toggleDrawer, HashLink }) {
       {label}
     </Button>
   );
-}
+};
+
+export default DrawerButton;

@@ -6,14 +6,20 @@ import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOutlined";
 import DoneAllOutlinedIcon from "@mui/icons-material/DoneAllOutlined";
 
-export default function PricePlan({
+/**
+ * Renders the price plans on the home page and renders copy
+ * depending on the type of price plan.
+ * @param {object} param0
+ * @returns jsx
+ */
+const PricePlan = ({
   type,
   setShowModal,
   setPaymentPlanType,
   setIsCheckOut,
   setModalMessage,
   setModalHeading,
-}) {
+}) => {
   const sectStyle = "text-white text-center my-4";
   const planPrices = {
     Silver: "€99",
@@ -21,6 +27,11 @@ export default function PricePlan({
     Unlimited: "€159",
   };
 
+  /**
+   * Handles the click on the sign up button for each price plan.
+   * Checks if logged in and shows warning if not. Opens checkout
+   * form modal if user is logged in.
+   */
   const handleClick = async () => {
     await getProfile().then((res) => {
       if (res.email) {
@@ -140,4 +151,6 @@ export default function PricePlan({
       </div>
     </>
   );
-}
+};
+
+export default PricePlan;

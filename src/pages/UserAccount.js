@@ -21,7 +21,13 @@ import DoneAllOutlinedIcon from "@mui/icons-material/DoneAllOutlined";
 const CONTAINER_CSS =
   "border-radius: 4px;border: #64748b solid 2px;background-color: rgba(0, 0, 0, 0.473);display: flex;";
 
-export default function UserAccount({ profile }) {
+/**
+ * Renders the user account page and handles requests to
+ * update user information and class enrollement.
+ * @param {object} param0
+ * @returns jsx
+ */
+const UserAccount = ({ profile }) => {
   const [swUser, setSWUser] = useState();
   const [address1, setAddress1] = useState();
   const [address2, setAddress2] = useState();
@@ -46,6 +52,11 @@ export default function UserAccount({ profile }) {
   const [subLimit, setSubLimit] = useState();
   const [instructor, setInstructor] = useState();
 
+  /**
+   * Using the userEmail sends a fetch request to the backend
+   * to get the steelworks user object and set it to a state
+   * variable.
+   */
   const getUserAsync = async () => {
     try {
       if (profile && profile.email) {
@@ -58,10 +69,18 @@ export default function UserAccount({ profile }) {
     }
   };
 
+  /**
+   * Async function that gets and sets the productUserPairs
+   */
   const getProductUserPairsAsync = async () => {
     setProductUserPairs(await getProductUserPairs());
   };
 
+  /**
+   * Prevents default submit behaviour and opens a modal with
+   * input to get the user password.
+   * @param {object} e
+   */
   const handleUpdadeInfo = (e) => {
     e.preventDefault();
     setModalHeading("Enter Password to update details.");
@@ -69,6 +88,10 @@ export default function UserAccount({ profile }) {
     setIsModalInput(true);
   };
 
+  /**
+   * Sends a fetch request to update the steelworks user information
+   * and shows a modal if there is an error returned from the request.
+   */
   const updateUserAddressPhoneAsync = async () => {
     let response = await updateUserAddressPhone(
       swUser?.id,
@@ -88,14 +111,31 @@ export default function UserAccount({ profile }) {
     }
   };
 
+  /**
+   * Takes in event object and setter function and
+   * on input change, sets the state variable witht
+   * the setter passed.
+   * @param {object} e
+   * @param {object} setter
+   */
   const changeInput = (e, setter) => {
     setter(e.target.value);
   };
 
+  /**
+   * Makes a fetch request to get gym classes and sets gym classes
+   * state variable.
+   */
   const getGymClassesAsync = async () => {
     await getGymClasses().then((res) => setGymClassesArray(res));
   };
 
+  /**
+   * Takes an int as student id and makes a fetch request to get a
+   * list of all gym classes that a specific student is in and then
+   * sets a state variable for enrolledClassesArray.
+   * @param {int} student_id
+   */
   const getUserClassesAsync = async (student_id) => {
     await getUserClasses(student_id).then((res) => {
       setEnrolledClassesArray(res.response);
@@ -103,6 +143,13 @@ export default function UserAccount({ profile }) {
     });
   };
 
+  /**
+   * Takes in a heading and message as a string, sets IsModalInput
+   * to false, opens a modal and sets the heading and message for
+   * the modal.
+   * @param {string} heading
+   * @param {string} message
+   */
   const openModal = (heading, message) => {
     setIsModalInput(false);
     setShowModal(true);
@@ -110,6 +157,13 @@ export default function UserAccount({ profile }) {
     setModalMessage(message);
   };
 
+  /**
+   * Takes in the event object and handles the class enrollment. Makes checks
+   * for number of classes the user is entitled to and if user is already enrolled,
+   * and enrolles the user into the class in the database, then adds them to
+   * a time slot for that class.
+   * @param {object} e
+   */
   const handleClassesUpdate = async (e) => {
     const option = e.target.innerText === "REMOVE" ? "remove" : "add";
     if (enrolledClassesArray.includes(fitnessClass) && option === "add") {
@@ -149,6 +203,12 @@ export default function UserAccount({ profile }) {
     }
   };
 
+  /**
+   * Sets the selected fitness class state variable as the class
+   * object for the db, and then sets the instructor state variable
+   * as the instructor object from the db, after getting the instructor
+   * id from the class object.
+   */
   const getSelectedClassDetails = () => {
     gymClassesArray &&
       gymClassesArray.forEach((item) => {
@@ -161,6 +221,11 @@ export default function UserAccount({ profile }) {
       });
   };
 
+  /**
+   * Gets the time slots for the classes that a given user is
+   * signed up to and sets the two slots to an array of classes
+   * each.
+   */
   const findUserTimeSlotsAsync = async () => {
     await findUserTimeSlots(swUser?.id).then((res) => {
       setSlot1ClassNames(res.slot_1);
@@ -172,6 +237,10 @@ export default function UserAccount({ profile }) {
     getUserAsync();
   }, [profile]);
 
+  /**
+   * If productUserPairs changes finds the subscription the user is
+   * signed up to and sets the subID state variable.
+   */
   useEffect(() => {
     productUserPairs &&
       productUserPairs.forEach((item) => {
@@ -183,6 +252,11 @@ export default function UserAccount({ profile }) {
       });
   }, [productUserPairs]);
 
+  /**
+   * Sets subscription name based on subID and sets classes
+   * limit for each subscription type whenever the steelworks
+   * user variable is updated.
+   */
   useEffect(() => {
     switch (subID) {
       case 1:
@@ -203,6 +277,9 @@ export default function UserAccount({ profile }) {
     }
   }, [subID]);
 
+  /**
+   * Sets user details and productUserPairs whenever the steelworks user id is set.
+   */
   useEffect(() => {
     setAddress1(swUser?.address_line_1);
     setAddress2(swUser?.address_line_2);
@@ -351,7 +428,7 @@ export default function UserAccount({ profile }) {
               ) : sub === "Gold" ? (
                 <MilitaryTechIcon fontSize="large" />
               ) : sub === "Silver" ? (
-                <DoneAllOutlinedIcon  />
+                <DoneAllOutlinedIcon />
               ) : null}
               <br />
               {sub === "None" && (
@@ -462,4 +539,6 @@ export default function UserAccount({ profile }) {
       </div>
     </>
   );
-}
+};
+
+export default UserAccount;

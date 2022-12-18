@@ -36,31 +36,51 @@ const drawerButtons = [
 
 const options = ["Account", "Log out"];
 
-function Sidebar({ profile, setProfile }) {
+/**
+ * Renders the layout of the website; Sidebar, nav bar and footer.
+ * @param {object} param0
+ * @returns jsx
+ */
+const Layout = ({ profile, setProfile }) => {
   const [toggle, setToggle] = useState(false);
   const steelworksBlue = "#3b82f6 !important";
   const navigate = useNavigate();
 
-  const toggleDrawer = (option) => (event) => {
+  /**
+   * Accepts a boolean and sets the toggle state variable
+   * to open or close the menu drawer.
+   * @param {boolean} option
+   */
+  const openCloseDrawer = (option) => (event) => {
     setToggle(option);
   };
 
+  /**
+   * Uses react router to navigate to the user account page.
+   */
   const handleNavigateAccount = useCallback(
     () => navigate("/user-account", { replace: true }),
     [navigate]
   );
 
+  /**
+   * Uses react router to navigate to the login-register page.
+   */
   const handleNavigateLogin = useCallback(
     () => navigate("/login-register", { replace: true }),
     [navigate]
   );
 
-  async function handleLogout() {
+  /**
+   * Logs out the user, gets and sets the profile and
+   * navigates to the login-register page.
+   */
+  const handleLogout = async () => {
     await logout()
       .then(() => getProfile())
       .then((res) => setProfile(res))
       .then(handleNavigateLogin());
-  }
+  };
 
   return (
     <>
@@ -81,7 +101,7 @@ function Sidebar({ profile, setProfile }) {
           >
             <div className="flex items-center">
               <IconButton
-                onClick={toggleDrawer(!toggle)}
+                onClick={openCloseDrawer(!toggle)}
                 size="large"
                 edge="start"
                 aria-label="menu"
@@ -112,7 +132,7 @@ function Sidebar({ profile, setProfile }) {
                 variant="h1"
               >
                 <Button
-                  onClick={toggleDrawer(false)}
+                  onClick={openCloseDrawer(false)}
                   component={HashLink}
                   smooth
                   to="/#hero"
@@ -139,7 +159,7 @@ function Sidebar({ profile, setProfile }) {
             </div>
             <div className="flex">
               <Button
-                onClick={toggleDrawer(false)}
+                onClick={openCloseDrawer(false)}
                 component={HashLink}
                 smooth
                 title={
@@ -224,7 +244,7 @@ function Sidebar({ profile, setProfile }) {
       </Box>
       <Drawer
         open={toggle}
-        onClose={toggleDrawer(false)}
+        onClose={openCloseDrawer(false)}
         className={css`
           & > .MuiPaper-root {
             width: 20rem;
@@ -239,7 +259,7 @@ function Sidebar({ profile, setProfile }) {
             key={`drawer-button-${idx}`}
             label={drawer.label}
             link={drawer.link}
-            toggleDrawer={toggleDrawer}
+            toggleDrawer={openCloseDrawer}
             HashLink={HashLink}
           />
         ))}
@@ -259,6 +279,6 @@ function Sidebar({ profile, setProfile }) {
       </footer>
     </>
   );
-}
+};
 
-export default Sidebar;
+export default Layout;

@@ -2,7 +2,14 @@ import React from "react";
 import { Button } from "@mui/material";
 import { css } from "@emotion/css";
 
-export default function SWButton({
+/**
+ * Wraps MUI Button component to style the steelworks
+ * button. Can be user as a link, submission button,
+ * or to run a function.
+ * @param {object} param0 
+ * @returns jsx
+ */
+const SWButton = ({
   type,
   margin,
   width,
@@ -10,7 +17,7 @@ export default function SWButton({
   handleOnClick,
   component,
   link,
-}) {
+}) => {
   return (
     <Button
       type={type ? type : "button"}
@@ -33,3 +40,5 @@ export default function SWButton({
     </Button>
   );
 }
+
+export default SWButton;

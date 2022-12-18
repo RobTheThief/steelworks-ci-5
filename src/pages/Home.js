@@ -7,7 +7,14 @@ import { Helmet } from "react-helmet-async";
 import gabbyC from "../img/gabbyc.png";
 import SWButton from "../components/SWButton";
 
-function Home() {
+/**
+ * Renders the home page for Steelworks. Contains Hero,
+ * About, Price Plans, and contact sections. Has a modal
+ * for the price plan section and a head using the Helmet
+ * component.
+ * @returns jsx
+ */
+const Home = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [modalHeading, setModalHeading] = useState("");
@@ -400,6 +407,6 @@ function Home() {
       </section>
     </>
   );
-}
+};
 
 export default Home;

@@ -4,7 +4,13 @@ import Register from "../components/Register";
 import { Helmet } from "react-helmet-async";
 import Modal from "../components/Modal";
 
-export default function LoginRegister({ setProfile }) {
+/**
+ * Renders the login-register page with a modal for errors
+ * and warnings and a head using the Helmet component.
+ * @param {object} param0
+ * @returns
+ */
+const LoginRegister = ({ setProfile }) => {
   const [isRegister, setIsRegister] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalHeading, setModalHeading] = useState("");
@@ -59,4 +65,6 @@ export default function LoginRegister({ setProfile }) {
       </div>
     </>
   );
-}
+};
+
+export default LoginRegister;

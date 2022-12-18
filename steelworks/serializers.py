@@ -1,3 +1,7 @@
+""" Serializers for fields in supporting CRUD operations to database,
+validating input for authentication/registration/login and creating
+users """
+
 from rest_framework import serializers
 from steelworks import models
 from django.contrib.auth import authenticate
@@ -8,7 +12,8 @@ from django.contrib.auth.password_validation import validate_password
 
 
 class SteelworksUserSerializer(serializers.ModelSerializer):
-
+    """ Used for the SteelworksUser view to create/update an
+    object with user information"""
     class Meta:
         model = models.SteelworksUser
         fields = ['pk', 'first_name', 'last_name', 'email',
@@ -17,7 +22,7 @@ class SteelworksUserSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    """ Used for the ProfileView view to create an
+    """ Used for the ProfileView view to create/update an
     object with user information"""
     class Meta:
         model = User
@@ -30,7 +35,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-
+    """ Used for the Product view to create/update an
+    object with Product information"""
     class Meta:
         model = models.Product
         fields = ['pk', 'product_name', 'product_cost',
@@ -38,14 +44,16 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class ProductUserPairSerializer(serializers.ModelSerializer):
-
+    """ Used for the ProductUserPair view to create/update an
+    object with ProductUserPair information"""
     class Meta:
         model = models.ProductUserPair
         fields = ['pk', 'product', 'subscribed_users', 'created']
 
 
 class ClassesSerializer(serializers.ModelSerializer):
-
+    """ Used for the Classes view to create/update an
+    object with Classes information"""
     class Meta:
         model = models.Classes
         fields = ['pk', 'class_name', 'class_details',
@@ -53,7 +61,8 @@ class ClassesSerializer(serializers.ModelSerializer):
 
 
 class InstructorSerializer(serializers.ModelSerializer):
-
+    """ Used for the Instructor view to create/update an
+    object with Instructor information"""
     class Meta:
         model = models.Instructor
         fields = ['pk', 'first_name', 'last_name',
@@ -61,7 +70,8 @@ class InstructorSerializer(serializers.ModelSerializer):
 
 
 class ClassTimeUserPairSerializer(serializers.ModelSerializer):
-
+    """ Used for the ClassTimeUserPair view to create/update an
+    object with ClassTimeUserPair information"""
     class Meta:
         model = models.ClassTimeUserPair
         fields = ['pk', 'gym_class', 'time_slot_1', 'time_slot_2', 'created']

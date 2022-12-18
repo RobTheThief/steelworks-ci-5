@@ -5,13 +5,19 @@ import { getProfile, login, register } from "../apirequests/authRequests";
 import { createUser } from "../apirequests/apiBackEndRequests";
 import { useNavigate } from "react-router-dom";
 
-export default function Register({
+/**
+ * Renders the register form component and handles the form submission
+ * and fetch requests to the backend.
+ * @param {object} param0
+ * @returns jsx
+ */
+const Register = ({
   setIsRegister,
   setShowModal,
   setModalHeading,
   setModalMessage,
   setProfile,
-}) {
+}) => {
   const [user, setUser] = useState();
   const [pass, setPass] = useState();
   const [pass2, setPass2] = useState();
@@ -28,21 +34,40 @@ export default function Register({
 
   const inputClasses = "w-full mb-8 rounded p-1";
 
+  /**
+   * Uses react router to navigate to the user account page.
+   */
   const handleNavigateAccount = useCallback(
     () => navigate("/user-account", { replace: true }),
     [navigate]
   );
 
+  /**
+   * Sets the isRegister state variable to false to show
+   * the login component in the login-register page.
+   */
   const handleGoToLogin = () => {
     setIsRegister(false);
   };
 
+  /**
+   * Takes in a heading and message as a string, opens a
+   * modal and sets the heading and message fot the modal.
+   * @param {string} heading
+   * @param {string} message
+   */
   function createModal(heading, message) {
     setShowModal(true);
     setModalHeading(heading);
     setModalMessage(message);
   }
 
+  /**
+   * Makes a fetch request tot he backend and registers the user.
+   * If successful it will then creat a steelworks user and then
+   * login the user in and go to the user account page. ELse it
+   * will display a modal with an error or warning.
+   */
   const handleRegister = async () => {
     const result = await register(
       user,
@@ -77,6 +102,12 @@ export default function Register({
     }
   };
 
+  /**
+   * Prevents defaults submission behaviour, checks if the
+   * username entered in 14 char or less, and runs handleRegister,
+   * else creates a modal error message.
+   * @param {object} e
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
     user.length <= 14
@@ -233,4 +264,6 @@ export default function Register({
       </fieldset>
     </form>
   );
-}
+};
+
+export default Register;

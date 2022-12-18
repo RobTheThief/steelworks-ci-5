@@ -4,6 +4,12 @@ import { css } from "@emotion/css";
 import { useNavigate } from "react-router-dom";
 import { getProfile, login } from "../apirequests/authRequests";
 
+/**
+ * Renders the login form component and handles the form submission
+ * and fetch requests to the backend.
+ * @param {object} param0
+ * @returns jsx
+ */
 export default function Login({
   setIsRegister,
   setShowModal,
@@ -15,24 +21,41 @@ export default function Login({
   const [pass, setPass] = useState();
 
   const navigate = useNavigate();
-
   const inputClasses = "w-full mb-8 rounded p-1";
 
+  /**
+   * Uses react router to navigate to the user account page.
+   */
   const handleNavigateAccount = useCallback(
     () => navigate("/user-account", { replace: true }),
     [navigate]
   );
 
-  function createModal(heading, message) {
+  /**
+   * Takes in a heading and message as a string, opens a
+   * modal and sets the heading and message for the modal.
+   * @param {string} heading
+   * @param {string} message
+   */
+  const createModal = (heading, message) => {
     setShowModal(true);
     setModalHeading(heading);
     setModalMessage(message);
-  }
+  };
 
+  /**
+   * Sets the isRegister state variable to true to show
+   * the register component in the login-register page.
+   */
   const handleGoToRegister = () => {
     setIsRegister(true);
   };
 
+  /**
+   * Sends a fetch request to login the user and either shows
+   * an error message through the modal or gets and sets the
+   * user profile and navigates to the account page.
+   */
   const handleLogin = async () => {
     try {
       let result = await login(user, pass);
@@ -50,6 +73,11 @@ export default function Login({
     }
   };
 
+  /**
+   * Takes in the event object, prevents default behaviour,
+   * and runs the handleLogin function.
+   * @param {object} e
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
     handleLogin();

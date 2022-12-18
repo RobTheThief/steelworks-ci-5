@@ -12,7 +12,14 @@ import { getSWUser } from "../apirequests/apiBackEndRequests";
 
 const stripePromise = loadStripe(process.env.REACT_STRIPE_PUBLISHABLE_KEY);
 
-export default function Modal({
+/**
+ * Renders a modal for various uses through out the app; Error
+ * reporting, warning messages, taking input and for the checkout
+ * form.
+ * @param {object} param0 
+ * @returns jsx
+ */
+const Modal = ({
   showModal,
   setShowModal,
   message,
@@ -23,10 +30,16 @@ export default function Modal({
   isCheckout,
   paymentPlanType,
   setResponseMessage,
-}) {
+}) => {
   const [userEmail, setUserEmail] = useState("");
   const [swUser, setSWUser] = useState("");
 
+  /**
+   * An async function that makes a fetch request to get the
+   * user profile and sets the user email. Then if successful
+   * the getUserAsync function is run to get the steelworks
+   * user details.
+   */
   const getProfileAsync = async () => {
     await getProfile()
       .then((res) => setUserEmail(res.email))
@@ -35,7 +48,12 @@ export default function Modal({
       });
   };
 
-  async function getUserAsync() {
+  /**
+   * Using the userEmail sends a fetch request to the backend
+   * to get the steelworks user object and set it to a state
+   * variable.
+   */
+   const getUserAsync = async () => {
     try {
       if (userEmail) {
         await getSWUser(userEmail).then((res) => {
@@ -148,3 +166,5 @@ export default function Modal({
     </div>
   );
 }
+
+export default Modal;

@@ -5,16 +5,24 @@ import { HelmetProvider } from "react-helmet-async";
 import { getProfile } from "./apirequests/authRequests";
 import Favicon from "react-favicon";
 import favicon from "./favicon.png";
-import Sidebar from "./components/Sidebar";
+import Layout from "./components/Layout";
 import LoginRegister from "./pages/LoginRegister";
 import UserAccount from "./pages/UserAccount";
 import Home from "./pages/Home";
 import Page404 from "./pages/Page404";
 
+/**
+ *  Main App function component.
+ * @returns jsx
+ */
 function App() {
   const [profile, setProfile] = useState();
 
-  async function checkForProfile() {
+  /**
+   * Makes a fetch request to get user profile and
+   * set response to profile state variable.
+   */
+  const checkForProfile = async () => {
     const profile = await getProfile();
     setProfile(profile);
   }
@@ -28,7 +36,7 @@ function App() {
       <BrowserRouter>
         <HelmetProvider>
           <Favicon url={favicon}></Favicon>
-          <Sidebar profile={profile} setProfile={setProfile} />
+          <Layout profile={profile} setProfile={setProfile} />
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route

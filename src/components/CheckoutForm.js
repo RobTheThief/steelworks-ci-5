@@ -4,6 +4,12 @@ import { saveStripeInfo } from "../apirequests/apiBackEndRequests";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Modal from "./Modal";
 
+/**
+ * Renders checkout form for stripe payment and makes a request
+ * to make a payment.
+ * @param {object} param0
+ * @returns jsx
+ */
 const CheckoutForm = ({ paymentPlanType, userEmail, userID }) => {
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -22,10 +28,19 @@ const CheckoutForm = ({ paymentPlanType, userEmail, userID }) => {
     Silver: "REACT_STRIPE_SILVER_ID",
   };
 
+  /**
+   * Submits a payment with the option set to upgrade.
+   */
   const setUpgradeState = () => {
     handleSubmit("upgrade")();
   };
 
+  /**
+   * Takes in the event object and handles change of the payment form.
+   * Displays an error if incorrect input or enables submit button if
+   * ok and complete.
+   * @param {object} event
+   */
   const handleChange = (event) => {
     setDisableSubmit(!event.complete);
     if (event.error) {
@@ -35,6 +50,11 @@ const CheckoutForm = ({ paymentPlanType, userEmail, userID }) => {
     }
   };
 
+  /**
+   * Accepts a string as upgrade option. Sets loading true and
+   * creates a payment method object and attempts a stripe payment.
+   * @param {string} upgrade
+   */
   const handleSubmit = (upgrade) => async (event) => {
     event && event.preventDefault();
     setLoading(true);
@@ -65,6 +85,9 @@ const CheckoutForm = ({ paymentPlanType, userEmail, userID }) => {
       });
   };
 
+  /**
+   * Opens a modal based on the responseMessage from the stripe payment.
+   */
   useEffect(() => {
     setModalHeading("Subscription information");
     setShowModal(true);
