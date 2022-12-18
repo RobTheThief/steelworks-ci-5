@@ -229,7 +229,7 @@ export default function UserAccount({ profile }) {
         <title>Steelworks-account</title>
         <link
           rel="canonical"
-          href="https://steelworks-fitness.herokuapp.com/"
+          href="https://steelworks-fitness.herokuapp.com/user-account"
         />
         <meta
           name="description"

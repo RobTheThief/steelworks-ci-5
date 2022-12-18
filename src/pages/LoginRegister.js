@@ -23,7 +23,7 @@ export default function LoginRegister({ setProfile }) {
         <title>Steelworks-login/register</title>
         <link
           rel="canonical"
-          href="https://steelworks-fitness.herokuapp.com/"
+          href="https://steelworks-fitness.herokuapp.com/login-register"
         />
         <meta
           name="description"
