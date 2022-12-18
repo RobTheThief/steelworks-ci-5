@@ -66,7 +66,7 @@ export default function Login({
         className={`w-1/3 my-24 p-6 rounded flex flex-col justify-center items-start ${css`
           min-width: 295px;
           max-width: 400px;
-          border: #64748b solid 2px;
+          border: #3b82f6 solid 2px;
           background-color: rgba(0, 0, 0, 0.473);
         `}`}
       >

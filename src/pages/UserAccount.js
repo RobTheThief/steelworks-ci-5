@@ -224,7 +224,7 @@ export default function UserAccount({ profile }) {
 
   return (
     <>
-    <Helmet>
+      <Helmet>
         <meta charSet="utf-8" />
         <title>Steelworks-account</title>
         <link
@@ -255,16 +255,16 @@ export default function UserAccount({ profile }) {
       />
       <div className="w-full min-h-screen flex justify-center items-center user-account-page overflow-y-scroll">
         <div
-          className={`my-24 py-8 flex-col items-center account-details ${css`
-            width: 30%;
+          className={`my-24 py-3 flex-col items-center account-details ${css`
+            width: 28%;
             min-width: 310px;
             ${CONTAINER_CSS}
           `}`}
         >
           <form
             className={`p-8 mb-4 text-white ${css`
-              ${CONTAINER_CSS} background: black;
-              width: 90%;
+              ${CONTAINER_CSS} background: black; border: #3b82f6 solid 2px;
+              width: 95%;
             `}`}
             onSubmit={(e) => handleUpdadeInfo(e)}
           >
@@ -273,50 +273,49 @@ export default function UserAccount({ profile }) {
               <li>Email: {profile?.email}</li>
               <li>First Name: {profile?.first_name}</li>
               <li>Last Name: {profile?.last_name}</li>
-              <li>
+              <li className="mt-4">
                 Address: <br />
                 <input
                   type="text"
                   value={address1 ? address1 : ""}
-                  className="bg-transparent border-t-2 border-x-2 border-blue-500 p-1 rounded-tl rounded-tr outline-none"
+                  className="bg-transparent border-t-2 border-x-2 border-slate-500 p-1 rounded-tl rounded-tr outline-none"
                   onChange={(e) => changeInput(e, setAddress1)}
                 ></input>
                 <br />
                 <input
                   type="text"
                   value={address2 ? address2 : ""}
-                  className="bg-transparent border-x-2 border-blue-500 p-1 outline-none"
+                  className="bg-transparent border-x-2 border-slate-500 p-1 outline-none"
                   onChange={(e) => changeInput(e, setAddress2)}
                 ></input>
                 <br />
                 <input
                   type="text"
                   value={address3 ? address3 : ""}
-                  className="bg-transparent border-x-2 border-blue-500 p-1 outline-none"
+                  className="bg-transparent border-x-2 border-slate-500 p-1 outline-none"
                   onChange={(e) => changeInput(e, setAddress3)}
                 ></input>
                 <br />
                 <input
                   type="text"
                   value={postcode ? postcode : ""}
-                  className="bg-transparent border-b-2 border-x-2 border-blue-500 p-1 rounded-bl rounded-br outline-none"
+                  className="bg-transparent border-b-2 border-x-2 border-slate-500 p-1 rounded-bl rounded-br outline-none"
                   onChange={(e) => changeInput(e, setPostcode)}
                 ></input>
                 <br />
               </li>
-              <li>
+              <li className="mt-4">
                 Tel:
                 <br />
                 <input
                   type="tel"
                   pattern="(^\d{1,10}$)"
                   value={phone ? phone : ""}
-                  className="bg-transparent p-1 border-2 border-blue-500 rounded outline-none"
+                  className="bg-transparent p-1 border-2 border-slate-500 rounded outline-none"
                   onChange={(e) => changeInput(e, setPhone)}
                 ></input>
                 <br />
               </li>
-              <li>ID: {swUser?.id}</li>
               <SWButton type="submit" margin={"1rem 0 0 0"}>
                 Update
               </SWButton>
@@ -324,8 +323,8 @@ export default function UserAccount({ profile }) {
           </form>
           <div
             className={`w-4/5 p-8 text-white flex-col ${css`
-              ${CONTAINER_CSS} background: black;
-              width: 90%;
+              ${CONTAINER_CSS} background: black; border: #3b82f6 solid 2px;
+              width: 95%;
             `}`}
           >
             <p>
@@ -349,8 +348,8 @@ export default function UserAccount({ profile }) {
             <section
               id="update-classes"
               className={`w-4/5 p-8 mt-4 text-white flex-col ${css`
-                ${CONTAINER_CSS} background: black;
-                width: 90%;
+                ${CONTAINER_CSS} background: black; border: #3b82f6 solid 2px;
+                width: 95%;
               `}`}
             >
               <form className="flex flex-col">
@@ -397,7 +396,7 @@ export default function UserAccount({ profile }) {
                 </div>
               </form>
               <h3 className="mt-4 text-xl">Enrolled classes</h3>
-              <p className="p-2 text-white border-2 border-blue-500 rounded">
+              <p className="p-2 text-white border-2 border-slate-500 rounded">
                 Wed 7-8pm:{" "}
                 {slot1ClassNames &&
                   slot1ClassNames.map((item, idx) => {
@@ -417,7 +416,7 @@ export default function UserAccount({ profile }) {
               <div
                 className={`${
                   selectedClass
-                    ? "h-32 p-2 border-2 border-blue-500 rounded"
+                    ? "h-32 p-2 border-2 border-slate-500 rounded"
                     : "h-4"
                 } mt-4 transition-all duration-300 ease-in-out overflow-scroll`}
               >

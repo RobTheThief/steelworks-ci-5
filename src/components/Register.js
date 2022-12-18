@@ -96,7 +96,7 @@ export default function Register({
         className={`my-24 w-1/3 rounded flex justify-center items-start p-6 ${css`
           min-width: 295px;
           max-width: 400px;
-          border: #64748b solid 2px;
+          border: #3b82f6 solid 2px;
           background-color: rgba(0, 0, 0, 0.473);
         `}`}
       >
