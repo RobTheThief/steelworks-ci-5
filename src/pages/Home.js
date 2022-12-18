@@ -205,7 +205,7 @@ function Home() {
           >
             <form
               action="https://formspree.io/f/xqkjjegb"
-              className="w-11/12 lg:w-full flex flex-col z-50 pt-0 pb-0"
+              className="w-11/12 flex flex-col z-50 pt-0 pb-0"
               method="POST"
               target="_blank"
             >
@@ -257,7 +257,7 @@ function Home() {
                 Submit
               </Button>
             </form>
-            <div className="flex lg:flex-row md:flex-col sm:flex-col flex-col w-11/12 lg:w-full text-white font-extrabold text-xl mb-4">
+            <div className="flex lg:flex-row md:flex-col sm:flex-col flex-col w-11/12 text-white font-extrabold text-xl mb-4">
               <div className="mt-12 w-full">
                 <span className="mt-4 w-full">Address:</span>
                 <address className="mt-4 w-full">
@@ -280,14 +280,14 @@ function Home() {
             </div>
             <Divider
               variant="middle"
-              className={`w-11/12 lg:w-full ${css`
+              className={`w-11/12 ${css`
                 border-color: #3b82f6 !important;
               `}`}
             />
 
             <div
               id="mc_embed_signup"
-              className={`w-11/12 lg:w-full text-white mb-32 ${css`
+              className={`w-11/12 text-white mb-32 ${css`
                 background: none;
                 clear: left;
                 font: 14px;

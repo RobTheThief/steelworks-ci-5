@@ -14,6 +14,9 @@ import SWButton from "../components/SWButton";
 import Modal from "../components/Modal";
 import { HashLink } from "react-router-hash-link";
 import { Helmet } from "react-helmet-async";
+import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
+import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOutlined";
+import DoneAllOutlinedIcon from "@mui/icons-material/DoneAllOutlined";
 
 const CONTAINER_CSS =
   "border-radius: 4px;border: #64748b solid 2px;background-color: rgba(0, 0, 0, 0.473);display: flex;";
@@ -263,18 +266,30 @@ export default function UserAccount({ profile }) {
         >
           <form
             className={`p-8 mb-4 text-white ${css`
-              ${CONTAINER_CSS} background: black; border: #3b82f6 solid 2px;
+              ${CONTAINER_CSS} background: black;
+              border: #3b82f6 solid 2px;
               width: 95%;
             `}`}
             onSubmit={(e) => handleUpdadeInfo(e)}
           >
             <ul>
-              <li>Username: {profile?.username}</li>
-              <li>Email: {profile?.email}</li>
-              <li>First Name: {profile?.first_name}</li>
-              <li>Last Name: {profile?.last_name}</li>
+              <li>
+                <b>Username: </b>
+                {profile?.username}
+              </li>
+              <li>
+                <b>Email: </b>
+                {profile?.email}
+              </li>
+              <li>
+                <b>First Name: </b>
+                {profile?.first_name}
+              </li>
+              <li>
+                <b>Last Name: </b> {profile?.last_name}
+              </li>
               <li className="mt-4">
-                Address: <br />
+                <b>Address: </b> <br />
                 <input
                   type="text"
                   value={address1 ? address1 : ""}
@@ -305,7 +320,7 @@ export default function UserAccount({ profile }) {
                 <br />
               </li>
               <li className="mt-4">
-                Tel:
+                <b>Tel: </b>
                 <br />
                 <input
                   type="tel"
@@ -323,12 +338,22 @@ export default function UserAccount({ profile }) {
           </form>
           <div
             className={`w-4/5 p-8 text-white flex-col ${css`
-              ${CONTAINER_CSS} background: black; border: #3b82f6 solid 2px;
+              ${CONTAINER_CSS} background: black;
+              border: #3b82f6 solid 2px;
               width: 95%;
             `}`}
           >
             <p>
-              Active Subscription: {sub}.<br />
+              <b>Active Subscription: </b>
+              {sub}{" "}
+              {sub === "Unlimited" ? (
+                <WorkspacePremiumOutlinedIcon fontSize="large" />
+              ) : sub === "Gold" ? (
+                <MilitaryTechIcon fontSize="large" />
+              ) : sub === "Silver" ? (
+                <DoneAllOutlinedIcon  />
+              ) : null}
+              <br />
               {sub === "None" && (
                 <span>
                   Sign up to enroll in classes and access the facilities.
@@ -348,12 +373,15 @@ export default function UserAccount({ profile }) {
             <section
               id="update-classes"
               className={`w-4/5 p-8 mt-4 text-white flex-col ${css`
-                ${CONTAINER_CSS} background: black; border: #3b82f6 solid 2px;
+                ${CONTAINER_CSS} background: black;
+                border: #3b82f6 solid 2px;
                 width: 95%;
               `}`}
             >
               <form className="flex flex-col">
-                <label htmlFor="classes">Choose a class:</label>
+                <label htmlFor="classes" className="text-xl">
+                  Choose a class
+                </label>
                 <select
                   id="classes"
                   name="classes"
@@ -367,7 +395,9 @@ export default function UserAccount({ profile }) {
                   <option value="CrossFit">CrossFit</option>
                 </select>
 
-                <label htmlFor="time-slot">Choose a time slot:</label>
+                <label htmlFor="time-slot" className="text-xl">
+                  Choose a time slot
+                </label>
                 <select
                   id="time-slot"
                   name="time-slot"
@@ -395,7 +425,7 @@ export default function UserAccount({ profile }) {
                   </SWButton>
                 </div>
               </form>
-              <h3 className="mt-4 text-xl">Enrolled classes</h3>
+              <h3 className="mt-8 text-xl">Enrolled classes</h3>
               <p className="p-2 text-white border-2 border-slate-500 rounded">
                 Wed 7-8pm:{" "}
                 {slot1ClassNames &&
@@ -418,7 +448,7 @@ export default function UserAccount({ profile }) {
                   selectedClass
                     ? "h-32 p-2 border-2 border-slate-500 rounded"
                     : "h-4"
-                } mt-4 transition-all duration-300 ease-in-out overflow-scroll`}
+                } transition-all duration-300 ease-in-out overflow-scroll mt-6`}
               >
                 {instructor
                   ? `Class Instructor: ${instructor.first_name} ${instructor.last_name}`
