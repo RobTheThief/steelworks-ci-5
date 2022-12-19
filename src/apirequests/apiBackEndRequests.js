@@ -1,4 +1,6 @@
-import { makeFetchRequest } from "../helpers";
+/* eslint-disable object-shorthand */
+/* eslint-disable semi */
+import { makeFetchRequest } from '../helpers';
 
 /**
  * Makes a POST request to create a user in the database
@@ -24,8 +26,8 @@ const createUser = async (
   phone
 ) => {
   return await makeFetchRequest(
-    "POST",
-    `/api/user/create/`,
+    'POST',
+    '/api/user/create/',
     JSON.stringify({
       first_name: firstName,
       last_name: lastName,
@@ -34,7 +36,7 @@ const createUser = async (
       address_line_2: address2,
       address_line_3: address3,
       postcode: postCode,
-      phone: phone,
+      phone: phone
     })
   );
 };
@@ -45,7 +47,7 @@ const createUser = async (
  * @returns promise, object
  */
 const getSWUser = async (email) => {
-  return await makeFetchRequest("GET", `/api/user/get/${email}/`);
+  return await makeFetchRequest('GET', `/api/user/get/${email}/`);
 };
 
 /**
@@ -53,28 +55,28 @@ const getSWUser = async (email) => {
  * the steelworks user object address,postcode and phone number
  * and returns a status as a string with a promise.
  * @param {int} pk
- * @param {string} user_email
+ * @param {string} userEmail
  * @param {string} password,
- * @param {string} address_line_1
- * @param {string} address_line_2
- * @param {string} address_line_3
+ * @param {string} addressLine1
+ * @param {string} addressLine2
+ * @param {string} addressLine3
  * @param {string} postcode
  * @param {int} phone
  * @returns promise, object
  */
 const updateUserAddressPhone = async (
   pk,
-  user_email,
+  userEmail,
   password,
-  address_line_1,
-  address_line_2,
-  address_line_3,
+  addressLine1,
+  addressLine2,
+  addressLine3,
   postcode,
   phone
 ) => {
   return await makeFetchRequest(
-    "GET",
-    `/api/user/update/${pk}/${user_email}/${password}/${address_line_1}/${address_line_2}/${address_line_3}/${postcode}/${phone}/`
+    'GET',
+    `/api/user/update/${pk}/${userEmail}/${password}/${addressLine1}/${addressLine2}/${addressLine3}/${postcode}/${phone}/`
   );
 };
 
@@ -84,7 +86,7 @@ const updateUserAddressPhone = async (
  * @returns promise, array
  */
 const getProductUserPairs = async () => {
-  return await makeFetchRequest("GET", "/api/product/user-pair/");
+  return await makeFetchRequest('GET', '/api/product/user-pair/');
 };
 
 /**
@@ -99,13 +101,13 @@ const getProductUserPairs = async () => {
 const saveStripeInfo = async (
   email,
   paymentMethodID,
-  subscription_type,
+  subscriptionType,
   upgrade,
   userID
 ) => {
   return await makeFetchRequest(
-    "POST",
-    `/api/save-stripe-info/${email}/${paymentMethodID}/${subscription_type}/${upgrade}/${userID}/`
+    'POST',
+    `/api/save-stripe-info/${email}/${paymentMethodID}/${subscriptionType}/${upgrade}/${userID}/`
   );
 };
 
@@ -120,14 +122,14 @@ const saveStripeInfo = async (
  * @returns promise, object
  */
 const updateGymClass = async (
-  class_name,
+  className,
   details,
-  student_id,
-  remove_user = "add"
+  studentID,
+  removeUser = 'add'
 ) => {
   return await makeFetchRequest(
-    "GET",
-    `/api/classes/update/${class_name}/${details}/${student_id}/${remove_user}/`
+    'GET',
+    `/api/classes/update/${className}/${details}/${studentID}/${removeUser}/`
   );
 };
 
@@ -137,7 +139,7 @@ const updateGymClass = async (
  * @returns promise, object
  */
 const getGymClasses = async () => {
-  return await makeFetchRequest("GET", `/api/classes/`);
+  return await makeFetchRequest('GET', '/api/classes/');
 };
 
 /**
@@ -145,10 +147,10 @@ const getGymClasses = async () => {
  * that a specific student is in and returns a response object.
  * @returns promise, object
  */
-const getUserClasses = async (student_id) => {
+const getUserClasses = async (studentID) => {
   return await makeFetchRequest(
-    "GET",
-    `/api/classes/user/get-classes/${student_id}/`
+    'GET',
+    `/api/classes/user/get-classes/${studentID}/`
   );
 };
 
@@ -158,14 +160,14 @@ const getUserClasses = async (student_id) => {
  * @returns promise, object
  */
 const classTimeUserPairUpdate = async (
-  gym_class_name,
-  user_id,
-  add_remove = "add",
-  time_slot
+  gymClassName,
+  userID,
+  addRemove = 'add',
+  timeSlot
 ) => {
   return await makeFetchRequest(
-    "GET",
-    `api/class-time/user-pair/update/${gym_class_name}/${user_id}/${add_remove}/${time_slot}/`
+    'GET',
+    `api/class-time/user-pair/update/${gymClassName}/${userID}/${addRemove}/${timeSlot}/`
   );
 };
 
@@ -174,10 +176,10 @@ const classTimeUserPairUpdate = async (
  * users class time slots and returns a response object.
  * @returns promise, object
  */
-const findUserTimeSlots = async (user_id) => {
+const findUserTimeSlots = async (userID) => {
   return await makeFetchRequest(
-    "GET",
-    `api/class-time/user-pair/user-time-slots/${user_id}/`
+    'GET',
+    `api/class-time/user-pair/user-time-slots/${userID}/`
   );
 };
 
@@ -191,5 +193,5 @@ export {
   getGymClasses,
   getUserClasses,
   classTimeUserPairUpdate,
-  findUserTimeSlots,
+  findUserTimeSlots
 };

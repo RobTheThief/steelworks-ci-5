@@ -1,11 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
-
 * {
-  font-family: "Open Sans", sans-serif !important;
+  font-family: 'Open Sans', sans-serif !important;
 }
 
 body {
@@ -13,7 +13,7 @@ body {
 }
 
 body::after {
-  content: "";
+  content: '';
   display: block;
   height: 96px;
 }
@@ -26,7 +26,7 @@ footer {
 .hero-container {
   background: #000000;
   background: linear-gradient(rgb(0, 0, 0, 0.753), rgb(0, 0, 0, 0.753)),
-    url("./img/hero1024.jpg");
+    url('./img/hero1024.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   width: 100%;
@@ -42,7 +42,7 @@ footer {
 
 .contact-section {
   background: linear-gradient(rgb(0, 0, 0, 0.753), rgb(0, 0, 0, 0.753)),
-    url("./img/exercise-bike1024.jpg");
+    url('./img/exercise-bike1024.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
@@ -52,13 +52,13 @@ footer {
 
 .login-register-page {
   background: linear-gradient(rgb(0, 0, 0, 0.753), rgb(0, 0, 0, 0.753)),
-    url("./img/weight-rack1024.jpg");
+    url('./img/weight-rack1024.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .user-account-page {
-  background: url("./img/gym-with-view1024.jpg");
+  background: url('./img/gym-with-view1024.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }

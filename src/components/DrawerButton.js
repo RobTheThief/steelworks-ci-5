@@ -1,6 +1,6 @@
-import React from "react";
-import { css } from "@emotion/css";
-import { Button } from "@mui/material";
+import React from 'react';
+import { css } from '@emotion/css';
+import { Button } from '@mui/material';
 
 /**
  * Uses MUI to create a side bar/ drawer button as a HashLink component.

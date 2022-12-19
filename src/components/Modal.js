@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import WarningAmberIcon from "@mui/icons-material/WarningAmber";
-import { css } from "@emotion/css";
-import SWButton from "./SWButton";
+import React, { useEffect, useState } from 'react';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import { css } from '@emotion/css';
+import SWButton from './SWButton';
 
-import CheckoutForm from "./CheckoutForm";
-import { getProfile } from "../apirequests/authRequests";
+import CheckoutForm from './CheckoutForm';
+import { getProfile } from '../apirequests/authRequests';
 
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js/pure";
-import { getSWUser } from "../apirequests/apiBackEndRequests";
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js/pure';
+import { getSWUser } from '../apirequests/apiBackEndRequests';
 
 const stripePromise = loadStripe(process.env.REACT_STRIPE_PUBLISHABLE_KEY);
 
@@ -16,7 +16,7 @@ const stripePromise = loadStripe(process.env.REACT_STRIPE_PUBLISHABLE_KEY);
  * Renders a modal for various uses through out the app; Error
  * reporting, warning messages, taking input and for the checkout
  * form.
- * @param {object} param0 
+ * @param {object} param0
  * @returns jsx
  */
 const Modal = ({
@@ -29,10 +29,10 @@ const Modal = ({
   func,
   isCheckout,
   paymentPlanType,
-  setResponseMessage,
+  setResponseMessage
 }) => {
-  const [userEmail, setUserEmail] = useState("");
-  const [swUser, setSWUser] = useState("");
+  const [userEmail, setUserEmail] = useState('');
+  const [swUser, setSWUser] = useState('');
 
   /**
    * An async function that makes a fetch request to get the
@@ -53,7 +53,7 @@ const Modal = ({
    * to get the steelworks user object and set it to a state
    * variable.
    */
-   const getUserAsync = async () => {
+  const getUserAsync = async () => {
     try {
       if (userEmail) {
         await getSWUser(userEmail).then((res) => {
@@ -63,7 +63,7 @@ const Modal = ({
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     isCheckout && getProfileAsync();
@@ -71,9 +71,9 @@ const Modal = ({
 
   return (
     <div
-      id="id01"
+      id='id01'
       className={`py-96 fixed left-0 top-0 w-full h-full overflow-auto flex justify-center items-center ${
-        showModal ? "block" : "hidden"
+        showModal ? 'block' : 'hidden'
       } ${css`
         background-color: rgb(0, 0, 0);
         background-color: rgba(0, 0, 0, 0.4);
@@ -81,62 +81,62 @@ const Modal = ({
       `}`}
       onClick={() => {
         !isInput && !isCheckout && setShowModal(false);
-        setResponseMessage && setResponseMessage("");
+        setResponseMessage && setResponseMessage('');
       }}
     >
       <div
-        className={`${isCheckout ? "w-2/3" : "w-1/3"} ${
-          isCheckout ? "bg-white text-black" : "bg-black text-white"
+        className={`${isCheckout ? 'w-2/3' : 'w-1/3'} ${
+          isCheckout ? 'bg-white text-black' : 'bg-black text-white'
         } rounded border-blue-500 border-2 ${css`
           min-width: 300px;
           max-width: 390px;
-          ${isCheckout && "max-width: 600px;"}
+          ${isCheckout && 'max-width: 600px;'}
         `}`}
       >
-        <div className="px-4 pt-2 pb-8">
-          <div className="flex  justify-end items-end">
-            <h3 className="w-full text-lg text-blue-500">{heading}</h3>
+        <div className='px-4 pt-2 pb-8'>
+          <div className='flex  justify-end items-end'>
+            <h3 className='w-full text-lg text-blue-500'>{heading}</h3>
             <span
               onClick={() => {
                 (isInput || isCheckout) && setShowModal(false);
-                setResponseMessage && setResponseMessage("");
+                setResponseMessage && setResponseMessage('');
               }}
-              className="cursor-pointer text-3xl mb-2"
+              className='cursor-pointer text-3xl mb-2'
             >
               &times;
             </span>
           </div>
           {isInput ? (
-            <div className="flex flex-col">
+            <div className='flex flex-col'>
               {setter ? (
                 <input
-                  type="password"
-                  className="text-black mt-4 rounded"
+                  type='password'
+                  className='text-black mt-4 rounded'
                   onChange={(e) => setter(e.target.value)}
                 ></input>
               ) : (
-                <p className="w-full">{message}</p>
+                <p className='w-full'>{message}</p>
               )}
-              <div className="flex w-full justify-center mt-4">
-                <div className="w-3/5 flex justify-between mt-4">
+              <div className='flex w-full justify-center mt-4'>
+                <div className='w-3/5 flex justify-between mt-4'>
                   <SWButton
                     handleOnClick={() => {
                       setShowModal(false);
-                      setResponseMessage && setResponseMessage("");
+                      setResponseMessage && setResponseMessage('');
                       func && func();
                     }}
-                    variant="outlined"
-                    width="15%"
-                    margin="0 1rem 0 -1rem"
+                    variant='outlined'
+                    width='15%'
+                    margin='0 1rem 0 -1rem'
                   >
                     Ok
                   </SWButton>
                   <SWButton
-                    variant="outlined"
-                    width="15%"
+                    variant='outlined'
+                    width='15%'
                     handleOnClick={() => {
                       setShowModal(false);
-                      setResponseMessage && setResponseMessage("");
+                      setResponseMessage && setResponseMessage('');
                     }}
                   >
                     Cancel
@@ -153,18 +153,18 @@ const Modal = ({
               />
             </Elements>
           ) : (
-            <div className="flex items-center">
+            <div className='flex items-center'>
               <WarningAmberIcon
-                className="pr-2 text-yellow-500"
-                fontSize="large"
+                className='pr-2 text-yellow-500'
+                fontSize='large'
               />
-              <p className="w-full">{message}</p>
+              <p className='w-full'>{message}</p>
             </div>
           )}
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Modal;

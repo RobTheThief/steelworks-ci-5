@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from "react";
-import { Button } from "@mui/material";
-import { css } from "@emotion/css";
-import { useNavigate } from "react-router-dom";
-import { getProfile, login } from "../apirequests/authRequests";
+import React, { useCallback, useState } from 'react';
+import { Button } from '@mui/material';
+import { css } from '@emotion/css';
+import { useNavigate } from 'react-router-dom';
+import { getProfile, login } from '../apirequests/authRequests';
 
 /**
  * Renders the login form component and handles the form submission
@@ -10,24 +10,24 @@ import { getProfile, login } from "../apirequests/authRequests";
  * @param {object} param0
  * @returns jsx
  */
-export default function Login({
+export default function Login ({
   setIsRegister,
   setShowModal,
   setModalHeading,
   setModalMessage,
-  setProfile,
+  setProfile
 }) {
   const [user, setUser] = useState();
   const [pass, setPass] = useState();
 
   const navigate = useNavigate();
-  const inputClasses = "w-full mb-8 rounded p-1";
+  const inputClasses = 'w-full mb-8 rounded p-1';
 
   /**
    * Uses react router to navigate to the user account page.
    */
   const handleNavigateAccount = useCallback(
-    () => navigate("/user-account", { replace: true }),
+    () => navigate('/user-account', { replace: true }),
     [navigate]
   );
 
@@ -61,8 +61,9 @@ export default function Login({
       let result = await login(user, pass);
       if (!result.ok) {
         result = await result.json();
-        if (result.non_field_errors)
-          createModal("Error", result.non_field_errors[0]);
+        if (result.non_field_errors) {
+          createModal('Error', result.non_field_errors[0]);
+        }
       } else {
         const profile = await getProfile();
         setProfile(profile);
@@ -98,34 +99,34 @@ export default function Login({
           background-color: rgba(0, 0, 0, 0.473);
         `}`}
       >
-        <h2 className="text-white text-xl mb-8 font-extrabold">Login</h2>
-        <label htmlFor="username_field" className="text-white">
+        <h2 className='text-white text-xl mb-8 font-extrabold'>Login</h2>
+        <label htmlFor='username_field' className='text-white'>
           Username
         </label>
         <input
-          id="username_field"
-          name="username_field"
-          type="text"
+          id='username_field'
+          name='username_field'
+          type='text'
           className={inputClasses}
-          placeholder="Username"
+          placeholder='Username'
           required
           onChange={(e) => setUser(e.target.value)}
         />
-        <label htmlFor="password_field" className="text-white">
+        <label htmlFor='password_field' className='text-white'>
           Password
         </label>
         <input
-          id="password_field"
-          name="password_field"
-          type="password"
+          id='password_field'
+          name='password_field'
+          type='password'
           className={inputClasses}
           required
           onChange={(e) => setPass(e.target.value)}
         />
         <div>
           <Button
-            type="submit"
-            variant="outlined"
+            type='submit'
+            variant='outlined'
             className={css`
               width: 40%;
               background-color: rgb(0, 89, 255) !important;
@@ -138,7 +139,7 @@ export default function Login({
             Submit
           </Button>
           <a
-            className="text-blue-300 ml-4 cursor-pointer"
+            className='text-blue-300 ml-4 cursor-pointer'
             onClick={handleGoToRegister}
           >
             Create account

@@ -1,9 +1,9 @@
-import React, { useCallback, useState } from "react";
-import { Button } from "@mui/material";
-import { css } from "@emotion/css";
-import { getProfile, login, register } from "../apirequests/authRequests";
-import { createUser } from "../apirequests/apiBackEndRequests";
-import { useNavigate } from "react-router-dom";
+import React, { useCallback, useState } from 'react';
+import { Button } from '@mui/material';
+import { css } from '@emotion/css';
+import { getProfile, login, register } from '../apirequests/authRequests';
+import { createUser } from '../apirequests/apiBackEndRequests';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * Renders the register form component and handles the form submission
@@ -16,7 +16,7 @@ const Register = ({
   setShowModal,
   setModalHeading,
   setModalMessage,
-  setProfile,
+  setProfile
 }) => {
   const [user, setUser] = useState();
   const [pass, setPass] = useState();
@@ -26,19 +26,19 @@ const Register = ({
   const [lastName, setLastName] = useState();
   const [postCode, setPostCode] = useState();
   const [phone, setPhone] = useState();
-  const address1 = "address line 1";
-  const address2 = "address line 2";
-  const address3 = "address line 3";
+  const address1 = 'address line 1';
+  const address2 = 'address line 2';
+  const address3 = 'address line 3';
 
   const navigate = useNavigate();
 
-  const inputClasses = "w-full mb-8 rounded p-1";
+  const inputClasses = 'w-full mb-8 rounded p-1';
 
   /**
    * Uses react router to navigate to the user account page.
    */
   const handleNavigateAccount = useCallback(
-    () => navigate("/user-account", { replace: true }),
+    () => navigate('/user-account', { replace: true }),
     [navigate]
   );
 
@@ -56,7 +56,7 @@ const Register = ({
    * @param {string} heading
    * @param {string} message
    */
-  function createModal(heading, message) {
+  function createModal (heading, message) {
     setShowModal(true);
     setModalHeading(heading);
     setModalMessage(message);
@@ -77,7 +77,7 @@ const Register = ({
       firstName,
       lastName
     );
-    if (result.email && result.email[0] !== "This field must be unique.") {
+    if (result.email && result.email[0] !== 'This field must be unique.') {
       createUser(
         email,
         firstName,
@@ -93,10 +93,10 @@ const Register = ({
       setProfile(profile);
       handleNavigateAccount();
     } else if (result.email) {
-      createModal("Input error!", "Email already used. " + result.email[0]);
+      createModal('Input error!', 'Email already used. ' + result.email[0]);
     } else {
       createModal(
-        "Input error!",
+        'Input error!',
         result.username ? result.username[0] : result.password[0]
       );
     }
@@ -113,14 +113,14 @@ const Register = ({
     user.length <= 14
       ? handleRegister()
       : createModal(
-          "Inpur error!",
-          "Username can be no longer than 14 characters."
-        );
+        'Inpur error!',
+        'Username can be no longer than 14 characters.'
+      );
   };
 
   return (
     <form
-      className={`register-form w-full h-full flex flex-col justify-end items-center`}
+      className='register-form w-full h-full flex flex-col justify-end items-center'
       onSubmit={(e) => handleSubmit(e)}
     >
       <fieldset
@@ -131,97 +131,97 @@ const Register = ({
           background-color: rgba(0, 0, 0, 0.473);
         `}`}
       >
-        <div className="w-full h-2/3 flex flex-col">
-          <h2 className="text-white text-xl mb-8 font-extrabold">Register</h2>
-          <label htmlFor="first_name_field" className="text-white">
+        <div className='w-full h-2/3 flex flex-col'>
+          <h2 className='text-white text-xl mb-8 font-extrabold'>Register</h2>
+          <label htmlFor='first_name_field' className='text-white'>
             First name
           </label>
           <input
-            id="first_name_field"
-            name="first_name_field"
-            type="text"
+            id='first_name_field'
+            name='first_name_field'
+            type='text'
             className={inputClasses}
-            placeholder="First name"
+            placeholder='First name'
             required
             onChange={(e) => setFirstName(e.target.value)}
           />
-          <label htmlFor="last_name_field" className="text-white">
+          <label htmlFor='last_name_field' className='text-white'>
             Last name
           </label>
           <input
-            id="last_name_field"
-            name="last_name_field"
-            type="text"
+            id='last_name_field'
+            name='last_name_field'
+            type='text'
             className={inputClasses}
-            placeholder="Last name"
+            placeholder='Last name'
             required
             onChange={(e) => setLastName(e.target.value)}
           />
-          <label htmlFor="email_field" className="text-white">
+          <label htmlFor='email_field' className='text-white'>
             Email
           </label>
           <input
-            id="email_field"
-            name="email_field"
-            type="email"
+            id='email_field'
+            name='email_field'
+            type='email'
             className={inputClasses}
-            placeholder=" example@yourmail.com"
+            placeholder=' example@yourmail.com'
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <label htmlFor="username_field" className="text-white">
+          <label htmlFor='username_field' className='text-white'>
             Username
           </label>
           <input
-            id="username_field"
-            name="username_field"
-            type="text"
+            id='username_field'
+            name='username_field'
+            type='text'
             className={inputClasses}
-            placeholder="Username"
+            placeholder='Username'
             required
             onChange={(e) => setUser(e.target.value)}
           />
-          <label htmlFor="password_field" className="text-white">
+          <label htmlFor='password_field' className='text-white'>
             Password
           </label>
           <input
-            id="password_field"
-            name="password_field"
-            type="password"
+            id='password_field'
+            name='password_field'
+            type='password'
             className={inputClasses}
             required
             onChange={(e) => setPass(e.target.value)}
           />
-          <label htmlFor="password_again_field" className="text-white">
+          <label htmlFor='password_again_field' className='text-white'>
             Type password again
           </label>
           <input
-            id="password_again_field"
-            name="password_again_field"
-            type="password"
+            id='password_again_field'
+            name='password_again_field'
+            type='password'
             className={inputClasses}
             required
             onChange={(e) => setPass2(e.target.value)}
           />
-          <label htmlFor="postcode_field" className="text-white">
+          <label htmlFor='postcode_field' className='text-white'>
             Postcode
           </label>
           <input
-            id="postcode_field"
-            name="postcode_field"
-            type="text"
+            id='postcode_field'
+            name='postcode_field'
+            type='text'
             className={inputClasses}
             required
             onChange={(e) => setPostCode(e.target.value)}
           />
-          <label htmlFor="phone_field" className="text-white">
+          <label htmlFor='phone_field' className='text-white'>
             Phone
           </label>
           <input
-            id="phone_field"
-            name="phone_field"
-            type="tel"
-            pattern="(^\d{1,10}$)"
+            id='phone_field'
+            name='phone_field'
+            type='tel'
+            pattern='(^\d{1,10}$)'
             className={inputClasses}
             required
             onChange={(e) => setPhone(e.target.value)}
@@ -234,8 +234,8 @@ const Register = ({
             `}`}
           >
             <Button
-              type="submit"
-              variant="outlined"
+              type='submit'
+              variant='outlined'
               className={css`
                 width: 40%;
                 min-width: 80px !important;

@@ -1,40 +1,40 @@
-import React, { useCallback, useState } from "react";
-import Drawer from "@mui/material/Drawer";
-import { Button, Input } from "@mui/material";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import { css } from "@emotion/css";
-import { HashLink } from "react-router-hash-link";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import { useNavigate } from "react-router-dom";
+import React, { useCallback, useState } from 'react';
+import Drawer from '@mui/material/Drawer';
+import { Button, Input } from '@mui/material';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import { css } from '@emotion/css';
+import { HashLink } from 'react-router-hash-link';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import { useNavigate } from 'react-router-dom';
 
-import { getProfile, logout } from "../apirequests/authRequests";
-import DrawerButton from "./DrawerButton";
+import { getProfile, logout } from '../apirequests/authRequests';
+import DrawerButton from './DrawerButton';
 
 const MenuProps = {
   PaperProps: {
     style: {
-      width: 150,
-    },
-  },
+      width: 150
+    }
+  }
 };
 
 const drawerButtons = [
-  { label: "Home", link: "/#hero" },
-  { label: "About", link: "/#about" },
-  { label: "Price Plans", link: "/#price-plans" },
-  { label: "Contact", link: "/#contact_section" },
+  { label: 'Home', link: '/#hero' },
+  { label: 'About', link: '/#about' },
+  { label: 'Price Plans', link: '/#price-plans' },
+  { label: 'Contact', link: '/#contact_section' }
 ];
 
-const options = ["Account", "Log out"];
+const options = ['Account', 'Log out'];
 
 /**
  * Renders the layout of the website; Sidebar, nav bar and footer.
@@ -43,7 +43,7 @@ const options = ["Account", "Log out"];
  */
 const Layout = ({ profile, setProfile }) => {
   const [toggle, setToggle] = useState(false);
-  const steelworksBlue = "#3b82f6 !important";
+  const steelworksBlue = '#3b82f6 !important';
   const navigate = useNavigate();
 
   /**
@@ -51,7 +51,7 @@ const Layout = ({ profile, setProfile }) => {
    * to open or close the menu drawer.
    * @param {boolean} option
    */
-  const openCloseDrawer = (option) => (event) => {
+  const openCloseDrawer = (option) => () => {
     setToggle(option);
   };
 
@@ -59,7 +59,7 @@ const Layout = ({ profile, setProfile }) => {
    * Uses react router to navigate to the user account page.
    */
   const handleNavigateAccount = useCallback(
-    () => navigate("/user-account", { replace: true }),
+    () => navigate('/user-account', { replace: true }),
     [navigate]
   );
 
@@ -67,7 +67,7 @@ const Layout = ({ profile, setProfile }) => {
    * Uses react router to navigate to the login-register page.
    */
   const handleNavigateLogin = useCallback(
-    () => navigate("/login-register", { replace: true }),
+    () => navigate('/login-register', { replace: true }),
     [navigate]
   );
 
@@ -90,7 +90,7 @@ const Layout = ({ profile, setProfile }) => {
             background: black !important;
             z-index: 12010 !important;
           `}
-          position="fixed"
+          position='fixed'
         >
           <Toolbar
             className={`${css`
@@ -99,12 +99,12 @@ const Layout = ({ profile, setProfile }) => {
               justify-content: space-between !important;
             `}`}
           >
-            <div className="flex items-center">
+            <div className='flex items-center'>
               <IconButton
                 onClick={openCloseDrawer(!toggle)}
-                size="large"
-                edge="start"
-                aria-label="menu"
+                size='large'
+                edge='start'
+                aria-label='menu'
                 sx={{ mr: 2 }}
                 className={css`
                   color: ${steelworksBlue};
@@ -129,13 +129,13 @@ const Layout = ({ profile, setProfile }) => {
                     padding-bottom: 0;
                   }
                 `}
-                variant="h1"
+                variant='h1'
               >
                 <Button
                   onClick={openCloseDrawer(false)}
                   component={HashLink}
                   smooth
-                  to="/#hero"
+                  to='/#hero'
                   className={css`
                     color: ${steelworksBlue};
                     font-size: 24px !important;
@@ -157,7 +157,7 @@ const Layout = ({ profile, setProfile }) => {
                 </Button>
               </Typography>
             </div>
-            <div className="flex">
+            <div className='flex'>
               <Button
                 onClick={openCloseDrawer(false)}
                 component={HashLink}
@@ -165,9 +165,9 @@ const Layout = ({ profile, setProfile }) => {
                 title={
                   profile?.username
                     ? `${profile.username}'s Account`
-                    : "Login or register"
+                    : 'Login or register'
                 }
-                to={profile?.username ? "/user-account" : "/login-register"}
+                to={profile?.username ? '/user-account' : '/login-register'}
                 className={css`
                   color: ${steelworksBlue};
                   padding: 0 !important;
@@ -180,21 +180,21 @@ const Layout = ({ profile, setProfile }) => {
                   }
                 `}
               >
-                {profile?.username ? profile.username : "Login / Register"}
+                {profile?.username ? profile.username : 'Login / Register'}
               </Button>
 
-              <FormControl sx={{ mt: 1, mb: 1, width: 40, mt: 3, pb: 2 }}>
+              <FormControl sx={{ mb: 1, width: 40, mt: 3, pb: 2 }}>
                 <Select
                   displayEmpty
-                  value={""}
+                  value={''}
                   onClick={() => {
-                    if (profile?.username === "") {
+                    if (profile?.username === '') {
                       handleNavigateLogin();
                     }
                   }}
                   input={
                     <Input
-                      disabled={profile?.username === ""}
+                      disabled={profile?.username === ''}
                       disableUnderline={true}
                     />
                   }
@@ -209,7 +209,7 @@ const Layout = ({ profile, setProfile }) => {
                     );
                   }}
                   MenuProps={MenuProps}
-                  inputProps={{ "aria-label": "Without label" }}
+                  inputProps={{ 'aria-label': 'Without label' }}
                   className={` ${css`
                     height: 30px;
                     font-size: 13px !important;
@@ -217,8 +217,8 @@ const Layout = ({ profile, setProfile }) => {
                     padding: 0 !important;
                   `}`}
                 >
-                  <MenuItem disabled value="">
-                    <em className="text-blue-500 p-2"></em>
+                  <MenuItem disabled value=''>
+                    <em className='text-blue-500 p-2'></em>
                   </MenuItem>
                   {options.map((option) => (
                     <MenuItem
@@ -228,7 +228,7 @@ const Layout = ({ profile, setProfile }) => {
                         color: ${steelworksBlue};
                       `}`}
                       onClick={
-                        option === "Account"
+                        option === 'Account'
                           ? handleNavigateAccount
                           : handleLogout
                       }
@@ -264,16 +264,16 @@ const Layout = ({ profile, setProfile }) => {
           />
         ))}
       </Drawer>
-      <footer className="h-24 w-full bg-black flex flex-col justify-center items-center">
-        <p className="text-white">Copyright &#169; Steelworks 2022</p>
+      <footer className='h-24 w-full bg-black flex flex-col justify-center items-center'>
+        <p className='text-white'>Copyright &#169; Steelworks 2022</p>
         <a
-          href="https://www.facebook.com/people/Steelworks-Fitness/100088910285306/"
-          target="_blank"
+          href='https://www.facebook.com/people/Steelworks-Fitness/100088910285306/'
+          target='_blank'
           className={`text-white flex mt-4 ${css`
             z-index: 9000000000000;
-          `}`}
+          `}`} rel="noreferrer"
         >
-          <FacebookIcon className="mr-2 text-blue-500" />
+          <FacebookIcon className='mr-2 text-blue-500' />
           Follow us on Facebook!
         </a>
       </footer>

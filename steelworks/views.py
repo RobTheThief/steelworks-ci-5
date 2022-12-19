@@ -17,7 +17,7 @@ from rest_framework import views
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, authentication_classes, \
-     permission_classes
+    permission_classes
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
@@ -127,7 +127,7 @@ def product_name_from_stripe_product_id(stripe_prod_id: str, product_names):
 @permission_classes([IsAuthenticated])
 def save_stripe_info(
     self, email, payment_method_id, subscription_type, upgrade, user_id
-        ):
+):
     """ Takes in email(string), paymentMethodID(string),
     subscription_type(string), upgrade(string),
     user_id(int). Makes a Stripe payment API request and
@@ -162,8 +162,8 @@ def save_stripe_info(
 
                             if isSubedCurrentProd:
                                 upgrade_message = (
-                                        'Subscription already active',
-                                        'for same product')
+                                    'Subscription already active',
+                                    'for same product')
                             else:
                                 upgrade_message = check_sub_upgrade(
                                     current_product_id, subscription_type)
@@ -208,7 +208,7 @@ def save_stripe_info(
                     'message': 'Success',
                     'customer_id': customer.id,
                     'extra_msg': extra_msg
-                    }
+                }
             }
         )
     except Exception as e:
@@ -255,7 +255,7 @@ def SteelworksUserGetFunction(self, user_email):
     else:
         return HttpResponse(json.dumps({
             'response': 'You must enter an email address'
-            }))
+        }))
 
 
 class SteelworksUserDetail(generics.RetrieveAPIView):
@@ -296,7 +296,7 @@ def SteelworksUserUpdateFunction(self, pk, user_email, password,
             else:
                 return HttpResponse(json.dumps({
                     'response': 'password incorrect'
-                    }))
+                }))
     return HttpResponse(json.dumps({'response': 'user not found'}))
 
 
@@ -448,25 +448,25 @@ def ClassTimeUserPairUpdateFunction(self, gym_class_name, user_id,
             pair.save()
             return HttpResponse(json.dumps({
                 'response': 'added to time slot 1'
-                }))
+            }))
         elif time_slot == 'time_slot_1':
             pair.time_slot_1.remove(user)
             pair.save()
             return HttpResponse(json.dumps({
                 'response': 'removed from time slot 1'
-                }))
+            }))
         if add_remove == 'add' and time_slot == 'time_slot_2':
             pair.time_slot_2.add(user)
             pair.save()
             return HttpResponse(json.dumps({
                 'response': 'added to time slot 2'
-                }))
+            }))
         elif time_slot == 'time_slot_2':
             pair.time_slot_2.remove(user)
             pair.save()
             return HttpResponse(json.dumps({
                 'response': 'removed from time slot 2'
-                }))
+            }))
 
     except Exception as e:
         return Response({
@@ -497,12 +497,12 @@ def findUserTimeSlots(self, user_id):
             slot_2_gym_class_ids.append(gym_class.class_name)
         return HttpResponse(json.dumps({
             'slot_1': slot_1_gym_class_ids, 'slot_2': slot_2_gym_class_ids
-            }))
+        }))
     except Exception as e:
         return Response({
             'msg': 'something went wrong while getting user class time slots',
             'error': str(e)
-            }, status=500)
+        }, status=500)
 
 
 class ClassesList(generics.ListAPIView):
@@ -555,12 +555,12 @@ def ClassesUpdateFunction(self, class_name, details, student_id, remove_user):
                 gym_class.enrolled_students.remove(student)
                 return HttpResponse(json.dumps({
                     'response': 'user removed from class'
-                    }), status=200)
+                }), status=200)
         except Exception as e:
             return Response({
                 'msg': 'something went wrong while updating classes',
                 'error': str(e)
-                }, status=500)
+            }, status=500)
 
         gym_class.enrolled_students.add(student)
         if details != 'from frontend':
@@ -572,7 +572,7 @@ def ClassesUpdateFunction(self, class_name, details, student_id, remove_user):
         return Response({
             'msg': 'something went wrong while updating classes',
             'error': str(e)
-            }, status=500)
+        }, status=500)
 
 
 @api_view(['GET'])
@@ -590,13 +590,13 @@ def getUserClasses(self, student_id):
             user_classes_list.append(i['class_name'])
         return HttpResponse(json.dumps({
             'response': user_classes_list
-            }), status=200)
+        }), status=200)
 
     except Exception as e:
         return Response({
             'msg': 'something went wrong while retrieving user classes',
             'error': str(e)
-            }, status=500)
+        }, status=500)
 
 
 class InstructorList(generics.ListAPIView):
@@ -687,7 +687,7 @@ class ProfileView(generics.RetrieveAPIView):
 
 class CreateUserView(generics.CreateAPIView):
     """ Endpoint that registeres a new user """
-    permission_classes = [permissions.AllowAny]
-    authentication_classes = []
+    """   permission_classes = [permissions.AllowAny]
+    authentication_classes = [] """
     queryset = User.objects.all()
     serializer_class = serializers.CreateUserSerializer

@@ -1,12 +1,12 @@
-import React from "react";
-import { Button } from "@mui/material";
-import { css } from "@emotion/css";
+import React from 'react';
+import { Button } from '@mui/material';
+import { css } from '@emotion/css';
 
 /**
  * Wraps MUI Button component to style the steelworks
  * button. Can be user as a link, submission button,
  * or to run a function.
- * @param {object} param0 
+ * @param {object} param0
  * @returns jsx
  */
 const SWButton = ({
@@ -16,13 +16,13 @@ const SWButton = ({
   children,
   handleOnClick,
   component,
-  link,
+  link
 }) => {
   return (
     <Button
-      type={type ? type : "button"}
+      type={type ? type : 'button'}
       onClick={handleOnClick && handleOnClick}
-      variant="outlined"
+      variant='outlined'
       component={component && component}
       to={link && link}
       className={`${css`
@@ -39,6 +39,6 @@ const SWButton = ({
       {children}
     </Button>
   );
-}
+};
 
 export default SWButton;
