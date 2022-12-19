@@ -134,9 +134,12 @@ Fullstack eCommerce Gym website. React frontend and Django restframework backend
 
 ### Marketing
 
+This business model is that of a gym with fitness equipment as well as trainers and a pool. They would expect to get clients from ages 18 to 54 ([gymdesk.com](https://gymdesk.com/blog/gym-membership-statistics/)). They would hope to get traffic from Facebook, google search results, and by advertising through a mailing list.
+
 - A Facebook page was set up for [Steelworks fitness](https://www.facebook.com/people/Steelworks-Fitness/100088910285306/). And this was added as a link in the footer of the layout with the Facebook icon.
   ![Steelworks Facebook page](./assets/media/facebook-page.png)
 - A newsletter mailing list sign up form was added to the contact section using the [Mailchimp](https://mailchimp.com/) service.
+- SEO guidelines were followed using semantic HTML and appropriate use of meta tags utilizing react-helmet-async.
 
 ### FUTURE FEATURES
 
