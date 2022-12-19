@@ -252,7 +252,7 @@ Fullstack eCommerce Gym website. React frontend and Django restframework backend
   - Enter `git push --set-upstream https://git.heroku.com/steelworks-ci-5.git` to deploy.
   - Enter `git push --set-upstream https://github.com/RobTheThief/steelworks-ci-5.git main` to reset upstream to github.
 
-The live link can be found here - https://steelworks-fitness.herokuapp.com/l
+The live link can be found here - https://steelworks-fitness.herokuapp.com/
 
 ## Credits
 
